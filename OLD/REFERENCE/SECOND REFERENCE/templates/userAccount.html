@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DM | Welcome</title>
+    <link href="/static/css/style.css" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="/static/images/JBS-retina-copy.png.webp">
+    <script src="/static/js/code.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</head>
+
+<body x-data="AutomatedDigitalMaturity" x-cloak>
+    <main class="container">
+
+        <section>
+            ,<div class="dashboard_main_admin">
+                <h1 class="item">USER UTILIZATION PANEL</h1>
+                <a href="/logout" class="item" style="float: right;">SIGN OUT</a>
+            </div>
+        </section><br>
+
+        <section>
+            <div class="userAccountParent">
+                <div class="userAccount_left">
+                    <p><img src="data:image/jpeg;base64,{{ photo_data }}" alt="User Photo" class="images"></p>
+                    <p> {{ user[1] }}</p>
+                    <p>{{ user[2] }}</p>
+                   
+
+                </div>
+                <div class="userAccount_middle">
+
+                    <!-- Selecting their business sector starts here  -->
+                    <div x-show="select_your_business_sector">
+                        <h1 class="item">BUSINESS SECTOR</h1><br><br>
+
+                        <div>
+                            <span>
+                                <h1>BUSINESS SECTOR NAME:</h1>
+                            </span> <span><input class="input_field_for_admin_create_and_update" type="text"
+                                    placeholder="Create a Business Sector">
+                            </span>
+                            <div class="userAccountParent">
+                                <button class="submit-btn">SUBMIT</button>
+                                <button class="submit-btn"
+                                    x-on:click="openUserAccount('choose_measuring_element')">NEXT</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div x-show="choose_measuring_element">
+                        <h1 class="item">MEASURING ELEMENT</h1><br><br>
+
+                        <div>
+                            <span>
+                                <h1>SELECT AN ELEMENT:</h1>
+                            </span> <span><input class="input_field_for_admin_create_and_update" type="text"
+                                    placeholder="Create a Business Sector">
+                            </span>
+                            <div class="userAccountParent">
+                                <button class="submit-btn">SUBMIT</button>
+                                <button class="submit-btn"
+                                    x-on:click="openUserAccount('choose_sub_category')">NEXT</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div x-show="choose_sub_category">
+                        <h1 class="item">MEASURING ELEMENT</h1><br><br>
+
+                        <div>
+                            <span>
+                                <h1>SUB-CATEGORY:</h1>
+                            </span> <span><input class="input_field_for_admin_create_and_update" type="text"
+                                    placeholder="Create a Business Sector">
+                            </span>
+                            <div class="userAccountParent">
+                                <button class="submit-btn">SUBMIT</button>
+                                <button class="submit-btn"
+                                    x-on:click="openUserAccount('Maturity_toolkit_feedback')">NEXT</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div x-show="Maturity_toolkit_feedback">
+                        <h1 class="item">FEEDBACK BASED ON SUBMISSIONS</h1><br><br>
+
+                        <div>
+                            <span>
+                                <h1>SUB-CATEGORY:</h1>
+                            </span> <span><input class="input_field_for_admin_create_and_update" type="text"
+                                    placeholder="Create a Business Sector">
+                            </span>
+                            <div class="userAccountParent">
+                                <button class="submit-btn"
+                                    x-on:click="openUserAccount('select_your_business_sector')">BACK TO HOME</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+</body>
+
+</html>

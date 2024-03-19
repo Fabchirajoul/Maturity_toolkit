@@ -1,8 +1,6 @@
-from flask import Flask, request, render_template, redirect, session, url_for
+from flask import Flask, request, render_template, redirect, session
 import sqlite3
 import bcrypt
-import base64
-import csv
 
 app = Flask(__name__)
 app.secret_key = 'secret_key'
@@ -36,23 +34,50 @@ def create_user_table():
     connection.close()
 
 
-# combined table
-
-
-def create_combined_table():
+def create_mining_sector_table():
     connection = sqlite3.connect('database.db')
     cursor = connection.cursor()
     cursor.execute('''
-        CREATE TABLE IF NOT EXISTS CombinedTable (
-            id INTEGER,
-            BusinessSector TEXT,
-            MeasuringElt TEXT,
+        CREATE TABLE IF NOT EXISTS MiningSector (
+            id INTEGER PRIMARY KEY,
+            BusinessSector TEXT NOT NULL
+        )
+    ''')
+    connection.commit()
+    connection.close()
+
+# Creating table for measuring element and rating
+
+
+def create_measuring_element_and_rating_table():
+    connection = sqlite3.connect('database.db')
+    cursor = connection.cursor()
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS MeasuringRating (
+            id INTEGER PRIMARY KEY,
+            MeasuringElement TEXT NOT NULL,
             Rating INTEGER,
-            SUbCategory TEXT,
-            Questions TEXT,
-            Answers TEXT,
-            RateAnswer INTEGER,
-            MaxRating INTEGER
+            MiningSectorID INTEGER,
+            FOREIGN KEY (MiningSectorID) REFERENCES MiningSector(id)
+        )
+    ''')
+    connection.commit()
+    connection.close()
+
+
+def create_subCategory_Questions_Answers_AnswerRating_MaxRating():
+    connection = sqlite3.connect('database.db')
+    cursor = connection.cursor()
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS subCatQstnAnsRAnsMaxR (
+            id INTEGER PRIMARY KEY,
+            SUbCategory TEXT NOT NULL,
+            Questions TEXT NOT NULL,
+            Answers TEXT NOT NULL,
+            RateAnswer TEXT NOT NULL,
+            MaxRating INTEGER,
+            MeasuringRatingID INTEGER,
+            FOREIGN KEY (MeasuringRatingID) REFERENCES MeasuringRating(id)
         )
     ''')
     connection.commit()
@@ -60,7 +85,9 @@ def create_combined_table():
 
 
 create_user_table()
-create_combined_table()
+create_mining_sector_table()
+create_measuring_element_and_rating_table()
+create_subCategory_Questions_Answers_AnswerRating_MaxRating()
 
 
 @app.route('/')
@@ -190,15 +217,113 @@ def dashboardAdministrator():
 
     return redirect('/login')
 
-# Creating the combined all tiers
+# Creating the business sector
 
 
-@app.route('/CombinedTiersForAll', methods=['GET', 'POST'])
-def CombinedTiers():
+@app.route('/BSector', methods=['GET', 'POST'])
+def businessSector():
     if request.method == 'POST':
         business_sector_name = request.form['business_sector_name']
+
+        connection = sqlite3.connect('database.db')
+        cursor = connection.cursor()
+        cursor.execute('''
+            INSERT INTO MiningSector (BusinessSector)
+            VALUES (?)
+        ''', (business_sector_name,))
+        connection.commit()
+        connection.close()
+
+        return redirect('/BSector')
+
+    return render_template('administrator.html')
+
+# Updating the business sector
+
+
+@app.route('/UpdateBSector', methods=['GET', 'POST'])
+def UpdatebusinessSector():
+    if request.method == 'POST':
+        business_sector_name = request.form['business_sector_name']
+
+        connection = sqlite3.connect('database.db')
+        cursor = connection.cursor()
+        cursor.execute('''
+            UPDATE MiningSector SET BusinessSector = ? WHERE id = 1
+        ''', (business_sector_name,))
+        connection.commit()
+        connection.close()
+
+        return redirect('/administrator')
+
+    return render_template('administrator.html')
+
+
+# creating measuring element and rating
+@app.route('/MeasuringElementandRating', methods=['GET', 'POST'])
+def MeasureElementRating():
+    message = None
+    message_display = False  # Initialize message_display
+    if request.method == 'POST':
         measuring_element_name = request.form['Measuring_Element']
         rating = request.form['Rating']
+
+        connection = sqlite3.connect('database.db')
+        cursor = connection.cursor()
+        cursor.execute('''
+            INSERT INTO MeasuringRating (Measuring, Rating)
+            VALUES (?,?)
+        ''', (measuring_element_name, rating))
+
+        connection.commit()
+        connection.close()
+
+        message = "Successfully Created Measuring Element and its Rating"
+        message_display = True  # Set message_display to True after the form submission
+
+    return render_template('administrator.html', message=message, message_display=message_display)
+
+
+# updating measuring element and its rating
+# updating measuring element and its rating
+@app.route('/UpdateMeasuringElementandRating', methods=['POST'])
+def UpdateMeasureElementRating():
+    if request.method == 'POST':
+        old_measuring_element = request.form['old_measuring_element']
+        old_rating = request.form['old_rating']
+        new_measuring_element = request.form['new_measuring_element']
+        new_rating = request.form['new_rating']
+
+        connection = sqlite3.connect('database.db')
+        cursor = connection.cursor()
+        cursor.execute('''
+            UPDATE MeasuringRating 
+            SET Measuring = ?, Rating = ? 
+            WHERE Measuring = ? AND Rating = ?
+        ''', (new_measuring_element, new_rating, old_measuring_element, old_rating))
+
+        connection.commit()
+        connection.close()
+
+    return redirect('/administrator')
+
+# to be used in the datalist
+
+# @app.route('/Update_Measuring_Element')
+# def update_measuring_element():
+#     connection = sqlite3.connect('database.db')
+#     cursor = connection.cursor()
+#     cursor.execute('SELECT Measuring, Rating FROM MeasuringRating')
+#     data = cursor.fetchall()
+#     connection.close()
+#     return render_template('administrator.html', data=data)
+
+# Creating the combined 4 tiers
+
+
+@app.route('/CombinedTiers', methods=['GET', 'POST'])
+def SubCatQSTNAnsAnsRMaxR():
+    if request.method == 'POST':
         subCategory_name = request.form['subCategory_name']
         SubCategoryQuestion = request.form['SubCategoryQuestion']
         QuestionAnswer = request.form['QuestionAnswer']
@@ -208,145 +333,82 @@ def CombinedTiers():
         connection = sqlite3.connect('database.db')
         cursor = connection.cursor()
         cursor.execute('''
-            INSERT INTO CombinedTable (BusinessSector,MeasuringElt,Rating,SUbCategory,Questions,Answers,RateAnswer,MaxRating)
-            VALUES (?,?,?,?,?,?,?,?)
-        ''', (business_sector_name, measuring_element_name, rating, subCategory_name, SubCategoryQuestion, QuestionAnswer, AnswerRating, MaxRating))
+            INSERT INTO subCatQstnAnsRAnsMaxR (SUbCategory,Questions,Answers,RateAnswer,MaxRating)
+            VALUES (?,?,?,?,?)
+        ''', (subCategory_name, SubCategoryQuestion, QuestionAnswer, AnswerRating, MaxRating))
         connection.commit()
         connection.close()
 
-        return redirect('/CombinedTiersForAll')
+        return redirect('/CombinedTiers')
 
     return render_template('administrator.html')
 
+# Updating the combined 4 tiers
 
-# Updating the combined tiers
-@app.route('/UpdateCombinedTiersForAll', methods=['GET', 'POST'])
-def UpdateCombinedTiers():
+
+@app.route('/UpdateCombinedTiers', methods=['GET', 'POST'])
+def UpdateSubCatQSTNAnsAnsRMaxR():
     if request.method == 'POST':
-        # Extract old values from the form
-        oldbusiness_sector_name = request.form['oldbusiness_sector_name']
-        oldmeasuring_element_name = request.form['oldMeasuring_Element']
-        oldrating = request.form['oldRating']
         oldsubCategory_name = request.form['oldsubCategory_name']
         oldSubCategoryQuestion = request.form['oldSubCategoryQuestion']
         oldQuestionAnswer = request.form['oldQuestionAnswer']
         oldAnswerRating = request.form['oldAnswerRating']
         oldMaxRating = request.form['oldMaxRating']
 
-        # Extract new values from the form
-        newbusiness_sector_name = request.form['newbusiness_sector_name']
-        newmeasuring_element_name = request.form['newMeasuring_Element']
-        newrating = request.form['newRating']  # Corrected parameter name
         newsubCategory_name = request.form['newsubCategory_name']
         newSubCategoryQuestion = request.form['newSubCategoryQuestion']
         newQuestionAnswer = request.form['newQuestionAnswer']
         newAnswerRating = request.form['newAnswerRating']
         newMaxRating = request.form['newMaxRating']
 
-        # Connect to the database
         connection = sqlite3.connect('database.db')
         cursor = connection.cursor()
-
-        # Execute the SQL update query
         cursor.execute('''
-            UPDATE CombinedTable 
-            SET  BusinessSector=?, MeasuringElt=?, Rating=?, SUbCategory=?, Questions=?, Answers=?, RateAnswer=?, MaxRating=?
-            WHERE BusinessSector=? AND MeasuringElt=? AND Rating=? AND SUbCategory=? AND Questions=? AND Answers=? AND RateAnswer=? AND MaxRating=?
-        ''', (newbusiness_sector_name, newmeasuring_element_name, newrating, newsubCategory_name, newSubCategoryQuestion,
-              newQuestionAnswer, newAnswerRating, newMaxRating, oldbusiness_sector_name, oldmeasuring_element_name,
-              oldrating, oldsubCategory_name, oldSubCategoryQuestion, oldQuestionAnswer, oldAnswerRating, oldMaxRating))
+    UPDATE subCatQstnAnsRAnsMaxR 
+    SET  SUbCategory=?, Questions=?, Answers=?, RateAnswer=?, MaxRating=?
+    WHERE SUbCategory=? AND Questions=? AND Answers=? AND RateAnswer=? AND MaxRating=?
+''', (newsubCategory_name, newSubCategoryQuestion, newQuestionAnswer, newAnswerRating, newMaxRating, oldsubCategory_name, oldSubCategoryQuestion, oldQuestionAnswer, oldAnswerRating, oldMaxRating))
 
-        # Commit changes and close connection
         connection.commit()
         connection.close()
 
-        # Redirect back to administrator page
-        return redirect('/administrator')
+    return redirect('/administrator')
 
-    return render_template('administrator.html')
-# Route to delete a record from CombinedTable
+# Selecting the records from the database
 
 
-@app.route('/delete_combined_data', methods=['POST'])
-def delete_combined_data():
-    if request.method == 'POST':
-        # Get the ID of the record to delete from the form
-        delete_record_id = request.form['business_sector']
-
-        # For debugging: Print the delete_record_id
-        print("Record ID to delete:", delete_record_id)
-
-        try:
-            # Delete the record from the database
-            connection = sqlite3.connect('database.db')
-            cursor = connection.cursor()
-            cursor.execute('''
-                DELETE FROM CombinedTable
-                WHERE BusinessSector = ?
-            ''', (delete_record_id,))
-            connection.commit()
-            connection.close()
-
-            # For debugging: Print a message indicating successful deletion
-            print("Record deleted successfully.")
-
-            # Redirect back to the page displaying combined data
-            return redirect('/view_combined_data')
-        except Exception as e:
-            # For debugging: Print any exception that occurs during deletion
-            print("Error occurred during deletion:", str(e))
-            return "Error occurred during deletion: " + str(e)
-    else:
-        return "Method Not Allowed"
-
-
-# Displaying the elements in the databse on the admin side of the panel
-@app.route('/view_combined_data', methods=['GET', 'POST'])
-def view_combined_data():
+@app.route('/combinedDataForSector', methods=['GET'])
+def get_data():
     connection = sqlite3.connect('database.db')
     cursor = connection.cursor()
+
+    # Execute the SQL query
     cursor.execute('''
-        SELECT id, BusinessSector, MeasuringElt, Rating, SUbCategory, Questions, Answers, RateAnswer, MaxRating
-        FROM CombinedTable
+        SELECT 
+            MiningSector.BusinessSector, 
+            MeasuringRating.MeasuringElement, 
+            MeasuringRating.Rating, 
+            subCatQstnAnsRAnsMaxR.SUbCategory, 
+            subCatQstnAnsRAnsMaxR.Questions, 
+            subCatQstnAnsRAnsMaxR.Answers, 
+            subCatQstnAnsRAnsMaxR.RateAnswer, 
+            subCatQstnAnsRAnsMaxR.MaxRating 
+        FROM 
+            MiningSector
+        JOIN 
+            MeasuringRating ON MiningSector.id = MeasuringRating.MiningSectorID
+        JOIN 
+            subCatQstnAnsRAnsMaxR ON MeasuringRating.id = subCatQstnAnsRAnsMaxR.MeasuringRatingID
     ''')
-    combined_data = cursor.fetchall()
+
+    # Fetch all rows
+    data = cursor.fetchall()
+
+    # Close the cursor and connection
+    cursor.close()
     connection.close()
 
-    return render_template('administrator.html', combined_data=combined_data)
-
-
-# uploading csv file to database
-@app.route('/', methods=['GET', 'POST'])
-def upload_file():
-    if request.method == 'POST':
-        file = request.files['file']
-        if file and file.filename.endswith('.csv'):
-            # Process CSV file and insert into database
-            process_csv(file)
-            # Redirect to view data
-            return redirect(url_for('view_combined_data'))
-    return render_template('upload.html')
-
-# Process uploaded CSV file and insert into database
-
-
-def process_csv(csv_file):
-    connection = sqlite3.connect('database.db')
-    cursor = connection.cursor()
-
-    # Convert file object to text mode
-    csv_text = csv_file.stream.read().decode("utf-8")
-    csv_data = csv.reader(csv_text.splitlines())
-
-    next(csv_data)  # Skip header row if present
-    for row in csv_data:
-        cursor.execute('''
-            INSERT INTO CombinedTable (id, BusinessSector, MeasuringElt, Rating, SUbCategory, Questions, Answers, RateAnswer, MaxRating)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-        ''', row)
-
-    connection.commit()
-    connection.close()
+    return render_template('administrator.html', data=data)
 
 
 

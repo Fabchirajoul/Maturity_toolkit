@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DM| Administrator</title>
+    <link href="/static/css/style.css" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="/static/images/JBS-retina-copy.png.webp">
+    <script src="/static/js/code.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</head>
+
+<body x-data="AutomatedDigitalMaturity" x-cloak>
+
+    <main class="container">
+        <section>
+            <div class="dashboard_main_admin">
+                <h1 class="item">ADMINISTRATOR CONTROL</h1>
+                <button x-on:click="openHome('Admin_Home_Page')" class="create_user" style="float: right;">CREATE NEW
+                    USER</button>
+                <a href="/logout" class="item" style="float: right;">SIGN OUT</a>
+
+            </div>
+        </section>
+        <section x-cloak>
+            <div class="dashboard_main_admin">
+                <div class="dashboard_tabs">
+                    <div class="box_for_the_dashboard_tabs">
+                        <h1 class="item">BUSINESS SECTOR</h1>
+                        <div class="create_delete_update_buttons">
+                            <button class="submit-btn" x-on:click="openHome('Create_Business_Sector')">CREATE</button>
+                            <button class="submit-btn" x-on:click="openHome('Update_Business_Sector')">UPDATE</button>
+                            <!-- <button class="submit-btn" x-on:click="openHome('start_game')">DELETE</button> -->
+                        </div>
+                    </div>
+                    <div class="box_for_the_dashboard_tabs">
+                        <h1 class="item">MEASURING ELEMENT (TIER 1)</h1>
+                        <div class="create_delete_update_buttons">
+                            <button class="submit-btn" x-on:click="openHome('Create_Measuring_Element')">CREATE</button>
+                            <button class="submit-btn" x-on:click="openHome('Update_Measuring_Element')">UPDATE</button>
+                            <!-- <button class="submit-btn" x-on:click="openHome('start_game')">DELETE</button> -->
+                        </div>
+                    </div>
+                    <div class="box_for_the_dashboard_tabs">
+                        <h1 class="item">RATING &nbsp;&nbsp;&nbsp;(TIER 2)</h1>
+                        <div class="create_delete_update_buttons">
+                            <button class="submit-btn" x-on:click="openHome('Create_Rating')">CREATE</button>
+                            <button class="submit-btn" x-on:click="openHome('Update_Rating')">UPDATE</button>
+                            <!-- <button class="submit-btn" x-on:click="openHome('start_game')"> DELETE</button> -->
+                        </div>
+                    </div>
+                    <!-- <div class="box_for_the_dashboard_tabs">
+                        <h1 class="item">SUB-CATEGORY (TIER 3)</h1>
+                        <div class="create_delete_update_buttons">
+                            <button class="submit-btn" x-on:click="openHome('Create_Sub_Category')">CREATE</button>
+                            <button class="submit-btn" x-on:click="openHome('Update_Sub_Category')">UPDATE</button>
+                            <button class="submit-btn" x-on:click="openHome('start_game')">DELETE</button> -->
+                        <!-- </div>
+                    </div>
+                    <div class="box_for_the_dashboard_tabs">
+                        <h1 class="item">QUESTIONS (TIER 4)</h1>
+                        <div class="create_delete_update_buttons">
+                            <button class="submit-btn" x-on:click="openHome('Create_Questions')">CREATE</button>
+                            <button class="submit-btn" x-on:click="openHome('Update_Questions')">UPDATE</button>
+                             <button class="submit-btn" x-on:click="openHome('start_game')">DELETE</button> -->
+                        <!-- </div>
+                    </div>  -->
+                </div>
+
+                <div class="dashboard_computation">
+
+                    <!-- Creating a user by the admin  -->
+
+                    <div x-show="Admin_Home_Page">
+                        <div class="container-login">
+                            <form action="/Adminregister" method="POST">
+                                <div>
+                                    <label for="name">USERNAME:</label>
+                                    <input class="input" type="text" placeholder="Create your username" name="name"
+                                        required id="name">
+                                </div>
+                                <br><br>
+                                <div>
+                                    <label for="email">EMAIL:</label>
+                                    <input type="email" class="input" id="email" placeholder="Enter email" name="email"
+                                        required>
+                                </div>
+                                <br><br>
+
+                                <div>
+                                    <label label="account_type">ACCOUNT TYPE</label>
+                                    <select name="users" id="cars" class="input" required>
+                                        <option value="disabled">Select a user type</option>
+                                        <option value="Administrator">Administrator</option>
+                                        <option value="Business Analyst">Business Analyst</option>
+                                    </select>
+
+                                </div><br><br>
+                                <div>
+                                    <label for="password">PASSWORD:</label>
+                                    <input type="password" class="input" id="password" placeholder="Enter password"
+                                        name="password" required>
+                                </div>
+                                <br><br>
+                                <div>
+                                    <label for="confirm_password">CONFIRM PASSWORD:</label>
+                                    <input type="password" class="input" id="confirm_password"
+                                        placeholder="Confirm password" name="confirm_password" required>
+                                </div>
+                                <br><br>
+                                <button type="submit" class="submit-btn">Submit</button>
+
+                            </form>
+
+                            <div>
+                                <!-- Display error messages here -->
+                                {% if error %}
+                                <p class="error">{{ error }}</p>
+                                {% endif %}
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- Creating Business sector starts here  -->
+                    <!-- Creating a Business Sector starts here  -->
+                    <div x-show="Create_Business_Sector">
+                        <h1 class="item">CREATE A BUSINESS SECTOR</h1><br><br>
+
+                        <form action="/BSector" method="POST">
+                            <div>
+                                <label for="business_sector_name">BUSINESS SECTOR NAME:</label>
+                                <input class="input_field_for_admin_create_and_update" type="text"
+                                    placeholder="Enter Business Sector Name" name="business_sector_name">
+                            </div>
+                            <br><br>
+
+
+                            <button class="submit-btn">CREATE BUSINESS SECTOR</button>
+                        </form>
+
+                        <div class="item">
+                            <h1>MESSAGE FOR CREATING THE DATABASE RECORD WILL COME HERE </h1>
+                        </div>
+                    </div>
+
+                    <!-- Update Business sector starts here  -->
+                    <div x-show="Update_Business_Sector">
+                        <h1 class="item">UPDATE A BUSINESS SECTOR</h1><br><br>
+
+                        <form action="/UpdateBSector" method="POST">
+                            <div>
+
+                                <span>
+                                    <h1>UPDATE BUSINESS SECTOR NAME:</h1>
+                                </span> <span><input class="input_field_for_admin_create_and_update" type="text"
+                                        placeholder="Enter the new Business Sector" name="business_sector_name">
+                                </span>
+                                <button class="submit-btn">UPDATE BUSINESS SECTOR</button>
+                            </div>
+                        </form>
+
+                        <div class="item">
+
+                            <h1>PROPMT MESSAGE FOR UPDATINGTHE DATABASE RECORD WILL COME HERE </h1>
+
+                        </div>
+                    </div>
+
+
+
+
+
+
+
+
+
+
+                    <!-- Creating Measuring element starts here  -->
+                    <div x-show="Create_Measuring_Element">
+                        <h1 class="item">CREATE A MEASURING ELEMENT FOR THE BUSINESS SECTOR</h1><br><br>
+                        <form action="/MeasuringElementandRating" method="POST">
+                            <div>
+                                <span>
+                                    <h1>Measuring Element:</h1>
+                                </span> <span><input name="Measuring_Element"
+                                        class="input_field_for_admin_create_and_update" type="text"
+                                        placeholder="Type to filter and select an exisiting business sector Name from the list">
+                                </span>
+                                <span>
+                                    <h1>Rating:</h1>
+                                </span> <span><input class="input_field_for_admin_create_and_update" type="text"
+                                        placeholder="Enter an Measuirng Element Name" name="Rating">
+                                </span>
+                                <button class="submit-btn">CREATE MEASURING ELEMENT</button>
+                            </div>
+                        </form>
+
+                        <div class="item">
+                            {% if message_display %}
+                            <p>{{ message }}</p>
+                            {% endif %}
+                        </div>
+
+
+
+
+                    </div>
+
+
+
+                    <!-- update_measuring_element.html -->
+                    <div x-show="Update_Measuring_Element">
+                        <h1 class="item">UPDATE A MEASURING ELEMENT FOR THE BUSINESS SECTOR</h1><br><br>
+
+                        <form action="/UpdateMeasuringElementandRating" method="POST">
+                            <div>
+                                <!-- Old Measuring Element input -->
+                                <span>
+                                    <h1>Old Measuring Element Name:</h1>
+                                </span>
+                                <span>
+                                    <input list="measuring_elements" name="old_measuring_element"
+                                        class="input_field_for_admin_create_and_update" type="text"
+                                        placeholder="Select the old Measuring Element Name">
+                                    <datalist id="measuring_elements">
+                                        {% for element in data %}
+                                        <option value="{{ element[0] }}"></option>
+                                        {% endfor %}
+                                    </datalist>
+                                </span>
+
+                                <!-- Old Rating input -->
+                                <span>
+                                    <h1>Old Rating:</h1>
+                                </span>
+                                <span>
+                                    <input list="ratings" name="old_rating"
+                                        class="input_field_for_admin_create_and_update" type="text"
+                                        placeholder="Select the old Rating">
+                                    <datalist id="ratings">
+                                        {% for element in data %}
+                                        <option value="{{ element[1] }}"></option>
+                                        {% endfor %}
+                                    </datalist>
+                                </span>
+
+                                <span>
+                                    <h1>New Measuring Element Name:</h1>
+                                </span>
+                                <span><input name="new_measuring_element"
+                                        class="input_field_for_admin_create_and_update" type="text"
+                                        placeholder="Enter the new Measuring Element Name"></span>
+                                <span>
+                                    <h1>New Rating:</h1>
+                                </span>
+                                <span><input name="new_rating" class="input_field_for_admin_create_and_update"
+                                        type="text" placeholder="Enter the new Rating"></span>
+                                <button class="submit-btn">UPDATE MEASURING ELEMENT</button>
+                            </div>
+                        </form>
+
+                        <div class="item">
+                            <h1>PROPMT MESSAGE FOR UPDATING THE DATABASE RECORD WILL COME HERE </h1>
+                        </div>
+                    </div>
+
+
+
+
+
+
+
+
+
+
+                    <!--Creating  Tier 2 starts here  -->
+                    <div x-show="Create_Rating">
+                        <h1 class="item">CREATE A RATING FOR THE DIFFERENT MEASURING ELEMENT</h1><br><br><br>
+
+
+                        <form action="/CombinedTiers" method="POST">
+                            <div>
+
+                                <div>
+                                    <span>
+                                        <h1>SUB CATEGORY:</h1>
+                                    </span> <span><input name="subCategory_name" class="input_field_for_admin_create_and_update" type="text"
+                                            placeholder="Type to filter and select an exisiting measuring element from the list">
+
+                                    </span>
+                                </div> <br><br>
+                                <div>
+                                    <span>
+                                        <h1>QUESTIONS:</h1>
+                                    </span> <span><input name="SubCategoryQuestion" class="input_field_for_admin_create_and_update" type="text"
+                                            placeholder="Type to filter and select an exisiting measuring element from the list">
+
+                                    </span>
+                                </div> <br><br>
+                                <div>
+                                    <span>
+                                        <h1>ANSWERS:</h1>
+                                    </span> <span><input name="QuestionAnswer" class="input_field_for_admin_create_and_update" type="text"
+                                            placeholder="Type to filter and select an exisiting measuring element from the list">
+
+                                    </span>
+                                </div> <br><br>
+                                <div>
+                                    <span>
+                                        <h1>ANSWER RATING:</h1>
+                                    </span> <span><input name="AnswerRating" class="input_field_for_admin_create_and_update" type="text"
+                                            placeholder="Type to filter and select an exisiting measuring element from the list">
+
+                                    </span>
+                                </div> <br><br>
+
+                                <div>
+                                    <span>
+                                        <h1>MAXIMUM ANSWER RATING:</h1>
+                                    </span> <span><input name="MaxRating" class="input_field_for_admin_create_and_update" type="text"
+                                            placeholder="Type to filter and select an exisiting measuring element from the list">
+
+                                    </span>
+                                </div> <br><br>
+                               
+
+                               
+                                <button class="submit-btn">CREATE RATING</button>
+                            </div>
+                        </form>
+
+                        <div class="item">
+
+                            <h1>PROPMT MESSAGE FOR CREATING THE DATABASE RECORD WILL COME HERE </h1>
+
+                        </div>
+
+
+
+                    </div>
+
+                    <!-- Update rating starts here  -->
+                    <div x-show="Update_Rating">
+                        <h1 class="item">UPDATE A RATING FOR THE DIFFERENT MEASURING ELEMENT</h1><br><br><br>
+                        <form action="/CombinedTiers" method="POST">
+                            <div>
+
+                                <div>
+                                    <span>
+                                        <h1>OLD SUB CATEGORY:</h1>
+                                    </span> <span><input name="subCategory_name" class="input_field_for_admin_create_and_update" type="text"
+                                            placeholder="Type to filter and select an exisiting measuring element from the list">
+
+                                    </span>
+                                </div> <br><br>
+                                <div>
+                                    <span>
+                                        <h1>OLD QUESTIONS:</h1>
+                                    </span> <span><input name="SubCategoryQuestion" class="input_field_for_admin_create_and_update" type="text"
+                                            placeholder="Type to filter and select an exisiting measuring element from the list">
+
+                                    </span>
+                                </div> <br><br>
+                                <div>
+                                    <span>
+                                        <h1>OLD ANSWERS:</h1>
+                                    </span> <span><input name="QuestionAnswer" class="input_field_for_admin_create_and_update" type="text"
+                                            placeholder="Type to filter and select an exisiting measuring element from the list">
+
+                                    </span>
+                                </div> <br><br>
+                                <div>
+                                    <span>
+                                        <h1>OLD ANSWER RATING:</h1>
+                                    </span> <span><input name="AnswerRating" class="input_field_for_admin_create_and_update" type="text"
+                                            placeholder="Type to filter and select an exisiting measuring element from the list">
+
+                                    </span>
+                                </div> <br><br>
+
+                                <div>
+                                    <span>
+                                        <h1>OLD MAXIMUM ANSWER RATING:</h1>
+                                    </span> <span><input name="MaxRating" class="input_field_for_admin_create_and_update" type="text"
+                                            placeholder="Type to filter and select an exisiting measuring element from the list">
+
+                                    </span>
+                                </div> <br><br>
+                               
+
+                               
+                                <button class="submit-btn">CREATE RATING</button>
+                            </div>
+                        </form>
+
+                        <div class="item">
+
+                            <h1>PROPMT MESSAGE FOR UPDATING THE DATABASE RECORD WILL COME HERE </h1>
+
+                        </div>
+                    </div>
+
+
+
+
+
+
+
+
+                    <!--Creating  Tier 3 starts here  -->
+                    <div x-show="Create_Sub_Category">
+                        <h1 class="item">CREATE A CATEGORY FOR THE DIFFERENT MEASURING ELEMENT</h1><br><br><br>
+
+
+                        <div>
+
+                            <span>
+                                <h1>MEASURING ELEMENT:</h1>
+                            </span> <span><input class="input_field_for_admin_create_and_update" type="text"
+                                    placeholder="Type to filter and select an exisiting measuring element from the list">
+                                <br><br>
+
+                                <span>
+                                    <h1>CREATE A SUB-CATEGORY:</h1>
+                                </span> <span><input class="input_field_for_admin_create_and_update" type="text"
+                                        placeholder="Enter a new sub-category for the measuring element">
+                                </span>
+                                <button class="submit-btn">CREATE SUB-CATEGORY</button>
+                        </div>
+
+                        <div class="item">
+
+                            <h1>PROPMT MESSAGE FOR CREATING THE DATABASE RECORD WILL COME HERE </h1>
+
+                        </div>
+
+
+
+                    </div>
+
+                    <!-- Update sub category starts here  -->
+                    <div x-show="Update_Sub_Category">
+                        <h1 class="item">UPDATE A CATEGORY FOR THE DIFFERENT MEASURING ELEMENT</h1><br><br><br>
+
+                        <div>
+
+                            <span>
+                                <h1>MEASURING ELEMENT:</h1>
+                            </span> <span><input class="input_field_for_admin_create_and_update" type="text"
+                                    placeholder="Type to filter and select an exisiting measuring element from the list">
+                                <br><br>
+
+                                <span>
+                                    <h1>OLD SUB-CATEGORY:</h1>
+                                </span> <span><input class="input_field_for_admin_create_and_update" type="text"
+                                        placeholder="Select a sub category for the particular measuring element you want to update">
+                                </span>
+
+                                <span>
+                                    <h1>UPDATE SUB-CATEGORY:</h1>
+                                </span> <span><input class="input_field_for_admin_create_and_update" type="text"
+                                        placeholder="Enter the new Sub-category for the sub Measuring Element">
+                                </span>
+                                <button class="submit-btn">CLICK TO UPDATE SUB-CATEGORY</button>
+                        </div>
+
+                        <div class="item">
+
+                            <h1>PROPMT MESSAGE FOR UPDATING THE DATABASE RECORD WILL COME HERE </h1>
+
+                        </div>
+
+
+                    </div>
+
+
+
+
+
+
+                    <!--Creating  Question (Tier 4) starts here  -->
+                    <div x-show="Create_Questions">
+                        <h1 class="item">CREATE A QUESTION FOR THE DIFFERENT SUB-CATEGORY</h1><br><br><br>
+
+
+                        <div>
+
+                            <span>
+                                <h1>SUB CATEGORY:</h1>
+                            </span> <span><input class="input_field_for_admin_create_and_update" type="text"
+                                    placeholder="Type to filter and select an exisiting sub category from the list">
+                                <br><br>
+
+                                <span>
+                                    <h1>CREATE A QUESTION:</h1>
+                                </span> <span><input class="input_field_for_admin_create_and_update" type="text"
+                                        placeholder="Enter a new new question for the sub category">
+                                </span>
+                                <button class="submit-btn">CREATE QUESTION</button>
+                        </div>
+
+                        <div class="item">
+
+                            <h1>PROPMT MESSAGE FOR CREATING THE DATABASE RECORD WILL COME HERE </h1>
+
+                        </div>
+
+
+
+                    </div>
+
+                    <!-- update questions starts here  -->
+                    <div x-show="Update_Questions">
+                        <h1 class="item">UPDATE A QUESTION FOR THE DIFFERENT SUB-CATEGORY</h1><br><br><br>
+
+
+                        <div>
+
+                            <span>
+                                <h1>SUB CATEGORY:</h1>
+                            </span> <span><input class="input_field_for_admin_create_and_update" type="text"
+                                    placeholder="Type to filter and select an exisiting sub category from the list">
+                                <br><br>
+
+                                <span>
+                                    <h1>OLD A QUESTION:</h1>
+                                </span> <span><input class="input_field_for_admin_create_and_update" type="text"
+                                        placeholder="Select a question for the particular sub category you want to update">
+                                </span>
+
+                                <span>
+                                    <h1>UPDATE A QUESTION:</h1>
+                                </span> <span><input class="input_field_for_admin_create_and_update" type="text"
+                                        placeholder="Enter the new question for the sub category">
+                                </span>
+                                <button class="submit-btn">UPDATE QUESTION</button>
+                        </div>
+
+                        <div class="item">
+
+                            <h1>PROPMT MESSAGE FOR UPDATING THE DATABASE RECORD WILL COME HERE </h1>
+
+                        </div>
+
+
+                    </div>
+
+
+
+
+
+
+
+
+                </div>
+
+            </div>
+
+        </section>
+    </main>
+</body>
+
+</html>

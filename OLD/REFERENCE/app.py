@@ -1,8 +1,7 @@
-from flask import Flask, request, render_template, redirect, session, url_for
+from flask import Flask, request, render_template, redirect, session
 import sqlite3
 import bcrypt
 import base64
-import csv
 
 app = Flask(__name__)
 app.secret_key = 'secret_key'
@@ -44,14 +43,14 @@ def create_combined_table():
     cursor = connection.cursor()
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS CombinedTable (
-            id INTEGER,
+            id INTEGER PRIMARY KEY,
             BusinessSector TEXT,
-            MeasuringElt TEXT,
+            MeasuringElt TEXT NOT NULL,
             Rating INTEGER,
-            SUbCategory TEXT,
-            Questions TEXT,
-            Answers TEXT,
-            RateAnswer INTEGER,
+            SUbCategory TEXT NOT NULL,
+            Questions TEXT NOT NULL,
+            Answers TEXT NOT NULL,
+            RateAnswer TEXT NOT NULL,
             MaxRating INTEGER
         )
     ''')
@@ -262,91 +261,87 @@ def UpdateCombinedTiers():
 
         # Redirect back to administrator page
         return redirect('/administrator')
+    
+    return render_template('administrator.html')
+
+# inserting other properties except the business sector 
+@app.route('/CombinedTiersForAllWithoutBusinessSector', methods=['GET', 'POST'])
+def CombinedTiersWithoutBusinessSector():
+    if request.method == 'POST':
+        measuring_element_name = request.form['Measuring_Element']
+        rating = request.form['Rating']
+        subCategory_name = request.form['subCategory_name']
+        SubCategoryQuestion = request.form['SubCategoryQuestion']
+        QuestionAnswer = request.form['QuestionAnswer']
+        AnswerRating = request.form['AnswerRating']
+        MaxRating = request.form['MaxRating']
+
+        connection = sqlite3.connect('database.db')
+        cursor = connection.cursor()
+        cursor.execute('''
+            INSERT INTO CombinedTable (MeasuringElt,Rating,SUbCategory,Questions,Answers,RateAnswer,MaxRating)
+            VALUES (?,?,?,?,?,?,?)
+        ''', (measuring_element_name, rating, subCategory_name, SubCategoryQuestion, QuestionAnswer, AnswerRating, MaxRating))
+        connection.commit()
+        connection.close()
+
+        return redirect('/CombinedTiersForAll')
 
     return render_template('administrator.html')
-# Route to delete a record from CombinedTable
 
 
-@app.route('/delete_combined_data', methods=['POST'])
-def delete_combined_data():
+
+# Updating the combined tiers
+@app.route('/UpdateCombinedTiersForAllWithoutBusinessSector', methods=['GET', 'POST'])
+def UpdateCombinedTiersWithoutBusinessSector():
     if request.method == 'POST':
-        # Get the ID of the record to delete from the form
-        delete_record_id = request.form['business_sector']
+        # Extract old values from the form
+        # oldbusiness_sector_name = request.form['oldbusiness_sector_name']
+        oldmeasuring_element_name = request.form['oldMeasuring_Element']
+        oldrating = request.form['oldRating']
+        oldsubCategory_name = request.form['oldsubCategory_name']
+        oldSubCategoryQuestion = request.form['oldSubCategoryQuestion']
+        oldQuestionAnswer = request.form['oldQuestionAnswer']
+        oldAnswerRating = request.form['oldAnswerRating']
+        oldMaxRating = request.form['oldMaxRating']
 
-        # For debugging: Print the delete_record_id
-        print("Record ID to delete:", delete_record_id)
+        # Extract new values from the form
+        # newbusiness_sector_name = request.form['newbusiness_sector_name']
+        newmeasuring_element_name = request.form['newMeasuring_Element']
+        newrating = request.form['newRating']  # Corrected parameter name
+        newsubCategory_name = request.form['newsubCategory_name']
+        newSubCategoryQuestion = request.form['newSubCategoryQuestion']
+        newQuestionAnswer = request.form['newQuestionAnswer']
+        newAnswerRating = request.form['newAnswerRating']
+        newMaxRating = request.form['newMaxRating']
 
-        try:
-            # Delete the record from the database
-            connection = sqlite3.connect('database.db')
-            cursor = connection.cursor()
-            cursor.execute('''
-                DELETE FROM CombinedTable
-                WHERE BusinessSector = ?
-            ''', (delete_record_id,))
-            connection.commit()
-            connection.close()
+        # Connect to the database
+        connection = sqlite3.connect('database.db')
+        cursor = connection.cursor()
 
-            # For debugging: Print a message indicating successful deletion
-            print("Record deleted successfully.")
-
-            # Redirect back to the page displaying combined data
-            return redirect('/view_combined_data')
-        except Exception as e:
-            # For debugging: Print any exception that occurs during deletion
-            print("Error occurred during deletion:", str(e))
-            return "Error occurred during deletion: " + str(e)
-    else:
-        return "Method Not Allowed"
-
-
-# Displaying the elements in the databse on the admin side of the panel
-@app.route('/view_combined_data', methods=['GET', 'POST'])
-def view_combined_data():
-    connection = sqlite3.connect('database.db')
-    cursor = connection.cursor()
-    cursor.execute('''
-        SELECT id, BusinessSector, MeasuringElt, Rating, SUbCategory, Questions, Answers, RateAnswer, MaxRating
-        FROM CombinedTable
-    ''')
-    combined_data = cursor.fetchall()
-    connection.close()
-
-    return render_template('administrator.html', combined_data=combined_data)
-
-
-# uploading csv file to database
-@app.route('/', methods=['GET', 'POST'])
-def upload_file():
-    if request.method == 'POST':
-        file = request.files['file']
-        if file and file.filename.endswith('.csv'):
-            # Process CSV file and insert into database
-            process_csv(file)
-            # Redirect to view data
-            return redirect(url_for('view_combined_data'))
-    return render_template('upload.html')
-
-# Process uploaded CSV file and insert into database
-
-
-def process_csv(csv_file):
-    connection = sqlite3.connect('database.db')
-    cursor = connection.cursor()
-
-    # Convert file object to text mode
-    csv_text = csv_file.stream.read().decode("utf-8")
-    csv_data = csv.reader(csv_text.splitlines())
-
-    next(csv_data)  # Skip header row if present
-    for row in csv_data:
+        # Execute the SQL update query
         cursor.execute('''
-            INSERT INTO CombinedTable (id, BusinessSector, MeasuringElt, Rating, SUbCategory, Questions, Answers, RateAnswer, MaxRating)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-        ''', row)
+            UPDATE CombinedTable 
+            SET  MeasuringElt=?, Rating=?, SUbCategory=?, Questions=?, Answers=?, RateAnswer=?, MaxRating=?
+            WHERE MeasuringElt=? AND Rating=? AND SUbCategory=? AND Questions=? AND Answers=? AND RateAnswer=? AND MaxRating=?
+        ''', (newmeasuring_element_name, newrating, newsubCategory_name, newSubCategoryQuestion,
+              newQuestionAnswer, newAnswerRating, newMaxRating, oldmeasuring_element_name,
+              oldrating, oldsubCategory_name, oldSubCategoryQuestion, oldQuestionAnswer, oldAnswerRating, oldMaxRating))
 
-    connection.commit()
-    connection.close()
+        # Commit changes and close connection
+        connection.commit()
+        connection.close()
+
+        # Redirect back to administrator page
+        return redirect('/administrator')
+    
+    return render_template('administrator.html')
+
+
+
+
+
+
 
 
 

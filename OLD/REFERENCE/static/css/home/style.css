@@ -1,0 +1,71 @@
+.item_home {
+  font-size: larger;
+  color: black;
+  text-align: center;
+}
+
+.homeImage {
+  width: 100%;
+  height: auto;
+  border: 2px;
+  border-radius: 50px;
+}
+
+
+
+
+
+.home_page_parent{
+  width: 100%;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  
+  color: black;
+  
+}
+
+
+.home_page_left{
+  width: 600px;
+  height: 500px;
+  
+  
+}
+
+.home_page_middle{
+  width: 600px;
+  height: 500px;
+
+}
+
+.home_page_right{
+  width: 600px;
+  height: 500px;
+ 
+}
+
+
+
+
+/* New CSS for smaller screens */
+@media (max-width: 768px) {
+  .navbar-nav {
+      display: flex;
+      justify-content: space-between;
+  }
+
+  .navbar-brand {
+      order: 1;
+      flex: 1;
+  }
+
+  .nav-item {
+      order: 1;
+  }
+
+  .link-secondary {
+      margin-left: auto;
+      order: 1;
+  }
+}

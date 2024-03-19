@@ -1,0 +1,44 @@
+﻿id,BusinessSector,MeasuringElt,Rating,SUbCategory,Questions,Answers ,RateAnswer ,MAXIMUM RATING
+1,MINING,Data Utilization and Analytics,99,Data Collection,Question 1 will come here,Basic,1,5
+2,MINING,Data Utilization and Analytics,99,Data Storage,Question 2 will come here,Basic,1,5
+3,MINING,Data Utilization and Analytics,99,Data Management,Question 3 will come here,Reactive,2,5
+4,MINING,Data Utilization and Analytics,99,Data Analysis,Question 4 will come here,Planned,3,5
+5,MINING,Data Utilization and Analytics,99,Use of ML,Question 5 will come here,Proactive,4,5
+6,MINING,Automation and Robotics,85,Drilling,To what extent is drilling automated ?,Resilent,5,5
+7,MINING,Automation and Robotics,85,Blasting,To what extent is blasting automated ?,Basic,1,5
+8,MINING,Automation and Robotics,85,Loading,To what extent is loading automated ?,Reactive,2,5
+9,MINING,Automation and Robotics,85,Hauling,To what extent is hauling automated ?,Planned,3,5
+10,MINING,Automation and Robotics,85,Hoisting,To what extent is hoisting automated ?,Proactive,4,5
+11,MINING,Internet of Things (IoT) Integration,67,Equipment performance,Equipment performance carried out via the use of IoT devices and sensors ?,Resilent,5,5
+12,MINING,Internet of Things (IoT) Integration,67,Environmental conditions,How is data from IoT integrated into informed decision making ? ,Basic,1,5
+13,MINING,Internet of Things (IoT) Integration,67,Worker safety,Environmental conditions assessed and carried out via the use of IoT devices and sensors ?,Reactive,2,5
+14,MINING,Internet of Things (IoT) Integration,67,Decision making,Worker safety makes use of IoT devices and sensors ?,Planned,3,5
+15,MINING,Internet of Things (IoT) Integration,67,Workflow optimization,Question 4 will come here,Proactive,4,5
+16,MINING,Digital Twin Technologies,87,Simulation,Any usage of mining softwares for simulations ?,Resilent,5,5
+17,MINING,Digital Twin Technologies,87,Predictive maintainance,Any usage of mining softwares for Predictive maintainance?,Basic,1,5
+18,MINING,Digital Twin Technologies,87,Optimization of resource utilization,Any usage of mining softwares for Optimization of resource utilization?,Reactive,2,5
+19,MINING,Digital Twin Technologies,87,Creation of virtual mining assets,Any usage of mining softwares for Creation of virtual mining assets?,Planned,3,5
+20,MINING,Advanced Communication and Connectivity,66,Wireless network,"is wireless network used to support remote monitoring, control, and collaboration across mining sites",Proactive,4,5
+21,MINING,Advanced Communication and Connectivity,66,Satelite communication,"is Satelite communications used to support remote monitoring, control, and collaboration across mining sites",Resilent,5,5
+22,MINING,Advanced Communication and Connectivity,66,Fibre optics,"is fibre optics used to support remote monitoring, control, and collaboration across mining sites",Basic,1,5
+23,MINING,Cybersecurity and Data Privacy,89,Sensitive data,Is there any data privacy regulations in place for safeguarding personal and proprietary information,Reactive,2,5
+24,MINING,Cybersecurity and Data Privacy,89,Infrastructure,is there a system to protect sensitive data from cyber attacks ?,Planned,3,5
+25,MINING,Cybersecurity and Data Privacy,89,Operational systems,is there a system in place to protect operational systems from cyber attacks ?,Proactive,4,5
+26,MINING,Cybersecurity and Data Privacy,89,Data privacy,is there a system in place to protect infrastructure from cyber attacks ?,Resilent,5,5
+27,MINING,Supply Chain Digitization,82,Procurement,"To what extent are the procurement process digitized to improve transparency, efficiency, and sustainability. ?",Basic,1,5
+28,MINING,Supply Chain Digitization,82,Logistics,"To what extent are the logistics process digitized to improve transparency, efficiency, and sustainability. ?",Reactive,2,5
+29,MINING,Supply Chain Digitization,82,Inventory management,"To what extent are the inventory management process digitized to improve transparency, efficiency, and sustainability. ?",Planned,3,5
+30,MINING,Supply Chain Digitization,82,Real time tracking,Is there any real time tracking system in place ?,Proactive,4,5
+31,MINING,Workforce Skills and Training,97,Training programs,Are there any training program to effectively utilize the digital technologies and tools ?,Resilent,5,5
+32,MINING,Workforce Skills and Training,97,Knowledge transfer initiatives,Are there any Knowledge transfer initiatives program to enhance digital competency and adaptability. ?,Basic,1,5
+33,MINING,Workforce Skills and Training,97,Workforce development strategies,Are there any Workforce development strategies program to effectively utilize the digital technologies and tools ?,Reactive,2,5
+34,MINING,Workforce Skills and Training,97,Digital literacy and skills,Are there any Digital literacy and skills program to effectively utilize the digital technologies and tools ?,Planned,3,5
+35,MINING,Environmental and Sustainability Solutions,96,Environmental impact,Are there any  digital technologies and innovations to minimize th environmental impacts ?,Proactive,4,5
+36,MINING,Environmental and Sustainability Solutions,96,Energy consumption,Any technological and innovative ways of reducing the energy consumption ?,Resilent,5,5
+37,MINING,Environmental and Sustainability Solutions,96,Sustainable mining practice,Does your Sustainable mining practice involve any form of technological innovations ?,Basic,1,5
+38,MINING,Environmental and Sustainability Solutions,96,smart energy management,Does your waste reduction strategies involve any form of technological innovations ?,Reactive,2,5
+39,MINING,Environmental and Sustainability Solutions,96,waste reduction,Any technological innovative measures in the rehabilitation of mines when they at the end of the LoM ?,Planned,3,5
+40,MINING,Environmental and Sustainability Solutions,96,Rehabilitation,Smart Energy movements ?,Proactive,4,5
+41,MINING,Strategic Vision and Leadership,79,Strategic vision,"Does the strategic vision, mission and objectives revolves around digital transformation ?",Resilent,5,5
+42,MINING,Strategic Vision and Leadership,79,Leadership commitment,Question on leadership commitmemt comes here,Basic,1,5
+43,MINING,Strategic Vision and Leadership,79,Organizational structure,Question on organizational structure comes here,Reactive,2,5

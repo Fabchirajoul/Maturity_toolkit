@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DM| Login</title>
+    <link href="/static/css/style.css" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="/static/images/JBS-retina-copy.png.webp">
+</head>
+
+<body>
+
+    <main class="container">
+        <section>
+
+
+            <h1 class="item">WELCOME TO OUR DIGITAL MATURITY TOOLKIT</h1><br>
+            <h2 class="item">Want to assess the digital maturity nature of your business ?</h2>
+
+            <!-- Display error messages here -->
+            {% if error %}
+            <p class="error">{{ error }}</p>
+            {% endif %}
+
+
+
+
+        </section>
+
+        <!-- login section  -->
+        <section>
+            <div class="container-login">
+
+                <form action="/login" method="POST">
+                  <div>
+                    <span><strong>Email:</strong></span> <span><input class="input" type="email" name="email"
+                        placeholder="Enter your email" id="email" required>
+                </span><br><br>
+
+
+                <span><label for="cars"><strong>ACCOUNT TYPE:</strong></label>
+                    <select name="users" id="cars" class="input" required>
+                        <option value="disabled">Select a user type</option>
+                        <option value="Administrator">Administrator</option>
+                        <option value="Business Analyst">Business Analyst</option>
+                    </select>
+                </span><br><br>
+
+                <span><strong>PASSWORD:</strong></span> <span><input class="input" type="password" name="password"
+                        placeholder="Enter your password" required>
+                </span>
+
+                <button class="submit-btn" type="submit">Login</button>
+
+                <h4 class="item">Don't have an Account ? <a href="/register">Click to
+                        create</a></h4>
+                  </div>
+                </form>
+
+            </div>
+
+
+
+
+        </section>
+    </main>
+</body>
+
+</html>
