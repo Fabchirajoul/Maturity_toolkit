@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DM| Administrator</title>
+    <link href="/static/css/style.css" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="/static/images/JBS-retina-copy.png.webp">
+    <script src="/static/js/code.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</head>
+
+<body x-data="AutomatedDigitalMaturity" x-cloak>
+
+    <main class="container">
+        <section>
+            <div class="dashboard_main_admin">
+                <h1 class="item">ADMINISTRATOR CONTROL</h1>
+                <button x-on:click="openHome('Admin_Home_Page')" class="create_user" style="float: right;">CREATE NEW
+                    USER</button>
+                <a href="/logout" class="item" style="float: right;">SIGN OUT</a>
+
+            </div>
+        </section>
+        <section x-cloak>
+            <div class="dashboard_main_admin">
+                <div class="dashboard_tabs">
+                    <div class="box_for_the_dashboard_tabs">
+                        <h1 class="item">BUSINESS SECTOR</h1>
+                        <div class="create_delete_update_buttons">
+                            <button class="submit-btn" x-on:click="openHome('Create_Sub_Category')">CREATE</button>
+                            <button class="submit-btn" x-on:click="openHome('Update_Sub_Category')">UPDATE</button>
+                            <!-- <button class="submit-btn" x-on:click="openHome('start_game')">DELETE</button> -->
+                        </div>
+                    </div>
+
+                    <div class="box_for_the_dashboard_tabs">
+
+
+                    </div>
+
+                    <div class="box_for_the_dashboard_tabs">
+                        <h1 class="item">SUB-CATEGORY </h1><br>
+                        <h1 class="item">QUESTIONS </h1><br>
+                        <h1 class="item">ANSWERS </h1><br>
+                        <h1 class="item">RATING ANSWERS </h1><br>
+                        <h1 class="item">MAX RATING </h1><br>
+
+                        <div class="create_delete_update_buttons">
+                            <button class="submit-btn" x-on:click="openHome('Create_Rating')">CREATE</button>
+                            <button class="submit-btn" x-on:click="openHome('Update_Rating')">UPDATE</button>
+                            <!-- <button class="submit-btn" x-on:click="openHome('start_game')"> DELETE</button> -->
+                        </div>
+                    </div>
+
+                    <div class="box_for_the_dashboard_tabs">
+
+
+                    </div>
+                </div>
+
+                <div class="dashboard_computation">
+
+                    <!-- Creating a user by the admin  -->
+
+                    <div x-show="Admin_Home_Page">
+                        <div class="container-login">
+                            <form action="/Adminregister" method="POST">
+                                <div>
+                                    <label for="name">USERNAME:</label>
+                                    <input class="input" type="text" placeholder="Create your username" name="name"
+                                        required id="name">
+                                </div>
+                                <br><br>
+                                <div>
+                                    <label for="email">EMAIL:</label>
+                                    <input type="email" class="input" id="email" placeholder="Enter email" name="email"
+                                        required>
+                                </div>
+                                <br><br>
+
+                                <div>
+                                    <label label="account_type">ACCOUNT TYPE</label>
+                                    <select name="users" id="cars" class="input" required>
+                                        <option value="disabled">Select a user type</option>
+                                        <option value="Administrator">Administrator</option>
+                                        <option value="Business Analyst">Business Analyst</option>
+                                    </select>
+
+                                </div><br><br>
+                                <div>
+                                    <label for="password">PASSWORD:</label>
+                                    <input type="password" class="input" id="password" placeholder="Enter password"
+                                        name="password" required>
+                                </div>
+                                <br><br>
+                                <div>
+                                    <label for="confirm_password">CONFIRM PASSWORD:</label>
+                                    <input type="password" class="input" id="confirm_password"
+                                        placeholder="Confirm password" name="confirm_password" required>
+                                </div>
+                                <br><br>
+                                <button type="submit" class="submit-btn">Submit</button>
+
+                            </form>
+
+                            <div>
+                                <!-- Display error messages here -->
+                                {% if error %}
+                                <p class="error">{{ error }}</p>
+                                {% endif %}
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- Creating Business sector starts here  -->
+                    <!-- Creating a Business Sector starts here  -->
+                    <div x-show="Create_Business_Sector">
+                        <h1 class="item">CREATE A BUSINESS SECTOR</h1><br><br>
+
+
+
+                        <h1>DO NOT DELETE </h1>
+
+                    </div>
+
+
+
+                    <!--Creating  Tier 2 starts here  -->
+                    <div x-show="Create_Rating">
+                        <h1 class="item">CREATE A RATING FOR THE DIFFERENT MEASURING ELEMENT</h1><br><br><br>
+
+
+                        <form action="/CombinedTiersForAllWithoutMeasuringElement" method="POST">
+                            <div>
+
+                                <div>
+                                    <span>
+                                        <h1>BUSINESS SECTOR:</h1>
+                                    </span> <span><input name="business_sector_name"
+                                            class="input_field_for_admin_create_and_update" type="text"
+                                            placeholder="Type to filter and select an exisiting measuring element from the list">
+
+                                    </span>
+                                </div> <br><br>
+
+                                <div>
+                                    <span>
+                                        <h1>RATING:</h1>
+                                    </span> <span><input name="Rating" class="input_field_for_admin_create_and_update"
+                                            type="text"
+                                            placeholder="Type to filter and select an exisiting measuring element from the list">
+
+                                    </span>
+                                </div> <br><br>
+
+                                <div>
+                                    <span>
+                                        <h1>SUB CATEGORY:</h1>
+                                    </span> <span><input name="subCategory_name"
+                                            class="input_field_for_admin_create_and_update" type="text"
+                                            placeholder="Type to filter and select an exisiting measuring element from the list">
+
+                                    </span>
+                                </div> <br><br>
+                                <div>
+                                    <span>
+                                        <h1>QUESTIONS:</h1>
+                                    </span> <span><input name="SubCategoryQuestion"
+                                            class="input_field_for_admin_create_and_update" type="text"
+                                            placeholder="Type to filter and select an exisiting measuring element from the list">
+
+                                    </span>
+                                </div> <br><br>
+                                <div>
+                                    <span>
+                                        <h1>ANSWERS:</h1>
+                                    </span> <span><input name="QuestionAnswer"
+                                            class="input_field_for_admin_create_and_update" type="text"
+                                            placeholder="Type to filter and select an exisiting measuring element from the list">
+
+                                    </span>
+                                </div> <br><br>
+                                <div>
+                                    <span>
+                                        <h1>ANSWER RATING:</h1>
+                                    </span> <span><input name="AnswerRating"
+                                            class="input_field_for_admin_create_and_update" type="text"
+                                            placeholder="Type to filter and select an exisiting measuring element from the list">
+
+                                    </span>
+                                </div> <br><br>
+
+                                <div>
+                                    <span>
+                                        <h1>MAXIMUM ANSWER RATING:</h1>
+                                    </span> <span><input name="MaxRating"
+                                            class="input_field_for_admin_create_and_update" type="text"
+                                            placeholder="Type to filter and select an exisiting measuring element from the list">
+
+                                    </span>
+                                </div> <br><br>
+
+
+
+                                <button class="submit-btn">CREATE RATING</button>
+                            </div>
+                        </form>
+
+                        <div class="item">
+
+                            <h1>PROPMT MESSAGE FOR CREATING THE DATABASE RECORD WILL COME HERE </h1>
+
+                        </div>
+                    </div>
+
+                    <!-- Update rating starts here  -->
+                    <div x-show="Update_Rating">
+                        <h1 class="item">UPDATE A RATING FOR THE DIFFERENT MEASURING ELEMENT</h1><br><br><br>
+                        <form action="/UpdateCombinedTiersForAllWithoutMeasuringElement" method="POST">
+                            <div>
+                                <div>
+                                    <span>
+                                        <h1>1. OLD BUSINESS SECTOR:</h1>
+                                    </span>
+                                    <span><input name="oldbusiness_sector_name"
+                                            class="input_field_for_admin_create_and_update" type="text"
+                                            placeholder="Old Sub Category Name"></span>
+                                </div><br><br>
+
+                                <div>
+                                    <span>
+                                        <h1>2. OLD RATING:</h1>
+                                    </span>
+                                    <span><input name="oldRating" class="input_field_for_admin_create_and_update"
+                                            type="text" placeholder="Old Sub Category Name"></span>
+                                </div><br><br>
+                                <div>
+                                    <span>
+                                        <h1>3. OLD SUB CATEGORY:</h1>
+                                    </span>
+                                    <span><input name="oldsubCategory_name"
+                                            class="input_field_for_admin_create_and_update" type="text"
+                                            placeholder="Old Sub Category Name"></span>
+                                </div><br><br>
+
+                                <div>
+                                    <span>
+                                        <h1>4. OLD QUESTIONS:</h1>
+                                    </span>
+                                    <span><input name="oldSubCategoryQuestion"
+                                            class="input_field_for_admin_create_and_update" type="text"
+                                            placeholder="Old Questions"></span>
+                                </div><br><br>
+                                <div>
+                                    <span>
+                                        <h1>5. OLD ANSWERS:</h1>
+                                    </span>
+                                    <span><input name="oldQuestionAnswer"
+                                            class="input_field_for_admin_create_and_update" type="text"
+                                            placeholder="Old Answers"></span>
+                                </div><br><br>
+                                <div>
+                                    <span>
+                                        <h1>6. OLD ANSWER RATING:</h1>
+                                    </span>
+                                    <span><input name="oldAnswerRating" class="input_field_for_admin_create_and_update"
+                                            type="text" placeholder="Old Answer Rating"></span>
+                                </div><br><br>
+                                <div>
+                                    <span>
+                                        <h1>7. OLD MAXIMUM ANSWER RATING:</h1>
+                                    </span>
+                                    <span><input name="oldMaxRating" class="input_field_for_admin_create_and_update"
+                                            type="text" placeholder="Old Maximum Answer Rating"></span>
+                                </div><br><br>
+                                <!-- New fields -->
+                                <div>
+                                    <span>
+                                        <h1>8. NEW BUSINESS SECTOR:</h1>
+                                    </span>
+                                    <span><input name="newbusiness_sector_name"
+                                            class="input_field_for_admin_create_and_update" type="text"
+                                            placeholder="Old Sub Category Name"></span>
+                                </div><br><br>
+
+                                <div>
+                                    <span>
+                                        <h1>9. NEW RATING:</h1>
+                                    </span>
+                                    <span><input name="newRating" class="input_field_for_admin_create_and_update"
+                                            type="text" placeholder="Old Sub Category Name"></span>
+                                </div><br><br>
+                                <div>
+                                    <span>
+                                        <h1>10. NEW SUB CATEGORY:</h1>
+                                    </span>
+                                    <span><input name="newsubCategory_name"
+                                            class="input_field_for_admin_create_and_update" type="text"
+                                            placeholder="New Sub Category Name"></span>
+                                </div><br><br>
+                                <div>
+                                    <span>
+                                        <h1>11. NEW QUESTIONS:</h1>
+                                    </span>
+                                    <span><input name="newSubCategoryQuestion"
+                                            class="input_field_for_admin_create_and_update" type="text"
+                                            placeholder="New Questions"></span>
+                                </div><br><br>
+                                <div>
+                                    <span>
+                                        <h1>12. NEW ANSWERS:</h1>
+                                    </span>
+                                    <span><input name="newQuestionAnswer"
+                                            class="input_field_for_admin_create_and_update" type="text"
+                                            placeholder="New Answers"></span>
+                                </div><br><br>
+                                <div>
+                                    <span>
+                                        <h1>13. NEW ANSWER RATING:</h1>
+                                    </span>
+                                    <span><input name="newAnswerRating" class="input_field_for_admin_create_and_update"
+                                            type="text" placeholder="New Answer Rating"></span>
+                                </div><br><br>
+                                <div>
+                                    <span>
+                                        <h1>14. NEW MAXIMUM ANSWER RATING:</h1>
+                                    </span>
+                                    <span><input name="newMaxRating" class="input_field_for_admin_create_and_update"
+                                            type="text" placeholder="New Maximum Answer Rating"></span>
+                                </div><br><br>
+                                <button class="submit-btn">UPDATE TIERS</button>
+                            </div>
+                        </form>
+
+
+                        <div class="item">
+
+                            <h1>PROPMT MESSAGE FOR UPDATING THE DATABASE RECORD WILL COME HERE </h1>
+
+                        </div>
+                    </div>
+
+
+                    <!-- THE BEGINING FOR THE CREATION OF ALL ENTRIES  -->
+                    <div x-show="Create_Sub_Category">
+                        <h1 class="item">CREATE A CATEGORY FOR THE DIFFERENT MEASURING ELEMENT</h1><br><br><br>
+
+
+                        <form action="/CombinedTiersForAll" method="POST">
+                            <div>
+                                <div>
+                                    <span>
+                                        <h1>BUSINESS SECTOR:</h1>
+                                    </span> <span><input name="business_sector_name"
+                                            class="input_field_for_admin_create_and_update" type="text"
+                                            placeholder="Type to filter and select an exisiting measuring element from the list">
+
+                                    </span>
+                                </div> <br><br>
+
+                                <div>
+                                    <span>
+                                        <h1>MEASURING ELEMENT:</h1>
+                                    </span> <span><input name="Measuring_Element"
+                                            class="input_field_for_admin_create_and_update" type="text"
+                                            placeholder="Type to filter and select an exisiting measuring element from the list">
+
+                                    </span>
+                                </div> <br><br>
+
+                                <div>
+                                    <span>
+                                        <h1>RATING:</h1>
+                                    </span> <span><input name="Rating" class="input_field_for_admin_create_and_update"
+                                            type="number"
+                                            placeholder="Type to filter and select an exisiting measuring element from the list">
+
+                                    </span>
+                                </div> <br><br>
+
+
+
+                                <div>
+                                    <span>
+                                        <h1>SUB CATEGORY:</h1>
+                                    </span> <span><input name="subCategory_name"
+                                            class="input_field_for_admin_create_and_update" type="text"
+                                            placeholder="Type to filter and select an exisiting measuring element from the list">
+
+                                    </span>
+                                </div> <br><br>
+                                <div>
+                                    <span>
+                                        <h1>QUESTIONS:</h1>
+                                    </span> <span><input name="SubCategoryQuestion"
+                                            class="input_field_for_admin_create_and_update" type="text"
+                                            placeholder="Type to filter and select an exisiting measuring element from the list">
+
+                                    </span>
+                                </div> <br><br>
+                                <div>
+                                    <span>
+                                        <h1>ANSWERS:</h1>
+                                    </span> <span><input name="QuestionAnswer"
+                                            class="input_field_for_admin_create_and_update" type="text"
+                                            placeholder="Type to filter and select an exisiting measuring element from the list">
+
+                                    </span>
+                                </div> <br><br>
+                                <div>
+                                    <span>
+                                        <h1>ANSWER RATING:</h1>
+                                    </span> <span><input name="AnswerRating"
+                                            class="input_field_for_admin_create_and_update" type="text"
+                                            placeholder="Type to filter and select an exisiting measuring element from the list">
+
+                                    </span>
+                                </div> <br><br>
+
+                                <div>
+                                    <span>
+                                        <h1>MAXIMUM ANSWER RATING:</h1>
+                                    </span> <span><input name="MaxRating"
+                                            class="input_field_for_admin_create_and_update" type="text"
+                                            placeholder="Type to filter and select an exisiting measuring element from the list">
+
+                                    </span>
+                                </div> <br><br>
+
+
+
+                                <button class="submit-btn">CREATE RATING</button>
+                            </div>
+                        </form>
+
+                        <div class="item">
+
+                            <h1>PROPMT MESSAGE FOR CREATING THE DATABASE RECORD WILL COME HERE </h1>
+
+                        </div>
+                    </div>
+
+                    <!-- Update sub category starts here  -->
+                    <div x-show="Update_Sub_Category">
+                        <h1 class="item">UPDATE A CATEGORY FOR THE DIFFERENT MEASURING ELEMENT</h1><br><br><br>
+
+                        <div>
+
+                            <form action="/UpdateCombinedTiersForAll" method="POST">
+                                <div>
+                                    <div>
+                                        <span>
+                                            <h1>OLD BUSINESS SECTOR:</h1>
+                                        </span> <span><input name="oldbusiness_sector_name"
+                                                class="input_field_for_admin_create_and_update" type="text"
+                                                placeholder="Type to filter and select an exisiting measuring element from the list">
+
+                                        </span>
+                                    </div> <br><br>
+
+                                    <div>
+                                        <span>
+                                            <h1>OLD MEASURING ELEMENT:</h1>
+                                        </span> <span><input name="oldMeasuring_Element"
+                                                class="input_field_for_admin_create_and_update" type="text"
+                                                placeholder="Type to filter and select an exisiting measuring element from the list">
+
+                                        </span>
+                                    </div> <br><br>
+
+                                    <div>
+                                        <span>
+                                            <h1>OLD RATING:</h1>
+                                        </span> <span><input name="oldRating"
+                                                class="input_field_for_admin_create_and_update" type="number"
+                                                placeholder="Type to filter and select an exisiting measuring element from the list">
+
+                                        </span>
+                                    </div> <br><br>
+
+
+
+                                    <div>
+                                        <span>
+                                            <h1>OLD SUB CATEGORY:</h1>
+                                        </span> <span><input name="oldsubCategory_name"
+                                                class="input_field_for_admin_create_and_update" type="text"
+                                                placeholder="Type to filter and select an exisiting measuring element from the list">
+
+                                        </span>
+                                    </div> <br><br>
+                                    <div>
+                                        <span>
+                                            <h1>OLD QUESTIONS:</h1>
+                                        </span> <span><input name="oldSubCategoryQuestion"
+                                                class="input_field_for_admin_create_and_update" type="text"
+                                                placeholder="Type to filter and select an exisiting measuring element from the list">
+
+                                        </span>
+                                    </div> <br><br>
+                                    <div>
+                                        <span>
+                                            <h1>OLD ANSWERS:</h1>
+                                        </span> <span><input name="oldQuestionAnswer"
+                                                class="input_field_for_admin_create_and_update" type="text"
+                                                placeholder="Type to filter and select an exisiting measuring element from the list">
+
+                                        </span>
+                                    </div> <br><br>
+                                    <div>
+                                        <span>
+                                            <h1>OLD ANSWER RATING:</h1>
+                                        </span> <span><input name="oldAnswerRating"
+                                                class="input_field_for_admin_create_and_update" type="text"
+                                                placeholder="Type to filter and select an exisiting measuring element from the list">
+
+                                        </span>
+                                    </div> <br><br>
+
+                                    <div>
+                                        <span>
+                                            <h1>OLD MAXIMUM ANSWER RATING:</h1>
+                                        </span> <span><input name="oldMaxRating"
+                                                class="input_field_for_admin_create_and_update" type="text"
+                                                placeholder="Type to filter and select an exisiting measuring element from the list">
+
+                                        </span>
+                                    </div> <br><br>
+
+                                    <div>
+                                        <div>
+                                            <span>
+                                                <h1>NEW BUSINESS SECTOR:</h1>
+                                            </span> <span><input name="newbusiness_sector_name"
+                                                    class="input_field_for_admin_create_and_update" type="text"
+                                                    placeholder="Type to filter and select an exisiting measuring element from the list">
+
+                                            </span>
+                                        </div> <br><br>
+
+                                        <div>
+                                            <span>
+                                                <h1>NEW MEASURING ELEMENT:</h1>
+                                            </span> <span><input name="newMeasuring_Element"
+                                                    class="input_field_for_admin_create_and_update" type="text"
+                                                    placeholder="Type to filter and select an exisiting measuring element from the list">
+
+                                            </span>
+                                        </div> <br><br>
+
+                                        <div>
+                                            <span>
+                                                <h1>NEW RATING:</h1>
+                                            </span> <span><input name="newRating"
+                                                    class="input_field_for_admin_create_and_update" type="number"
+                                                    placeholder="Type to filter and select an exisiting measuring element from the list">
+
+                                            </span>
+                                        </div> <br><br>
+
+
+
+                                        <div>
+                                            <span>
+                                                <h1>NEW SUB CATEGORY:</h1>
+                                            </span> <span><input name="newsubCategory_name"
+                                                    class="input_field_for_admin_create_and_update" type="text"
+                                                    placeholder="Type to filter and select an exisiting measuring element from the list">
+
+                                            </span>
+                                        </div> <br><br>
+                                        <div>
+                                            <span>
+                                                <h1>NEW QUESTIONS:</h1>
+                                            </span> <span><input name="newSubCategoryQuestion"
+                                                    class="input_field_for_admin_create_and_update" type="text"
+                                                    placeholder="Type to filter and select an exisiting measuring element from the list">
+
+                                            </span>
+                                        </div> <br><br>
+                                        <div>
+                                            <span>
+                                                <h1>NEW ANSWERS:</h1>
+                                            </span> <span><input name="newQuestionAnswer"
+                                                    class="input_field_for_admin_create_and_update" type="text"
+                                                    placeholder="Type to filter and select an exisiting measuring element from the list">
+
+                                            </span>
+                                        </div> <br><br>
+                                        <div>
+                                            <span>
+                                                <h1>NEW ANSWER RATING:</h1>
+                                            </span> <span><input name="newAnswerRating"
+                                                    class="input_field_for_admin_create_and_update" type="text"
+                                                    placeholder="Type to filter and select an exisiting measuring element from the list">
+
+                                            </span>
+                                        </div> <br><br>
+
+                                        <div>
+                                            <span>
+                                                <h1>NEW MAXIMUM ANSWER RATING:</h1>
+                                            </span> <span><input name="newMaxRating"
+                                                    class="input_field_for_admin_create_and_update" type="text"
+                                                    placeholder="Type to filter and select an exisiting measuring element from the list">
+
+                                            </span>
+                                        </div> <br><br>
+
+
+
+                                        <button class="submit-btn">CREATE RATING</button>
+                                    </div>
+                            </form>
+                        </div>
+
+                        <div class="item">
+
+                            <h1>PROPMT MESSAGE FOR UPDATING THE DATABASE RECORD WILL COME HERE </h1>
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <section>
+            <div class="dashboard_main_admin" style="background-color: black;">
+               
+                <table border="5">
+                   
+                    <thead>
+                        <tr>
+                            <th>Business Sector</th>
+                            <th>Measuring Element</th>
+                            <th>Rating</th>
+                            <th>Subcategory</th>
+                            <th>Questions</th>
+                            <th>Answers</th>
+                            <th>Rate Answer</th>
+                            <th>Max Rating</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for row in combined_data %}
+                        <tr>
+                            <td>{{ row[0] }}</td>
+                            <td>{{ row[1] }}</td>
+                            <td>{{ row[2] }}</td>
+                            <td>{{ row[3] }}</td>
+                            <td>{{ row[4] }}</td>
+                            <td>{{ row[5] }}</td>
+                            <td>{{ row[6] }}</td>
+                            <td>{{ row[7] }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+
+            </div>
+            <form action="/view_combined_data" method="post">
+                <button type="submit" class="submit-btn">Reload Data</button>
+            </form>
+        </section>
+
+
+    </main>
+</body>
+
+</html>
