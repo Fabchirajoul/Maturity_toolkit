@@ -239,7 +239,21 @@ body {
   text-decoration: none;
 }
 
-.table_style {
+.table_style_datase {
+  border-collapse: collapse;
+  border-spacing: 10px;
+  width: auto;
+  height: auto;
+  text-align: center;
+  vertical-align: middle;
+  background-color: black;
+  font-family: Arial, Helvetica, sans-serif;
+  padding: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  justify-content: center;
+  font-size: larger;
+}
+.table_style_user {
   border-collapse: collapse;
   border-spacing: 10px;
   width: auto;
@@ -254,7 +268,8 @@ body {
   font-size: larger;
 }
 
-.table_style td,
+
+.table_style_datase,.table_style_user, td,
 .table_style th {
   border: 1px solid white; /* Add border for table cells */
   padding: 8px 12px; /* Add padding to all sides of the cell content */
@@ -363,12 +378,16 @@ body {
     width: 300px;
   }
   .dashboard_computation {
-    width: 700px;
+    width: 800px;
   }
   .input_field_for_admin_create_and_update {
     width: 600px;
   }
-  .table_style{
-    width: auto;
+  .table_style_datase{
+    width: 800px;
+  }
+  .table_style_user{
+    width: 600px;
   }
 }
+
