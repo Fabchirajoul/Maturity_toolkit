@@ -409,9 +409,9 @@ def select_business_sector():
                 WHERE BusinessSector=?
             ''', (selected_sector,))
 
-            all_data_record = cursor.fetchall()
+            business_sectors = cursor.fetchall()
             # Debugging: Print fetched records
-            print("All Records:", all_data_record)
+            # print("All Records:", all_data_record)
             connection.close()
             business_sectors = get_unique_business_sectors()
 
