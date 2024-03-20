@@ -271,7 +271,7 @@ def UpdateCombinedTiers():
 def delete_combined_data():
     if request.method == 'POST':
         # Get the ID of the record to delete from the form
-        delete_record_id = request.form['business_sector']
+        delete_record_id = request.form['record_id']
 
         # For debugging: Print the delete_record_id
         print("Record ID to delete:", delete_record_id)
@@ -282,7 +282,7 @@ def delete_combined_data():
             cursor = connection.cursor()
             cursor.execute('''
                 DELETE FROM CombinedTable
-                WHERE BusinessSector = ?
+                WHERE id = ?
             ''', (delete_record_id,))
             connection.commit()
             connection.close()

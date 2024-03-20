@@ -42,3 +42,38 @@
 41,MINING,Strategic Vision and Leadership,79,Strategic vision,"Does the strategic vision, mission and objectives revolves around digital transformation ?",Resilent,5,5
 42,MINING,Strategic Vision and Leadership,79,Leadership commitment,Question on leadership commitmemt comes here,Basic,1,5
 43,MINING,Strategic Vision and Leadership,79,Organizational structure,Question on organizational structure comes here,Reactive,2,5
+44,ENERGY,Data Management and Analytics,90,Sub category 1,Question comes here,Basic,1,5
+45,ENERGY,Data Management and Analytics,90,Sub category 2,Question comes here,Reactive,2,5
+46,ENERGY,Data Management and Analytics,90,Sub category 3,Question comes here,Planned,3,5
+47,ENERGY,Data Management and Analytics,90,Sub category 4,Question comes here,Proactive,4,5
+48,ENERGY,Data Management and Analytics,90,Sub category 5,Question comes here,Resilent,5,5
+49,ENERGY,Data Management and Analytics,90,Sub category 6,Question comes here,Basic,1,5
+50,ENERGY,Data Management and Analytics,90,Sub category 7,Question comes here,Reactive,2,5
+51,ENERGY,Data Management and Analytics,90,Sub category 8,Question comes here,Planned,3,5
+52,ENERGY,Smart Grid and Infrastructure,80,Sub category 9,Question comes here,Proactive,4,5
+53,ENERGY,Smart Grid and Infrastructure,80,Sub category 10,Question comes here,Resilent,5,5
+54,ENERGY,Smart Grid and Infrastructure,80,Sub category 11,Question comes here,Basic,1,5
+55,ENERGY,Smart Grid and Infrastructure,80,Sub category 12,Question comes here,Reactive,2,5
+56,ENERGY,Smart Grid and Infrastructure,80,Sub category 13,Question comes here,Planned,3,5
+57,ENERGY,Smart Grid and Infrastructure,80,Sub category 14,Question comes here,Proactive,4,5
+58,ENERGY,Smart Grid and Infrastructure,80,Sub category 15,Question comes here,Resilent,5,5
+59,ENERGY,Smart Grid and Infrastructure,80,Sub category 16,Question comes here,Basic,1,5
+60,ENERGY,Smart Grid and Infrastructure,80,Sub category 17,Question comes here,Reactive,2,5
+61,ENERGY,Smart Grid and Infrastructure,80,Sub category 18,Question comes here,Planned,3,5
+62,ENERGY,Smart Grid and Infrastructure,80,Sub category 19,Question comes here,Proactive,4,5
+63,ENERGY,Renewable Energy Integration,60,Sub category 20,Question comes here,Resilent,5,5
+64,ENERGY,Renewable Energy Integration,60,Sub category 21,Question comes here,Basic,1,5
+65,ENERGY,Renewable Energy Integration,60,Sub category 22,Question comes here,Reactive,2,5
+66,ENERGY,Renewable Energy Integration,60,Sub category 23,Question comes here,Planned,3,5
+67,ENERGY,Renewable Energy Integration,60,Sub category 24,Question comes here,Proactive,4,5
+68,ENERGY,Renewable Energy Integration,60,Sub category 25,Question comes here,Resilent,5,5
+69,ENERGY,Renewable Energy Integration,60,Sub category 26,Question comes here,Basic,1,5
+70,ENERGY,Renewable Energy Integration,60,Sub category 27,Question comes here,Reactive,2,5
+71,ENERGY,Renewable Energy Integration,60,Sub category 28,Question comes here,Planned,3,5
+72,ENERGY,Renewable Energy Integration,60,Sub category 29,Question comes here,Proactive,4,5
+73,ENERGY,Renewable Energy Integration,60,Sub category 30,Question comes here,Resilent,5,5
+74,ENERGY,Energy Storage Solutions,70,Sub category 31,Question comes here,Basic,1,5
+75,ENERGY,Energy Storage Solutions,70,Sub category 32,Question comes here,Reactive,2,5
+76,ENERGY,Energy Storage Solutions,70,Sub category 33,Question comes here,Planned,3,5
+77,ENERGY,Energy Storage Solutions,70,Sub category 34,Question comes here,Proactive,4,5
+78,ENERGY,Energy Storage Solutions,70,Sub category 35,Question comes here,Resilent,5,5

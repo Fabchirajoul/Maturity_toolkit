@@ -118,11 +118,23 @@
                     <!-- Creating a Business Sector starts here  -->
                     <div x-show="Create_Business_Sector">
                         <h1 class="item">CREATE A BUSINESS SECTOR</h1><br><br>
-                        <h1 >UPLOAD CSV FILE</h1>
-                        <form action="/" method="post" enctype="multipart/form-data" >
+                        <h1>UPLOAD CSV FILE</h1>
+                        <form action="/" method="post" enctype="multipart/form-data">
                             <input type="file" name="file" accept=".csv">
-                            <button type="submit" >Upload</button>
+                            <button type="submit">Upload</button>
                         </form>
+
+                        <div class="item">
+                            {% with messages = get_flashed_messages(with_categories=true) %}
+                            {% if messages %}
+                            {% for category, message in messages %}
+                            <div class="alert alert-{{ category }}">
+                                {{ message }}
+                            </div>
+                            {% endfor %}
+                            {% endif %}
+                            {% endwith %}
+                        </div>
 
                     </div>
 
@@ -441,7 +453,7 @@
                             <td>{{ row[8] }}</td>
                             <td>
                                 <form action="/delete_combined_data" method="post">
-                                    <input type="hidden" name="business_sector" value="{{ row[0] }}">
+                                    <input type="hidden" name="record_id" value="{{ row[0] }}">
                                     <button type="submit" class="submit-btn">Delete</button>
                                 </form>
 
