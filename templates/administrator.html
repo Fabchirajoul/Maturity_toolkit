@@ -135,6 +135,35 @@
                             {% endif %}
                             {% endwith %}
                         </div>
+                        <!-- To display all user accounts  -->
+
+                        <br><br><br>
+                        <div >
+                            <table class="table_style">
+                                <thead>
+                                    <tr>
+                                        <th>NAME</th>
+                                        <th>EMAIL</th>
+                                        <th>ACCOUNT TYPE</th>
+                                
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for row in all_data %}
+                                    <tr>
+                                        <td>{{ row[0] }}</td>
+                                        <td>{{ row[1] }}</td>
+                                        <td>{{ row[2] }}</td>
+                                
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                    
+                            </table>
+                            <form action="/view_all_user" method="post">
+                                <button type="submit" >RELOAD USER DATA</button>
+                            </form>
+                        </div>
 
                     </div>
 

@@ -314,6 +314,20 @@ def view_combined_data():
 
     return render_template('administrator.html', combined_data=combined_data)
 
+# Route to display all user account 
+@app.route('/view_all_user', methods=['GET', 'POST'])
+def view_user_account():
+    connection = sqlite3.connect('database.db')
+    cursor = connection.cursor()
+    cursor.execute('''
+        SELECT name, email, account_type
+        FROM User
+    ''')
+    all_data = cursor.fetchall()
+    connection.close()
+
+    return render_template('administrator.html', all_data=all_data)
+
 
 # uploading csv file to database
 @app.route('/', methods=['GET', 'POST'])
