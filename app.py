@@ -44,7 +44,7 @@ def create_combined_table():
     cursor = connection.cursor()
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS CombinedTable (
-            id INTEGER,
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
             BusinessSector TEXT,
             MeasuringElt TEXT,
             Rating INTEGER,
@@ -284,6 +284,38 @@ def delete_combined_data():
                 DELETE FROM CombinedTable
                 WHERE id = ?
             ''', (delete_record_id,))
+            connection.commit()
+            connection.close()
+
+            # For debugging: Print a message indicating successful deletion
+            print("Record deleted successfully.")
+
+            # Redirect back to the page displaying combined data
+            return redirect('/view_combined_data')
+        except Exception as e:
+            # For debugging: Print any exception that occurs during deletion
+            print("Error occurred during deletion:", str(e))
+            return "Error occurred during deletion: " + str(e)
+    else:
+        return "Method Not Allowed"
+# delete user record 
+@app.route('/delete_user_data', methods=['POST'])
+def delete_user_record_data():
+    if request.method == 'POST':
+        # Get the ID of the record to delete from the form
+        delete_record_user_id = request.form['user_record_id']
+
+        # For debugging: Print the delete_record_id
+        print("Record ID to delete:", delete_record_user_id)
+
+        try:
+            # Delete the record from the database
+            connection = sqlite3.connect('database.db')
+            cursor = connection.cursor()
+            cursor.execute('''
+                DELETE FROM User
+                WHERE name = ?
+            ''', (delete_record_user_id,))
             connection.commit()
             connection.close()
 

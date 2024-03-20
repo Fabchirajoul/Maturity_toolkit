@@ -145,6 +145,7 @@
                                         <th>NAME</th>
                                         <th>EMAIL</th>
                                         <th>ACCOUNT TYPE</th>
+                                        <th>DELETE USER</th>
                                 
                                     </tr>
                                 </thead>
@@ -154,6 +155,13 @@
                                         <td>{{ row[0] }}</td>
                                         <td>{{ row[1] }}</td>
                                         <td>{{ row[2] }}</td>
+                                        <td>
+                                            <form action="/delete_user_data" method="post">
+                                                <input type="hidden" name="user_record_id" value="{{ row[0] }}">
+                                                <button type="submit" class="submit-btn">Delete</button>
+                                            </form>
+            
+                                        </td>
                                 
                                     </tr>
                                     {% endfor %}
