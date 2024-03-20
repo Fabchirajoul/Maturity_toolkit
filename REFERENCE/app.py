@@ -1,7 +1,8 @@
-from flask import Flask, request, render_template, redirect, session
+from flask import Flask, request, render_template, redirect, session, url_for
 import sqlite3
 import bcrypt
 import base64
+import csv
 
 app = Flask(__name__)
 app.secret_key = 'secret_key'
@@ -43,14 +44,14 @@ def create_combined_table():
     cursor = connection.cursor()
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS CombinedTable (
-            id INTEGER PRIMARY KEY,
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
             BusinessSector TEXT,
-            MeasuringElt TEXT NOT NULL,
+            MeasuringElt TEXT,
             Rating INTEGER,
-            SUbCategory TEXT NOT NULL,
-            Questions TEXT NOT NULL,
-            Answers TEXT NOT NULL,
-            RateAnswer TEXT NOT NULL,
+            SUbCategory TEXT,
+            Questions TEXT,
+            Answers TEXT,
+            RateAnswer INTEGER,
             MaxRating INTEGER
         )
     ''')
@@ -170,7 +171,6 @@ def dashboardBusinessAnalyst():
         cursor = connection.cursor()
         cursor.execute('SELECT * FROM User WHERE email=?', (session['email'],))
         user = cursor.fetchone()
-        print("User fetched:", user)  # Add this line for debugging
 
         connection.close()
         return render_template('userAccount.html', user=user)
@@ -261,88 +261,165 @@ def UpdateCombinedTiers():
 
         # Redirect back to administrator page
         return redirect('/administrator')
-    
-    return render_template('administrator.html')
 
-# inserting other properties except the business sector 
-@app.route('/CombinedTiersForAllWithoutBusinessSector', methods=['GET', 'POST'])
-def CombinedTiersWithoutBusinessSector():
+    return render_template('administrator.html')
+# Route to delete a record from CombinedTable
+
+
+@app.route('/delete_combined_data', methods=['POST'])
+def delete_combined_data():
     if request.method == 'POST':
-        measuring_element_name = request.form['Measuring_Element']
-        rating = request.form['Rating']
-        subCategory_name = request.form['subCategory_name']
-        SubCategoryQuestion = request.form['SubCategoryQuestion']
-        QuestionAnswer = request.form['QuestionAnswer']
-        AnswerRating = request.form['AnswerRating']
-        MaxRating = request.form['MaxRating']
+        # Get the ID of the record to delete from the form
+        delete_record_id = request.form['record_id']
+        try:
+            # Delete the record from the database
+            connection = sqlite3.connect('database.db')
+            cursor = connection.cursor()
+            cursor.execute('''
+                DELETE FROM CombinedTable
+                WHERE id = ?
+            ''', (delete_record_id,))
+            connection.commit()
+            connection.close()
 
-        connection = sqlite3.connect('database.db')
-        cursor = connection.cursor()
-        cursor.execute('''
-            INSERT INTO CombinedTable (MeasuringElt,Rating,SUbCategory,Questions,Answers,RateAnswer,MaxRating)
-            VALUES (?,?,?,?,?,?,?)
-        ''', (measuring_element_name, rating, subCategory_name, SubCategoryQuestion, QuestionAnswer, AnswerRating, MaxRating))
-        connection.commit()
-        connection.close()
+            # Redirect back to the page displaying combined data
+            return redirect('/view_combined_data')
+        except Exception as e:
 
-        return redirect('/CombinedTiersForAll')
-
-    return render_template('administrator.html')
+            return "Error occurred during deletion: " + str(e)
+    else:
+        return "Method Not Allowed"
+# delete user record
 
 
-
-# Updating the combined tiers
-@app.route('/UpdateCombinedTiersForAllWithoutBusinessSector', methods=['GET', 'POST'])
-def UpdateCombinedTiersWithoutBusinessSector():
+@app.route('/delete_user_data', methods=['POST'])
+def delete_user_record_data():
     if request.method == 'POST':
-        # Extract old values from the form
-        # oldbusiness_sector_name = request.form['oldbusiness_sector_name']
-        oldmeasuring_element_name = request.form['oldMeasuring_Element']
-        oldrating = request.form['oldRating']
-        oldsubCategory_name = request.form['oldsubCategory_name']
-        oldSubCategoryQuestion = request.form['oldSubCategoryQuestion']
-        oldQuestionAnswer = request.form['oldQuestionAnswer']
-        oldAnswerRating = request.form['oldAnswerRating']
-        oldMaxRating = request.form['oldMaxRating']
+        # Get the ID of the record to delete from the form
+        delete_record_user_id = request.form['user_record_id']
+        try:
+            # Delete the record from the database
+            connection = sqlite3.connect('database.db')
+            cursor = connection.cursor()
+            cursor.execute('''
+                DELETE FROM User
+                WHERE name = ?
+            ''', (delete_record_user_id,))
+            connection.commit()
+            connection.close()
 
-        # Extract new values from the form
-        # newbusiness_sector_name = request.form['newbusiness_sector_name']
-        newmeasuring_element_name = request.form['newMeasuring_Element']
-        newrating = request.form['newRating']  # Corrected parameter name
-        newsubCategory_name = request.form['newsubCategory_name']
-        newSubCategoryQuestion = request.form['newSubCategoryQuestion']
-        newQuestionAnswer = request.form['newQuestionAnswer']
-        newAnswerRating = request.form['newAnswerRating']
-        newMaxRating = request.form['newMaxRating']
+            # Redirect back to the page displaying combined data
+            return redirect('/view_combined_data')
+        except Exception as e:
 
-        # Connect to the database
-        connection = sqlite3.connect('database.db')
-        cursor = connection.cursor()
+            return "Error occurred during deletion: " + str(e)
+    else:
+        return "Method Not Allowed"
 
-        # Execute the SQL update query
+
+# Displaying the elements in the databse on the admin side of the panel
+@app.route('/view_combined_data', methods=['GET', 'POST'])
+def view_combined_data():
+    connection = sqlite3.connect('database.db')
+    cursor = connection.cursor()
+    cursor.execute('''
+        SELECT id, BusinessSector, MeasuringElt, Rating, SUbCategory, Questions, Answers, RateAnswer, MaxRating
+        FROM CombinedTable
+    ''')
+    combined_data = cursor.fetchall()
+    connection.close()
+
+    return render_template('administrator.html', combined_data=combined_data)
+
+# Route to display all user account
+
+
+@app.route('/view_all_user', methods=['GET', 'POST'])
+def view_user_account():
+    connection = sqlite3.connect('database.db')
+    cursor = connection.cursor()
+    cursor.execute('''
+        SELECT name, email, account_type
+        FROM User
+    ''')
+    all_data = cursor.fetchall()
+    connection.close()
+
+    return render_template('administrator.html', all_data=all_data)
+
+
+# uploading csv file to database
+@app.route('/', methods=['GET', 'POST'])
+def upload_file():
+    if request.method == 'POST':
+        file = request.files['file']
+        if file and file.filename.endswith('.csv'):
+            # Process CSV file and insert into database
+            process_csv(file)
+            # Redirect to view data
+            return redirect(url_for('view_combined_data'))
+    return render_template('upload.html')
+
+# Process uploaded CSV file and insert into database
+
+
+def process_csv(csv_file):
+    connection = sqlite3.connect('database.db')
+    print("Connection established successfully for csv")  # Debugging
+    cursor = connection.cursor()
+
+    # Convert file object to text mode
+    csv_text = csv_file.stream.read().decode("utf-8")
+    csv_data = csv.reader(csv_text.splitlines())
+
+    next(csv_data)  # Skip header row if present
+    for row in csv_data:
         cursor.execute('''
-            UPDATE CombinedTable 
-            SET  MeasuringElt=?, Rating=?, SUbCategory=?, Questions=?, Answers=?, RateAnswer=?, MaxRating=?
-            WHERE MeasuringElt=? AND Rating=? AND SUbCategory=? AND Questions=? AND Answers=? AND RateAnswer=? AND MaxRating=?
-        ''', (newmeasuring_element_name, newrating, newsubCategory_name, newSubCategoryQuestion,
-              newQuestionAnswer, newAnswerRating, newMaxRating, oldmeasuring_element_name,
-              oldrating, oldsubCategory_name, oldSubCategoryQuestion, oldQuestionAnswer, oldAnswerRating, oldMaxRating))
+            INSERT INTO CombinedTable (id, BusinessSector, MeasuringElt, Rating, SUbCategory, Questions, Answers, RateAnswer, MaxRating)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ''', row)
 
-        # Commit changes and close connection
-        connection.commit()
-        connection.close()
-
-        # Redirect back to administrator page
-        return redirect('/administrator')
-    
-    return render_template('administrator.html')
+    connection.commit()
+    connection.close()
 
 
+# user account starts here
+def get_unique_business_sectors():
+    connection = sqlite3.connect('database.db')
+    print("connection established for te unique business sector")
+    cursor = connection.cursor()
+    cursor.execute('SELECT DISTINCT BusinessSector FROM CombinedTable')
+    business_sectors = cursor.fetchall()
+    print("Unique Business Sectors are: ",business_sectors)
+    connection.close()
+    return business_sectors
 
 
-
-
-
+@app.route('/select_business_sector', methods=['GET', 'POST'])
+def select_business_sector():
+    if request.method == 'POST':
+        selected_sector = request.form.get('business_sector')
+        if selected_sector:
+            # Fetch relevant data from CombinedTable based on selected business sector
+            connection = sqlite3.connect('database.db')
+            print("The unque identifiers")
+            cursor = connection.cursor()
+            cursor.execute('''
+                SELECT MeasuringElt, Rating, SUbCategory, Questions, Answers
+                FROM CombinedTable
+                WHERE BusinessSector=?
+            ''', (selected_sector,))
+            data = cursor.fetchall()
+            print(data)
+            connection.close()
+            business_sectors = get_unique_business_sectors()
+        
+            return render_template('userAccount.html', data=business_sectors)
+        else:
+            return "No sector selected!"
+    else:
+        business_sectors = get_unique_business_sectors()
+        return render_template('userAccount.html', data=business_sectors)
 
 
 if __name__ == '__main__':

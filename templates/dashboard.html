@@ -20,6 +20,13 @@
             <a href="/logout" class="btn btn-dark">Logout</a>
         </div>
 
+        <form action="/select_business_sector" method="POST">
+            {% for sector in business_sectors %}
+            <input type="radio" name="business_sector" value="{{ sector[0] }}">{{ sector[0] }}<br>
+            {% endfor %}
+            <button type="submit">Submit</button>
+        </form>
+
     </div>
   
 </div>

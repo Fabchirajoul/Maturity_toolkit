@@ -25,35 +25,57 @@
             <div class="userAccountParent">
                 <div class="userAccount_left">
 
-                    <p> {{ user[1] }}</p>
-                    <p>{{ user[2] }}</p>
-
 
                 </div>
                 <div class="userAccount_middle">
 
                     <!-- Selecting their business sector starts here  -->
                     <div x-show="select_your_business_sector">
-                        <h1 class="item">BUSINESS SECTOR</h1><br><br>
 
-                        {% if unique_data %}
-                        <ul>
-                            {% for sector in unique_data %}
-                            <li>{{ sector[0] }}</li>
-                            {% endfor %}
-                        </ul>
-                        {% endif %}
+
                         <div>
                             <span>
                                 <h1>BUSINESS SECTOR NAME:</h1>
-                            </span> <span><input class="input_field_for_admin_create_and_update" type="text"
-                                    placeholder="Create a Business Sector">
                             </span>
                             <div class="userAccountParent">
-                                <button class="submit-btn">SUBMIT</button>
-                                <button class="submit-btn"
-                                    x-on:click="openUserAccount('choose_measuring_element')">NEXT</button>
+                                <form action="/select_business_sector" method="POST">
+                                    <select name="business_sector" class="input">
+                                        <option value="Select your business sector" disabled selected>
+                                            Select a business sector</option>
+                                        {% for sector in data %}
+                                        <option value="{{sector}}">{{sector}}</option>
+
+                                        {% endfor %}
+                                    </select>
+                                    <!-- <button type="submit" class="submit-btn"><a
+                                            href="{{ url_for('select_business_sector') }}">Submit</a></button> -->
+                                    <button type="submit" class="submit-btn">Submit</button>
+                                </form>
                             </div>
+
+                            <h1>Data Display</h1>
+                            <table class="table_style_user">
+                                <thead>
+                                    <tr>
+                                        <th>Measuring Element</th>
+                                        <th>Rating</th>
+                                        <th>Subcategory</th>
+                                        <th>Questions</th>
+                                        <th>Answers</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for row in data %}
+                                    <tr>
+                                        <td>{{ row[0] }}</td>
+                                        <td>{{ row[1] }}</td>
+                                        <td>{{ row[2] }}</td>
+                                        <td>{{ row[3] }}</td>
+                                        <td>{{ row[4] }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
                         </div>
                     </div>
 

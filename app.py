@@ -171,7 +171,6 @@ def dashboardBusinessAnalyst():
         cursor = connection.cursor()
         cursor.execute('SELECT * FROM User WHERE email=?', (session['email'],))
         user = cursor.fetchone()
-        print("User fetched:", user)  # Add this line for debugging
 
         connection.close()
         return render_template('userAccount.html', user=user)
@@ -272,10 +271,6 @@ def delete_combined_data():
     if request.method == 'POST':
         # Get the ID of the record to delete from the form
         delete_record_id = request.form['record_id']
-
-        # For debugging: Print the delete_record_id
-        print("Record ID to delete:", delete_record_id)
-
         try:
             # Delete the record from the database
             connection = sqlite3.connect('database.db')
@@ -287,27 +282,21 @@ def delete_combined_data():
             connection.commit()
             connection.close()
 
-            # For debugging: Print a message indicating successful deletion
-            print("Record deleted successfully.")
-
             # Redirect back to the page displaying combined data
             return redirect('/view_combined_data')
         except Exception as e:
-            # For debugging: Print any exception that occurs during deletion
-            print("Error occurred during deletion:", str(e))
+
             return "Error occurred during deletion: " + str(e)
     else:
         return "Method Not Allowed"
-# delete user record 
+# delete user record
+
+
 @app.route('/delete_user_data', methods=['POST'])
 def delete_user_record_data():
     if request.method == 'POST':
         # Get the ID of the record to delete from the form
         delete_record_user_id = request.form['user_record_id']
-
-        # For debugging: Print the delete_record_id
-        print("Record ID to delete:", delete_record_user_id)
-
         try:
             # Delete the record from the database
             connection = sqlite3.connect('database.db')
@@ -319,14 +308,10 @@ def delete_user_record_data():
             connection.commit()
             connection.close()
 
-            # For debugging: Print a message indicating successful deletion
-            print("Record deleted successfully.")
-
             # Redirect back to the page displaying combined data
             return redirect('/view_combined_data')
         except Exception as e:
-            # For debugging: Print any exception that occurs during deletion
-            print("Error occurred during deletion:", str(e))
+
             return "Error occurred during deletion: " + str(e)
     else:
         return "Method Not Allowed"
@@ -346,7 +331,9 @@ def view_combined_data():
 
     return render_template('administrator.html', combined_data=combined_data)
 
-# Route to display all user account 
+# Route to display all user account
+
+
 @app.route('/view_all_user', methods=['GET', 'POST'])
 def view_user_account():
     connection = sqlite3.connect('database.db')
@@ -378,6 +365,7 @@ def upload_file():
 
 def process_csv(csv_file):
     connection = sqlite3.connect('database.db')
+    print("Connection established successfully for csv")  # Debugging
     cursor = connection.cursor()
 
     # Convert file object to text mode
@@ -394,6 +382,45 @@ def process_csv(csv_file):
     connection.commit()
     connection.close()
 
+
+# user account starts here
+def get_unique_business_sectors():
+    connection = sqlite3.connect('database.db')
+    cursor = connection.cursor()
+    cursor.execute('SELECT DISTINCT BusinessSector FROM CombinedTable')
+    business_sectors = cursor.fetchall()
+    connection.close()
+    return business_sectors
+
+
+@app.route('/select_business_sector', methods=['GET', 'POST'])
+def select_business_sector():
+    if request.method == 'POST':
+        selected_sector = request.form.get('business_sector')
+        if selected_sector:
+            # Debugging: Print selected sector
+            print("Selected Sector:", selected_sector)
+            # Fetch relevant data from CombinedTable based on selected business sector
+            connection = sqlite3.connect('database.db')
+            cursor = connection.cursor()
+            cursor.execute('''
+                SELECT BusinessSector, MeasuringElt, Rating, SUbCategory, Questions, Answers
+                FROM CombinedTable
+                WHERE BusinessSector=?
+            ''', (selected_sector,))
+
+            all_data_record = cursor.fetchall()
+            # Debugging: Print fetched records
+            print("All Records:", all_data_record)
+            connection.close()
+            business_sectors = get_unique_business_sectors()
+
+            return render_template('userAccount.html', data=business_sectors)
+        else:
+            return "No sector selected!"
+    else:
+        business_sectors = get_unique_business_sectors()
+        return render_template('userAccount.html', data=business_sectors)
 
 
 if __name__ == '__main__':
