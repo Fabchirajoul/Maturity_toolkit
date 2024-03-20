@@ -312,6 +312,9 @@ body {
   .input_field_for_admin_create_and_update {
     width: 300px;
   }
+  .table_style{
+    width: auto;
+  }
 }
 
 /* Medium screen */
@@ -337,6 +340,9 @@ body {
   .input_field_for_admin_create_and_update {
     width: 400px;
   }
+  .table_style{
+    width: auto;
+  }
 }
 
 /* Large screen  and above*/
@@ -361,5 +367,8 @@ body {
   }
   .input_field_for_admin_create_and_update {
     width: 600px;
+  }
+  .table_style{
+    width: auto;
   }
 }
