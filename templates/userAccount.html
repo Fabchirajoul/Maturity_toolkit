@@ -67,11 +67,23 @@
                                 <tbody>
                                     {% for row in data %}
                                     <tr>
+
                                         <td>{{ row[0] }}</td>
                                         <td>{{ row[1] }}</td>
                                         <td>{{ row[2] }}</td>
                                         <td>{{ row[3] }}</td>
-                                        <td>{{ row[4] }}</td>
+                                        <td> 
+                                        <select name="UserAnswerRating" class="input">
+                                            <option value="Selectanswer" disabled selected> Please choose an answer</option>
+                                           
+                                            <option value="1">Basic</option>
+                                            <option value="2">Reactive</option>
+                                            <option value="3">Planned</option>
+                                            <option value="4">Proactive</option>
+                                            <option value="5">Resilent</option>
+    
+                                           
+                                        </select></td>
                                     </tr>
                                     {% endfor %}
                                 </tbody>
