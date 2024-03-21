@@ -37,7 +37,7 @@ document.addEventListener("alpine:init", () => {
         if (UserSection === "displayed_tiers_per_business_sector") {
           this.select_your_business_sector = false;
           this.displayed_tiers_per_business_sector = true;
-          window.location.href = "/userSubmissionDataIntoTable";
+          
  
           
         } else if (UserSection === "choose_sub_category") {

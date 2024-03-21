@@ -16,8 +16,8 @@
 
         <section>
             ,<div class="dashboard_main_admin">
-                <h1 class="item">USER CONTROL PANEL</h1>
-                <button class="create_user" x-on:click="openUserAccount('select_your_business_sector')">HOME</button>
+                <h1 class="item"><a href="" x-on:click="openUserAccount('select_your_business_sector')" class="item" style="float: right;">USER CONTROL PANEL</a></h1>
+                <button class="create_user" x-on:click="openUserAccount('displayed_tiers_per_business_sector')">GET FEEDBACK</button>
                 <a href="/logout" class="item" style="float: right;">SIGN OUT</a>
             </div>
         </section><br>
@@ -33,6 +33,57 @@
                 </div>
                 <div class="userAccount_middle">
 
+                    <!-- maturity feedback section  -->
+
+                    <div x-show="displayed_tiers_per_business_sector">
+
+                        <form>
+
+                            <h1>UNIQUE CODE:</h1>
+
+                            <input type="text" class="input" name=""
+                                placeholder="Please enter yor unique maturity code" value="">
+
+                                <button type="submit" class="submit-btn">SUBMIT CODE</button>
+                       
+                            </form><br><br><br>
+                        
+                    
+                        <table border="1" style="background-color: black;">
+                            <thead>
+                                <tr>
+                                    <th>MEASURING ELEMENT</th>
+                                    <th>CUMULATIVE RATING</th>
+                                    <th>CURRENT MATURITY LEVEL</th>
+                                    <th>EXPECTED MATURITY LEVEL</th>
+                                    <th>FEEDBACK</th>
+                                    <th>WAYS TO IMPROVE</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    
+                                </tr>
+                              
+                            </tbody>
+                        </table>
+
+
+
+
+
+
+                    
+                    
+                    </div>
+
                     <div x-show="select_your_business_sector">
                         <h1 class="item">NEW DEFAULT START PAGE</h1><br><br>
 
@@ -45,11 +96,12 @@
                                 <option value="EDUCATION">EDUCATION</option>
                                 <option value="IT">IT</option>
                             </select>
-                            <button type="submit" class="submit-btn"
-                                x-on:click="openUserAccount('displayed_tiers_per_business_sector')">Submit</button>
+                            <button type="submit" class="submit-btn">Submit</button>
                         </form>
 
                     </div><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+
+
 
                     
                     <form action="/userSubmissionDataIntoTable" method="POST">
@@ -58,7 +110,7 @@
 
                             <h1 style="background-color: black;">UNIQUE MATURITY CODE: {{ random_text }}</h1>
 
-                            <input class="input" name="userSubmissionName"
+                            <input type="hidden" class="input" name="userSubmissionName"
                                 placeholder="Please enter yor unique maturity code here before answering the questions" value="{{ random_text }}">
 
 
