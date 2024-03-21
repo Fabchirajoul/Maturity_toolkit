@@ -1,6 +1,8 @@
 from flask import Flask, request, render_template, redirect, session, url_for
 import sqlite3
 import bcrypt
+import random
+import string
 import base64
 import csv
 
@@ -37,8 +39,6 @@ def create_user_table():
 
 
 # combined table
-
-
 def create_combined_table():
     connection = sqlite3.connect('database.db')
     cursor = connection.cursor()
@@ -59,8 +59,29 @@ def create_combined_table():
     connection.close()
 
 
+def create_user_submission_record_table():
+    connection = sqlite3.connect('database.db')
+    cursor = connection.cursor()
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS UserSubmissionRecord (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            UserName TEXT,
+            MeasuringEltUser TEXT,
+            RatingUser INTEGER,
+            SUbCategoryUser TEXT,
+            QuestionsUser TEXT,
+            AnswersUser TEXT,
+            UniqueCodeForUser TEXT,
+            MaxRatingUser INTEGER DEFAULT 5
+        )
+    ''')
+    connection.commit()
+    connection.close()
+
+
 create_user_table()
 create_combined_table()
+create_user_submission_record_table()
 
 
 @app.route('/')
@@ -382,45 +403,64 @@ def process_csv(csv_file):
     connection.commit()
     connection.close()
 
-
-# user account starts here
-def get_unique_business_sectors():
-    connection = sqlite3.connect('database.db')
-    cursor = connection.cursor()
-    cursor.execute('SELECT DISTINCT BusinessSector FROM CombinedTable')
-    business_sectors = cursor.fetchall()
-    connection.close()
-    return business_sectors
+# Define a function to generate random 12-letter words
+def generate_random_text():
+    letters = string.ascii_lowercase
+    return ''.join(random.choice(letters) for _ in range(24))
 
 
-@app.route('/select_business_sector', methods=['GET', 'POST'])
+@app.route('/select_business_sector_user', methods=['GET', 'POST'])
 def select_business_sector():
-    if request.method == 'POST':
-        selected_sector = request.form.get('business_sector')
-        if selected_sector:
-            # Debugging: Print selected sector
-            print("Selected Sector:", selected_sector)
-            # Fetch relevant data from CombinedTable based on selected business sector
-            connection = sqlite3.connect('database.db')
-            cursor = connection.cursor()
-            cursor.execute('''
-                SELECT BusinessSector, MeasuringElt, Rating, SUbCategory, Questions, Answers
-                FROM CombinedTable
-                WHERE BusinessSector=?
-            ''', (selected_sector,))
+    # Corrected this line
+    selected_sector = request.form['business_sector_user']
+    if selected_sector:
+        # Fetch data from CombinedTable based on selected business sector
+        connection = sqlite3.connect('database.db')
+        cursor = connection.cursor()
+        cursor.execute(
+            "SELECT MeasuringElt, Rating, SubCategory, Questions FROM CombinedTable WHERE BusinessSector=?", (selected_sector,))
+        sector_data = cursor.fetchall()
+        connection.close()
 
-            business_sectors = cursor.fetchall()
-            # Debugging: Print fetched records
-            # print("All Records:", all_data_record)
-            connection.close()
-            business_sectors = get_unique_business_sectors()
-
-            return render_template('userAccount.html', data=business_sectors)
-        else:
-            return "No sector selected!"
+                    # Generate random text
+        random_text = generate_random_text()
+        return render_template('userAccount.html', data=sector_data,random_text=random_text)
     else:
-        business_sectors = get_unique_business_sectors()
-        return render_template('userAccount.html', data=business_sectors)
+        # Redirect back to administrator page
+        return redirect('/userSubmissionDataIntoTable')
+    
+
+
+
+@app.route('/userSubmissionDataIntoTable', methods=['GET', 'POST'])
+def CombinedTiersForUser():
+    if request.method == 'POST':
+        submissionUserName = request.form['userSubmissionName']
+        measuring_element_name_user = request.form.getlist('Measuring_element_user[]')
+        Rating_User_MElt= request.form.getlist('Rting_User[]')
+        subCategory_name_user = request.form.getlist('sub_category_for_user[]')
+        SubCategoryQuestion_user = request.form.getlist('questions_user[]')
+        QuestionAnswer_user = request.form.getlist('UserAnswerRating[]')
+
+        connection = sqlite3.connect('database.db')
+        cursor = connection.cursor()
+
+        for i in range(len(measuring_element_name_user)):
+            cursor.execute('''
+                INSERT INTO UserSubmissionRecord (UserName, MeasuringEltUser, RatingUser, SUbCategoryUser, QuestionsUser, AnswersUser, MaxRatingUser)
+                VALUES (?, ?, ?, ?, ?, ?, ?)
+            ''', (submissionUserName, measuring_element_name_user[i], Rating_User_MElt[i], subCategory_name_user[i], SubCategoryQuestion_user[i], QuestionAnswer_user[i], 5))
+
+        connection.commit()
+        connection.close()
+
+        return redirect('/userSubmissionDataIntoTable')
+
+    return render_template('userAccount.html')
+
+
+
+
 
 
 if __name__ == '__main__':

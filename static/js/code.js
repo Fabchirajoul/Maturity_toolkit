@@ -21,37 +21,34 @@ document.addEventListener("alpine:init", () => {
 
       // userAccount logics
       select_your_business_sector: true,
-      choose_measuring_element: false,
-      choose_sub_category: false,
+      displayed_tiers_per_business_sector: false,
+      // choose_sub_category: false,
 
       // toolkit computation
-      Maturity_toolkit_feedback: false,
+      // Maturity_toolkit_feedback: false,
 
       openUserAccount(UserSection) {
         this.select_your_business_sector = true;
-        this.choose_measuring_element = false;
-        this.choose_sub_category = false;
-        this.Maturity_toolkit_feedback = false;
+        this.displayed_tiers_per_business_sector = false;
+        // this.choose_sub_category = false;
+        // this.Maturity_toolkit_feedback = false;
         
 
-        if (UserSection === "choose_measuring_element") {
+        if (UserSection === "displayed_tiers_per_business_sector") {
           this.select_your_business_sector = false;
-          this.choose_measuring_element = true;
-          this.choose_sub_category = false;
-          this.Maturity_toolkit_feedback = false;
+          this.displayed_tiers_per_business_sector = true;
+          window.location.href = "/userSubmissionDataIntoTable";
+ 
           
         } else if (UserSection === "choose_sub_category") {
-          this.select_your_business_sector = false;
-          this.choose_measuring_element = false;
-          this.choose_sub_category = true;
-          this.Maturity_toolkit_feedback = false;
+  
           
         } else if (UserSection === "Maturity_toolkit_feedback") {
-          this.select_your_business_sector = false;
-          this.choose_measuring_element = false;
-          this.choose_sub_category = false;
-          this.Maturity_toolkit_feedback = true;
-          this.admininstrator_user_creating = false;
+          // this.select_your_business_sector = false;
+          // this.choose_measuring_element = false;
+          // this.choose_sub_category = false;
+          // this.Maturity_toolkit_feedback = true;
+          // this.admininstrator_user_creating = false;
         }
       },
 

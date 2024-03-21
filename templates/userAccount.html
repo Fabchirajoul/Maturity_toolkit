@@ -16,132 +16,105 @@
 
         <section>
             ,<div class="dashboard_main_admin">
-                <h1 class="item">USER UTILIZATION PANEL</h1>
+                <h1 class="item">USER CONTROL PANEL</h1>
+                <button class="create_user" x-on:click="openUserAccount('select_your_business_sector')">HOME</button>
                 <a href="/logout" class="item" style="float: right;">SIGN OUT</a>
             </div>
         </section><br>
 
         <section>
             <div class="userAccountParent">
+
+
                 <div class="userAccount_left">
+                    <P>Information about the business analyst will come here</P>
 
 
                 </div>
                 <div class="userAccount_middle">
 
-                    <!-- Selecting their business sector starts here  -->
                     <div x-show="select_your_business_sector">
+                        <h1 class="item">NEW DEFAULT START PAGE</h1><br><br>
 
+                        <form action="/select_business_sector_user" method="post">
+                            <select name="business_sector_user" class="input">
+                                <option value="" disabled selected>Select a business sector</option>
+                                <option value="MINING">MINING</option>
+                                <option value="ENERGY">ENERGY</option>
+                                <option value="FINANCE">FINANCE</option>
+                                <option value="EDUCATION">EDUCATION</option>
+                                <option value="IT">IT</option>
+                            </select>
+                            <button type="submit" class="submit-btn"
+                                x-on:click="openUserAccount('displayed_tiers_per_business_sector')">Submit</button>
+                        </form>
+
+                    </div><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+
+                    
+                    <form action="/userSubmissionDataIntoTable" method="POST">
 
                         <div>
-                            <span>
-                                <h1>BUSINESS SECTOR NAME:</h1>
-                            </span>
-                            <div class="userAccountParent">
-                                <form action="/select_business_sector" method="POST">
-                                    <select name="business_sector" class="input">
-                                        <option value="Select your business sector" disabled selected>
-                                            Select a business sector</option>
-                                        {% for sector in data %}
-                                        <option value="{{sector}}">{{sector}}</option>
 
-                                        {% endfor %}
-                                    </select>
-                                    <!-- <button type="submit" class="submit-btn"><a
-                                            href="{{ url_for('select_business_sector') }}">Submit</a></button> -->
-                                    <button type="submit" class="submit-btn">Submit</button>
-                                </form>
-                            </div>
+                            <h1 style="background-color: black;">UNIQUE MATURITY CODE: {{ random_text }}</h1>
 
-                            <h1>Data Display</h1>
-                            <table class="table_style_datase">
-                                <thead>
-                                    <tr>
-                                        <th>Measuring Element</th>
-                                        <th>Rating</th>
-                                        <th>Subcategory</th>
-                                        <th>Questions</th>
-                                        <th>Answers</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {% for row in data %}
-                                    <tr>
+                            <input class="input" name="userSubmissionName"
+                                placeholder="Please enter yor unique maturity code here before answering the questions" value="{{ random_text }}">
 
-                                        <td>{{ row[0] }}</td>
-                                        <td>{{ row[1] }}</td>
-                                        <td>{{ row[2] }}</td>
-                                        <td>{{ row[3] }}</td>
-                                        <td> 
-                                        <select name="UserAnswerRating" class="input">
-                                            <option value="Selectanswer" disabled selected> Please choose an answer</option>
-                                           
+
+                        </div><br><br>
+                        {% if data %}
+                        <table border="1" style="background-color: black;">
+                            <thead>
+                                <tr>
+                                    <th>MEASURING ELEMENT</th>
+                                    <th>RATING</th>
+                                    <th>SUB-CATEGORY</th>
+                                    <th>QUESTIONS</th>
+                                    <th>ANSWERS</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for row in data %}
+                                <tr>
+                                    <td>{{ row[0] }}</td>
+                                    <td>{{ row[1] }}</td>
+                                    <td>{{ row[2] }}</td>
+                                    <td>{{ row[3] }}</td>
+                                    <td>
+                                        <input type="hidden" name="Measuring_element_user[]" value="{{ row[0] }}">
+                                        <input type="hidden" name="Rting_User[]" value="{{ row[1] }}">
+                                        <input type="hidden" name="sub_category_for_user[]" value="{{ row[2] }}">
+                                        <input type="hidden" name="questions_user[]" value="{{ row[3] }}">
+                                        <select name="UserAnswerRating[]" class="input">
+                                            <option value="Selectanswer" disabled selected>Please choose an
+                                                answer</option>
                                             <option value="1">Basic</option>
                                             <option value="2">Reactive</option>
                                             <option value="3">Planned</option>
                                             <option value="4">Proactive</option>
                                             <option value="5">Resilent</option>
-    
-                                           
-                                        </select></td>
-                                    </tr>
-                                    {% endfor %}
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+                                        </select>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                        {% else %}
+                        <p>No data available for the selected sector.</p>
+                        {% endif %}
+                        <button class="submit-btn">SUBMIT</button>
+                    </form>
 
-                    <div x-show="choose_measuring_element">
-                        <h1 class="item">MEASURING ELEMENT</h1><br><br>
-
-                        <div>
-                            <span>
-                                <h1>SELECT AN ELEMENT:</h1>
-                            </span> <span><input class="input_field_for_admin_create_and_update" type="text"
-                                    placeholder="Create a Business Sector">
-                            </span>
-                            <div class="userAccountParent">
-                                <button class="submit-btn">SUBMIT</button>
-                                <button class="submit-btn"
-                                    x-on:click="openUserAccount('choose_sub_category')">NEXT</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div x-show="choose_sub_category">
-                        <h1 class="item">MEASURING ELEMENT</h1><br><br>
-
-                        <div>
-                            <span>
-                                <h1>SUB-CATEGORY:</h1>
-                            </span> <span><input class="input_field_for_admin_create_and_update" type="text"
-                                    placeholder="Create a Business Sector">
-                            </span>
-                            <div class="userAccountParent">
-                                <button class="submit-btn">SUBMIT</button>
-                                <button class="submit-btn"
-                                    x-on:click="openUserAccount('Maturity_toolkit_feedback')">NEXT</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div x-show="Maturity_toolkit_feedback">
-                        <h1 class="item">FEEDBACK BASED ON SUBMISSIONS</h1><br><br>
-
-                        <div>
-                            <span>
-                                <h1>SUB-CATEGORY:</h1>
-                            </span> <span><input class="input_field_for_admin_create_and_update" type="text"
-                                    placeholder="Create a Business Sector">
-                            </span>
-                            <div class="userAccountParent">
-                                <button class="submit-btn"
-                                    x-on:click="openUserAccount('select_your_business_sector')">BACK TO HOME</button>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
+        </section>
+
+        <section>
+            <div style="background-color: black;" x-show="displayed_tiers_per_business_sector">
+
+            </div>
+
         </section>
     </main>
 </body>
