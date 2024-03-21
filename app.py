@@ -3,6 +3,7 @@ import sqlite3
 import bcrypt
 import random
 import string
+from flask import jsonify
 import base64
 import csv
 
@@ -71,8 +72,9 @@ def create_user_submission_record_table():
             SUbCategoryUser TEXT,
             QuestionsUser TEXT,
             AnswersUser TEXT,
-            UniqueCodeForUser TEXT,
-            MaxRatingUser INTEGER DEFAULT 5
+            MaxRatingUser INTEGER DEFAULT 5,
+            ExpectedCumSum INTEGER,
+            UserCumSum INTEGER
         )
     ''')
     connection.commit()
@@ -404,6 +406,8 @@ def process_csv(csv_file):
     connection.close()
 
 # Define a function to generate random 12-letter words
+
+
 def generate_random_text():
     letters = string.ascii_lowercase
     return ''.join(random.choice(letters) for _ in range(24))
@@ -422,22 +426,21 @@ def select_business_sector():
         sector_data = cursor.fetchall()
         connection.close()
 
-                    # Generate random text
+        # Generate random text
         random_text = generate_random_text()
-        return render_template('userAccount.html', data=sector_data,random_text=random_text)
+        return render_template('userAccount.html', data=sector_data, random_text=random_text)
     else:
         # Redirect back to administrator page
         return redirect('/userSubmissionDataIntoTable')
-    
-
 
 
 @app.route('/userSubmissionDataIntoTable', methods=['GET', 'POST'])
 def CombinedTiersForUser():
     if request.method == 'POST':
         submissionUserName = request.form['userSubmissionName']
-        measuring_element_name_user = request.form.getlist('Measuring_element_user[]')
-        Rating_User_MElt= request.form.getlist('Rting_User[]')
+        measuring_element_name_user = request.form.getlist(
+            'Measuring_element_user[]')
+        Rating_User_MElt = request.form.getlist('Rting_User[]')
         subCategory_name_user = request.form.getlist('sub_category_for_user[]')
         SubCategoryQuestion_user = request.form.getlist('questions_user[]')
         QuestionAnswer_user = request.form.getlist('UserAnswerRating[]')
@@ -446,10 +449,19 @@ def CombinedTiersForUser():
         cursor = connection.cursor()
 
         for i in range(len(measuring_element_name_user)):
+            Rting_User = float(Rating_User_MElt[i])
+            UserAnswerRating = float(QuestionAnswer_user[i])
+            MaxRatingUser = 5  
+
+            # Calculate the cumulative sums
+            UserCumSum = Rting_User * UserAnswerRating
+            ExpectedCumSum = Rting_User * MaxRatingUser
+
+            # Insert data into the database
             cursor.execute('''
-                INSERT INTO UserSubmissionRecord (UserName, MeasuringEltUser, RatingUser, SUbCategoryUser, QuestionsUser, AnswersUser, MaxRatingUser)
-                VALUES (?, ?, ?, ?, ?, ?, ?)
-            ''', (submissionUserName, measuring_element_name_user[i], Rating_User_MElt[i], subCategory_name_user[i], SubCategoryQuestion_user[i], QuestionAnswer_user[i], 5))
+                INSERT INTO UserSubmissionRecord (UserName, MeasuringEltUser, RatingUser, SUbCategoryUser, QuestionsUser, AnswersUser, MaxRatingUser, ExpectedCumSum, UserCumSum)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+            ''', (submissionUserName, measuring_element_name_user[i], Rting_User, subCategory_name_user[i], SubCategoryQuestion_user[i], UserAnswerRating, MaxRatingUser, ExpectedCumSum, UserCumSum))
 
         connection.commit()
         connection.close()
@@ -457,10 +469,6 @@ def CombinedTiersForUser():
         return redirect('/userSubmissionDataIntoTable')
 
     return render_template('userAccount.html')
-
-
-
-
 
 
 if __name__ == '__main__':
