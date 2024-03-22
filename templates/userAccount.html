@@ -93,9 +93,10 @@
                             <button type="submit" class="submit-btn">Submit</button>
                         </form>
 
-                        <h1>MATURITY ANALYSIS RESULTS</h1>
-
-                        <div>
+                        
+                        <button type="submit" class="submit-btn" x-on:click="view_maturity_analysis=!view_maturity_analysis">VIEW FEEDBACK ANALYSIS</button>
+                        <div x-show="view_maturity_analysis">
+                            <h1 class="item">MATURITY ANALYSIS RESULTS</h1>
                             <table border="1" style="background-color: black;">
                                 <thead>
                                     <tr>
@@ -116,12 +117,14 @@
                                     {% endfor %}
                                 </tbody>
                             </table>
+
+                            <div>
+                                <h1 class="item">GRAPHICAL DISPLAY</h1>
+                                <img src="data:image/png;base64,{{ plot }}" alt="Plot">
+                            </div>
                         </div>
 
-                        <div>
-                            <h1 class="item">GRAPHICAL DISPLAY</h1>
-                            <img src="data:image/png;base64,{{ plot }}" alt="Plot">
-                        </div>
+
 
                     </div><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 

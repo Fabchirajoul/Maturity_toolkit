@@ -18,6 +18,7 @@ document.addEventListener("alpine:init", () => {
       Update_Sub_Category: false,
       Update_Questions: false,
       choose_a_question_to_answer: false,
+      view_maturity_analysis:false,
 
       // userAccount logics
       select_your_business_sector: true,
