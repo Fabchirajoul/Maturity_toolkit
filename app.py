@@ -496,6 +496,12 @@ def submit_code():
         sum_expected_cum_sum = [record[1] for record in user_records]
         sum_user_cum_sum = [record[2] for record in user_records]
 
+        # Calculate percentage values
+# Calculate percentage values and format to two significant figures
+        percentage_values = [round((user_cum_sum / expected_cum_sum) * 100, 2) if expected_cum_sum != 0 else 0
+                     for user_cum_sum, expected_cum_sum in zip(sum_user_cum_sum, sum_expected_cum_sum)]
+
+
         # Plotting
         plt.figure(figsize=(12, 12))  # Increase figure width to accommodate x-labels
         plt.bar(measuring_elt_user, sum_expected_cum_sum, label='EXPECTED MATURITY LEVEL')
@@ -514,7 +520,7 @@ def submit_code():
         img_str = base64.b64encode(img_buffer.getvalue()).decode()
 
         # Render the template with the measuring elements data and their summed ExpectedCumSum
-        return render_template('userAccount.html', user_records=user_records, plot=img_str)
+        return render_template('userAccount.html', user_records=user_records, percentages=percentage_values, plot=img_str)
 
 
 

@@ -102,14 +102,16 @@
                                         <th>MEASURING ELEMENT</th>
                                         <th>EXPECTED MATURITY LEVEL</th>
                                         <th>CURRENT MATURITY LEVEL</th>
+                                        <th>% CURRENT LEVEL</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {% for user_records in user_records %}
+                                    {% for i in range(user_records|length) %}
                                     <tr>
-                                        <td>{{ user_records[0] }}</td>
-                                        <td>{{ user_records[1] }}</td>
-                                        <td>{{ user_records[2] }}</td>
+                                        <td>{{ user_records[i][0] }}</td>
+                                        <td>{{ user_records[i][1] }}</td>
+                                        <td>{{ user_records[i][2] }}</td>
+                                        <td>{{ percentages[i] }}</td> <!-- Display the percentage value here -->
                                     </tr>
                                     {% endfor %}
                                 </tbody>
