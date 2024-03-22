@@ -3,11 +3,13 @@ import sqlite3
 import bcrypt
 import random
 import string
+import math
 from flask import jsonify
 import matplotlib.pyplot as plt
 import base64
 import csv
 import io
+import numpy as np
 
 app = Flask(__name__)
 app.secret_key = 'secret_key'
@@ -504,34 +506,60 @@ def submit_code():
             GROUP BY MeasuringEltUser
         ''', (unique_code,))
         user_records = cursor.fetchall()
-        print("These are all the records",user_records)
-        print("first record",user_records[0])
+        print("These are all the records", user_records)
+        print("first record", user_records[0])
         connection.close()
 
         # Extract data for plotting
         measuring_elt_user = [record[0] for record in user_records]
         sum_expected_cum_sum = [record[1] for record in user_records]
         sum_user_cum_sum = [record[2] for record in user_records]
-
-        
-
+        sum_user_cum_sum_t0_be = [record[3] for record in user_records]
 
         # Calculate percentage values
         percentage_values = [round((user_cum_sum / expected_cum_sum) * 100, 2) if expected_cum_sum != 0 else 0
-                     for user_cum_sum, expected_cum_sum in zip(sum_user_cum_sum, sum_expected_cum_sum)]
+                             for user_cum_sum, expected_cum_sum in zip(sum_user_cum_sum, sum_expected_cum_sum)]
 
+        # Calculate percentage values for sum_user_cum_sum_to_be
+        percentage_values_to_be = [round((user_cum_sum_to_be / expected_cum_sum) * 100, 2) if expected_cum_sum != 0 else 0
+                                   for user_cum_sum_to_be, expected_cum_sum in zip(sum_user_cum_sum_t0_be,
+                                                                                   sum_expected_cum_sum)]
+
+        # Growth rate calculation
+        percentage_growth_rate = [round(((new_value - old_value) / old_value) * 100, 2) if old_value != 0 else 0
+                                  for old_value, new_value in zip(sum_user_cum_sum, sum_user_cum_sum_t0_be)]
+
+        # Calculate the duration in years
+        duration_years = [round(math.log(new_value / old_value) / math.log(1 + percentage_growth_rate / 100), 2)
+                          if percentage_growth_rate != 0 else 0
+                          for old_value, new_value, percentage_growth_rate in
+                          zip(sum_user_cum_sum, sum_user_cum_sum_t0_be, percentage_growth_rate)]
+
+        # Define the width of the bars
+        bar_width = 0.3
+
+        # Generate an array of indices for positioning the bars
+        indices = np.arange(len(measuring_elt_user))
 
         # Plotting
         plt.figure(figsize=(12, 12))  # Increase figure width to accommodate x-labels
-        plt.bar(measuring_elt_user, sum_expected_cum_sum, label='EXPECTED MATURITY LEVEL')
-        plt.bar(measuring_elt_user, sum_user_cum_sum, label='CURRENT MATURITY LEVEL')
+
+        # Plot the bars for "MATURITY LEVEL 'WITH OTHER COMPANIES'"
+        plt.bar(indices - bar_width, sum_expected_cum_sum, width=bar_width, label='MATURITY LEVEL "WITH OTHER COMPANIES"')
+
+        # Plot the bars for "MATURITY LEVEL 'AS IS'"
+        plt.bar(indices, sum_user_cum_sum, width=bar_width, label='MATURITY LEVEL "AS IS"')
+
+        # Plot the bars for "MATURITY LEVEL 'TO BE'"
+        plt.bar(indices + bar_width, sum_user_cum_sum_t0_be, width=bar_width, label='MATURITY LEVEL "TO BE"')
+
         plt.xlabel('MEASURING ELEMENT')
         plt.ylabel('MATURITY LEVEL')
         plt.title('GRAPHICAL REPRESENTATION OF MATURITY LEVEL FOR DIFFERENT MEASURING ELEMENTS OF A BUSINESS SECTOR')
-        plt.xticks(rotation=90)  # Rotate x labels vertically
+        plt.xticks(indices, measuring_elt_user, rotation=90)  # Set x ticks to measuring elements
         plt.tight_layout()  # Adjust layout for better spacing
         plt.legend()
-        
+
         # Convert plot to base64
         img_buffer = io.BytesIO()
         plt.savefig(img_buffer, format='png')
@@ -539,7 +567,9 @@ def submit_code():
         img_str = base64.b64encode(img_buffer.getvalue()).decode()
 
         # Render the template with the measuring elements data and their summed ExpectedCumSum
-        return render_template('userAccount.html', user_records=user_records, percentages=percentage_values, plot=img_str)
+        return render_template('userAccount.html', user_records=user_records, percentages=percentage_values,
+                               percenTobe=percentage_values_to_be, growth_rate=percentage_growth_rate,
+                               duration=duration_years, plot=img_str)
 
 
 

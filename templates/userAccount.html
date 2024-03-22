@@ -101,10 +101,13 @@
                                 <thead>
                                     <tr>
                                         <th>MEASURING ELEMENT</th>
-                                        <th>EXPECTED MATURITY LEVEL</th>
+                                        <th>OTHER COMPANIES</th>
                                         <th>MATURITY "AS IS"</th>
                                         <th>% "AS IS"</th>
                                         <th>MATURITY "TO BE"</th>
+                                        <th>% "TO BE"</th>
+                                        <th>GROWTH RATE</th>
+                                        <th>DURATION</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -115,6 +118,9 @@
                                         <td>{{ user_records[i][2] }}</td>
                                         <td>{{ percentages[i] }}</td> 
                                         <td>{{ user_records[i][3] }}</td>
+                                        <td>{{ percenTobe[i] }}</td> 
+                                        <td>{{ growth_rate[i] }}</td> 
+                                        <td>{{ duration[i] }}</td> 
                                     </tr>
                                     {% endfor %}
                                 </tbody>
