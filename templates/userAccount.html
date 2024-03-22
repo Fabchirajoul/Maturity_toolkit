@@ -16,8 +16,9 @@
 
         <section>
             ,<div class="dashboard_main_admin">
-                <h1 class="item"><a href="" x-on:click="openUserAccount('select_your_business_sector')" class="item" style="float: right;">USER CONTROL PANEL</a></h1>
-                <button class="create_user" x-on:click="openUserAccount('displayed_tiers_per_business_sector')">GET FEEDBACK</button>
+                <h1 class="item"><a href="" x-on:click="openUserAccount('select_your_business_sector')" class="item"
+                        style="float: right;">USER CONTROL PANEL</a></h1>
+                <button class="create_user" x-on:click="openUserAccount('displayed_tiers_per_business_sector')">ENTER UNIQUE CODE</button>
                 <a href="/logout" class="item" style="float: right;">SIGN OUT</a>
             </div>
         </section><br>
@@ -37,51 +38,44 @@
 
                     <div x-show="displayed_tiers_per_business_sector">
 
-                        <form>
+                        <form action="/submit_code" method="POST">
 
                             <h1>UNIQUE CODE:</h1>
 
-                            <input type="text" class="input" name=""
+                            <input type="text" class="input" name="unique_code_user"
                                 placeholder="Please enter yor unique maturity code" value="">
 
-                                <button type="submit" class="submit-btn">SUBMIT CODE</button>
-                       
-                            </form><br><br><br>
-                        
-                    
+                            <button type="submit" class="submit-btn">SUBMIT CODE</button>
+
+                        </form><br><br><br>
+
+<!-- 
                         <table border="1" style="background-color: black;">
                             <thead>
                                 <tr>
                                     <th>MEASURING ELEMENT</th>
-                                    <th>CUMULATIVE RATING</th>
-                                    <th>CURRENT MATURITY LEVEL</th>
-                                    <th>EXPECTED MATURITY LEVEL</th>
-                                    <th>FEEDBACK</th>
-                                    <th>WAYS TO IMPROVE</th>
+                                    <th>EXPECTED CUM SUM</th>
+                                    <th>CUM CUM SUM</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                
+                                {% for user_records in user_records %}
                                 <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    
+                                    <td>{{ user_records[0] }}</td>
+                                    <td>{{ user_records[1] }}</td>
+                                    <td>{{ user_records[2] }}</td>
                                 </tr>
-                              
+                                {% endfor %}
                             </tbody>
-                        </table>
+                        </table> -->
 
 
 
 
 
 
-                    
-                    
+
+
                     </div>
 
                     <div x-show="select_your_business_sector">
@@ -99,22 +93,47 @@
                             <button type="submit" class="submit-btn">Submit</button>
                         </form>
 
+                        <h1>MATURITY ANALYSIS</h1>
+
+                        <div>
+                            <table border="1" style="background-color: black;">
+                                <thead>
+                                    <tr>
+                                        <th>MEASURING ELEMENT</th>
+                                        <th>EXPECTED CUM SUM</th>
+                                        <th>CUM CUM SUM</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for user_records in user_records %}
+                                    <tr>
+                                        <td>{{ user_records[0] }}</td>
+                                        <td>{{ user_records[1] }}</td>
+                                        <td>{{ user_records[2] }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+
                     </div><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 
 
 
-                    
+
                     <form action="/userSubmissionDataIntoTable" method="POST">
 
                         <div>
 
                             <h1 style="background-color: black;">UNIQUE MATURITY CODE: {{ random_text }}</h1>
 
-                            <input type="hidden" class="input" name="userSubmissionName"
-                                placeholder="Please enter yor unique maturity code here before answering the questions" value="{{ random_text }}">
+                            <input type="hidden" class="input_user" name="Unique_code_from_User"
+                                placeholder="Please enter yor unique maturity code here before answering the questions"
+                                value="{{ random_text }}">
 
 
                         </div><br><br>
+
                         {% if data %}
                         <table border="1" style="background-color: black;">
                             <thead>
@@ -152,10 +171,10 @@
                                 {% endfor %}
                             </tbody>
                         </table>
+                        <button class="submit-btn">SUBMIT</button>
                         {% else %}
                         <p>No data available for the selected sector.</p>
                         {% endif %}
-                        <button class="submit-btn">SUBMIT</button>
                     </form>
 
                 </div>

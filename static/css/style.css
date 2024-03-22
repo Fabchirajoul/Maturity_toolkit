@@ -75,6 +75,7 @@ body {
   background-color: aqua;
 }
 
+
 .submit-btn {
   width: auto;
   height: 30px;
@@ -274,6 +275,15 @@ body {
   border: 1px solid white; /* Add border for table cells */
   padding: 8px 12px; /* Add padding to all sides of the cell content */
 }
+
+.input_user {
+  width: 20px;
+  height: 50px;
+  border-radius: 10px;
+  font-size: large;
+  background-color: aqua;
+}
+
 
 
 

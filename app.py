@@ -66,7 +66,7 @@ def create_user_submission_record_table():
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS UserSubmissionRecord (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            UserName TEXT,
+            UniqueCodeUser TEXT,
             MeasuringEltUser TEXT,
             RatingUser INTEGER,
             SUbCategoryUser TEXT,
@@ -437,7 +437,7 @@ def select_business_sector():
 @app.route('/userSubmissionDataIntoTable', methods=['GET', 'POST'])
 def CombinedTiersForUser():
     if request.method == 'POST':
-        submissionUserName = request.form['userSubmissionName']
+        UserSubmittedUniqueCode = request.form['Unique_code_from_User']
         measuring_element_name_user = request.form.getlist(
             'Measuring_element_user[]')
         Rating_User_MElt = request.form.getlist('Rting_User[]')
@@ -459,9 +459,9 @@ def CombinedTiersForUser():
 
             # Insert data into the database
             cursor.execute('''
-                INSERT INTO UserSubmissionRecord (UserName, MeasuringEltUser, RatingUser, SUbCategoryUser, QuestionsUser, AnswersUser, MaxRatingUser, ExpectedCumSum, UserCumSum)
+                INSERT INTO UserSubmissionRecord (UniqueCodeUser, MeasuringEltUser, RatingUser, SUbCategoryUser, QuestionsUser, AnswersUser, MaxRatingUser, ExpectedCumSum, UserCumSum)
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-            ''', (submissionUserName, measuring_element_name_user[i], Rting_User, subCategory_name_user[i], SubCategoryQuestion_user[i], UserAnswerRating, MaxRatingUser, ExpectedCumSum, UserCumSum))
+            ''', (UserSubmittedUniqueCode, measuring_element_name_user[i], Rting_User, subCategory_name_user[i], SubCategoryQuestion_user[i], UserAnswerRating, MaxRatingUser, ExpectedCumSum, UserCumSum))
 
         connection.commit()
         connection.close()
@@ -469,6 +469,34 @@ def CombinedTiersForUser():
         return redirect('/userSubmissionDataIntoTable')
 
     return render_template('userAccount.html')
+
+
+@app.route('/submit_code', methods=['POST'])
+def submit_code():
+    if request.method == 'POST':
+        unique_code = request.form['unique_code_user']
+
+        # Check if the unique code exists in the UserSubmissionRecord table
+        connection = sqlite3.connect('database.db')
+        cursor = connection.cursor()
+        cursor.execute('''
+            SELECT MeasuringEltUser, SUM(ExpectedCumSum), SUM(UserCumSum)
+            FROM (
+                SELECT DISTINCT MeasuringEltUser, ExpectedCumSum, UserCumSum
+                FROM UserSubmissionRecord 
+                WHERE UniqueCodeUser = ?
+            )
+            GROUP BY MeasuringEltUser
+        ''', (unique_code,))
+        user_records = cursor.fetchall()
+        print(user_records)
+        connection.close()
+
+        # Render the template with the measuring elements data and their summed ExpectedCumSum
+        return render_template('userAccount.html', user_records=user_records)
+
+
+
 
 
 if __name__ == '__main__':
