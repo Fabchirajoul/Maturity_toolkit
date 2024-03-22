@@ -4,8 +4,10 @@ import bcrypt
 import random
 import string
 from flask import jsonify
+import matplotlib.pyplot as plt
 import base64
 import csv
+import io
 
 app = Flask(__name__)
 app.secret_key = 'secret_key'
@@ -480,20 +482,39 @@ def submit_code():
         connection = sqlite3.connect('database.db')
         cursor = connection.cursor()
         cursor.execute('''
-            SELECT MeasuringEltUser, SUM(ExpectedCumSum), SUM(UserCumSum)
-            FROM (
-                SELECT DISTINCT MeasuringEltUser, ExpectedCumSum, UserCumSum
-                FROM UserSubmissionRecord 
-                WHERE UniqueCodeUser = ?
-            )
+            SELECT DISTINCT MeasuringEltUser, SUM(ExpectedCumSum), SUM(UserCumSum)
+            FROM UserSubmissionRecord 
+            WHERE UniqueCodeUser = ?
             GROUP BY MeasuringEltUser
         ''', (unique_code,))
         user_records = cursor.fetchall()
         print(user_records)
         connection.close()
 
+        # Extract data for plotting
+        measuring_elt_user = [record[0] for record in user_records]
+        sum_expected_cum_sum = [record[1] for record in user_records]
+        sum_user_cum_sum = [record[2] for record in user_records]
+
+        # Plotting
+        plt.figure(figsize=(12, 12))  # Increase figure width to accommodate x-labels
+        plt.bar(measuring_elt_user, sum_expected_cum_sum, label='EXPECTED MATURITY LEVEL')
+        plt.bar(measuring_elt_user, sum_user_cum_sum, label='CURRENT MATURITY LEVEL')
+        plt.xlabel('MEASURING ELEMENT')
+        plt.ylabel('MATURITY LEVEL')
+        plt.title('GRAPHICAL REPRESENTATION OF MATURITY LEVEL FOR DIFFERENT MEASURING ELEMENTS OF A BUSINESS SECTOR')
+        plt.xticks(rotation=90)  # Rotate x labels vertically
+        plt.tight_layout()  # Adjust layout for better spacing
+        plt.legend()
+        
+        # Convert plot to base64
+        img_buffer = io.BytesIO()
+        plt.savefig(img_buffer, format='png')
+        img_buffer.seek(0)
+        img_str = base64.b64encode(img_buffer.getvalue()).decode()
+
         # Render the template with the measuring elements data and their summed ExpectedCumSum
-        return render_template('userAccount.html', user_records=user_records)
+        return render_template('userAccount.html', user_records=user_records, plot=img_str)
 
 
 

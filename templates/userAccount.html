@@ -93,7 +93,7 @@
                             <button type="submit" class="submit-btn">Submit</button>
                         </form>
 
-                        <h1>MATURITY ANALYSIS</h1>
+                        <h1>MATURITY ANALYSIS RESULTS</h1>
 
                         <div>
                             <table border="1" style="background-color: black;">
@@ -114,6 +114,11 @@
                                     {% endfor %}
                                 </tbody>
                             </table>
+                        </div>
+
+                        <div>
+                            <h1 class="item">GRAPHICAL DISPLAY</h1>
+                            <img src="data:image/png;base64,{{ plot }}" alt="Plot">
                         </div>
 
                     </div><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
