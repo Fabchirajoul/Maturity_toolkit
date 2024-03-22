@@ -73,10 +73,12 @@ def create_user_submission_record_table():
             RatingUser INTEGER,
             SUbCategoryUser TEXT,
             QuestionsUser TEXT,
-            AnswersUser TEXT,
+            AnswersUserAsIs TEXT,
+            AnswersUserToBe TEXT,   
             MaxRatingUser INTEGER DEFAULT 5,
             ExpectedCumSum INTEGER,
-            UserCumSum INTEGER
+            UserCumSumAsIs INTEGER,
+            UserCumSumToBe INTEGER
         )
     ''')
     connection.commit()
@@ -440,30 +442,43 @@ def select_business_sector():
 def CombinedTiersForUser():
     if request.method == 'POST':
         UserSubmittedUniqueCode = request.form['Unique_code_from_User']
-        measuring_element_name_user = request.form.getlist(
-            'Measuring_element_user[]')
+        measuring_element_name_user = request.form.getlist('Measuring_element_user[]')
         Rating_User_MElt = request.form.getlist('Rting_User[]')
         subCategory_name_user = request.form.getlist('sub_category_for_user[]')
         SubCategoryQuestion_user = request.form.getlist('questions_user[]')
         QuestionAnswer_user = request.form.getlist('UserAnswerRating[]')
+        QuestionAnswer_userToBe = request.form.getlist('UserAnswerRatingToBe[]')
+
+        print(" TO BE",QuestionAnswer_userToBe[0])
+        print(" AS IS", QuestionAnswer_user[0])
 
         connection = sqlite3.connect('database.db')
         cursor = connection.cursor()
 
         for i in range(len(measuring_element_name_user)):
-            Rting_User = float(Rating_User_MElt[i])
-            UserAnswerRating = float(QuestionAnswer_user[i])
-            MaxRatingUser = 5  
+            for j in range(len(measuring_element_name_user)):
+                Rting_User = float(Rating_User_MElt[i])
+                UserAnswerRatingAsIs = float(QuestionAnswer_user[i])  # Use index i for UserAnswerRatingAsIs
+                UserAnswerRatingToBe = float(QuestionAnswer_userToBe[j])  # Use index j for UserAnswerRatingToBe
+                MaxRatingUser = 5  # You may need to change this based on your requirement
 
             # Calculate the cumulative sums
-            UserCumSum = Rting_User * UserAnswerRating
             ExpectedCumSum = Rting_User * MaxRatingUser
+            UserCumSumAsIs = Rting_User * UserAnswerRatingAsIs
+            UserCumSumToBe = Rting_User * UserAnswerRatingToBe
+            # UserCumSumToBe = Rting_User * 5
+
+            print("As IS MULTIPLE: ", UserCumSumAsIs)
+            print("TO BE MULTIPLE: ", UserCumSumToBe)
+            print("EXPECTED MULTIPLE: ", ExpectedCumSum)
+           
+            
 
             # Insert data into the database
             cursor.execute('''
-                INSERT INTO UserSubmissionRecord (UniqueCodeUser, MeasuringEltUser, RatingUser, SUbCategoryUser, QuestionsUser, AnswersUser, MaxRatingUser, ExpectedCumSum, UserCumSum)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-            ''', (UserSubmittedUniqueCode, measuring_element_name_user[i], Rting_User, subCategory_name_user[i], SubCategoryQuestion_user[i], UserAnswerRating, MaxRatingUser, ExpectedCumSum, UserCumSum))
+                INSERT INTO UserSubmissionRecord (UniqueCodeUser, MeasuringEltUser, RatingUser, SUbCategoryUser, QuestionsUser, AnswersUserAsIs, AnswersUserToBe, MaxRatingUser, ExpectedCumSum, UserCumSumAsIs, UserCumSumToBe)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            ''', (UserSubmittedUniqueCode, measuring_element_name_user[i], Rting_User, subCategory_name_user[i], SubCategoryQuestion_user[i], QuestionAnswer_user[i], QuestionAnswer_userToBe[j], MaxRatingUser, ExpectedCumSum, UserCumSumAsIs, UserCumSumToBe))
 
         connection.commit()
         connection.close()
@@ -471,6 +486,7 @@ def CombinedTiersForUser():
         return redirect('/userSubmissionDataIntoTable')
 
     return render_template('userAccount.html')
+
 
 
 @app.route('/submit_code', methods=['POST'])
@@ -482,13 +498,14 @@ def submit_code():
         connection = sqlite3.connect('database.db')
         cursor = connection.cursor()
         cursor.execute('''
-            SELECT DISTINCT MeasuringEltUser, SUM(ExpectedCumSum), SUM(UserCumSum)
+            SELECT DISTINCT MeasuringEltUser, SUM(ExpectedCumSum), SUM(UserCumSumAsIs), SUM(UserCumSumToBe)
             FROM UserSubmissionRecord 
             WHERE UniqueCodeUser = ?
             GROUP BY MeasuringEltUser
         ''', (unique_code,))
         user_records = cursor.fetchall()
-        print(user_records)
+        print("These are all the records",user_records)
+        print("first record",user_records[0])
         connection.close()
 
         # Extract data for plotting
@@ -496,8 +513,10 @@ def submit_code():
         sum_expected_cum_sum = [record[1] for record in user_records]
         sum_user_cum_sum = [record[2] for record in user_records]
 
+        
+
+
         # Calculate percentage values
-# Calculate percentage values and format to two significant figures
         percentage_values = [round((user_cum_sum / expected_cum_sum) * 100, 2) if expected_cum_sum != 0 else 0
                      for user_cum_sum, expected_cum_sum in zip(sum_user_cum_sum, sum_expected_cum_sum)]
 

@@ -102,8 +102,9 @@
                                     <tr>
                                         <th>MEASURING ELEMENT</th>
                                         <th>EXPECTED MATURITY LEVEL</th>
-                                        <th>CURRENT MATURITY LEVEL</th>
-                                        <th>% CURRENT LEVEL</th>
+                                        <th>MATURITY "AS IS"</th>
+                                        <th>% "AS IS"</th>
+                                        <th>MATURITY "TO BE"</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -112,7 +113,8 @@
                                         <td>{{ user_records[i][0] }}</td>
                                         <td>{{ user_records[i][1] }}</td>
                                         <td>{{ user_records[i][2] }}</td>
-                                        <td>{{ percentages[i] }}</td> <!-- Display the percentage value here -->
+                                        <td>{{ percentages[i] }}</td> 
+                                        <td>{{ user_records[i][3] }}</td>
                                     </tr>
                                     {% endfor %}
                                 </tbody>
@@ -152,7 +154,8 @@
                                     <th>RATING</th>
                                     <th>SUB-CATEGORY</th>
                                     <th>QUESTIONS</th>
-                                    <th>ANSWERS</th>
+                                    <th>CURRENT STATE(AS IS) ANSWERS</th>
+                                    <th>EXPECTED STATE(TO BE) ANSWERS</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -176,6 +179,18 @@
                                             <option value="4">Proactive</option>
                                             <option value="5">Resilent</option>
                                         </select>
+                                        <td>
+                                            <select name="UserAnswerRatingToBe[]" class="input">
+                                                <option value="SelectanswerToBe" disabled selected>Please choose an
+                                                    answer</option>
+                                                <option value="1">Basic</option>
+                                                <option value="2">Reactive</option>
+                                                <option value="3">Planned</option>
+                                                <option value="4">Proactive</option>
+                                                <option value="5">Resilent</option>
+                                            </select>
+                                        </td>
+                                        
                                     </td>
                                 </tr>
                                 {% endfor %}
