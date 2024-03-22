@@ -544,6 +544,9 @@ def submit_code():
         # Plotting
         plt.figure(figsize=(12, 12))  # Increase figure width to accommodate x-labels
 
+        # Create the first subplot for the bar plot
+        plt.subplot(2, 1, 1)
+
         # Plot the bars for "MATURITY LEVEL 'WITH OTHER COMPANIES'"
         plt.bar(indices - bar_width, sum_expected_cum_sum, width=bar_width, label='MATURITY LEVEL "WITH OTHER COMPANIES"')
 
@@ -557,8 +560,23 @@ def submit_code():
         plt.ylabel('MATURITY LEVEL')
         plt.title('GRAPHICAL REPRESENTATION OF MATURITY LEVEL FOR DIFFERENT MEASURING ELEMENTS OF A BUSINESS SECTOR')
         plt.xticks(indices, measuring_elt_user, rotation=90)  # Set x ticks to measuring elements
-        plt.tight_layout()  # Adjust layout for better spacing
         plt.legend()
+
+        # Create the second subplot for the exponential growth curve
+        plt.subplot(2, 1, 2)
+
+        # Plot exponential growth curve for each measuring_elt_user
+        for idx, measuring_elt in enumerate(measuring_elt_user):
+            x_values = np.linspace(0, duration_years[idx], 100)  # Assume duration_years is available
+            growth_rate = percentage_growth_rate[idx] / 100  # Convert percentage to decimal growth rate
+            y_values = sum_user_cum_sum_t0_be[idx] * np.exp(growth_rate * x_values)
+            plt.plot(x_values, y_values, label=f'{measuring_elt} Growth Curve')
+
+        plt.xlabel('Time (Years)')
+        plt.ylabel('Value')
+        plt.title('Exponential Growth Curves for Different Measuring Elements')
+        plt.legend()
+        plt.tight_layout()  # Adjust layout for better spacing
 
         # Convert plot to base64
         img_buffer = io.BytesIO()
@@ -570,6 +588,9 @@ def submit_code():
         return render_template('userAccount.html', user_records=user_records, percentages=percentage_values,
                                percenTobe=percentage_values_to_be, growth_rate=percentage_growth_rate,
                                duration=duration_years, plot=img_str)
+
+
+
 
 
 
