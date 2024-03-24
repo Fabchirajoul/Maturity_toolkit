@@ -122,53 +122,50 @@
 
                     </div><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 
-
-
-
-                    <form action="/userSubmissionDataIntoTable" method="POST">
-
-                        <div>
-
-                            <h1 style="background-color: black;">UNIQUE MATURITY CODE: {{ random_text }}</h1>
-
-                            <input type="hidden" class="input_user" name="Unique_code_from_User"
-                                placeholder="Please enter yor unique maturity code here before answering the questions"
-                                value="{{ random_text }}">
-
-
-                        </div><br><br>
-
-                        <div>
-                            <table style="background-color: black;">
-                                <th>
-                                    <tr>
-                                  
-                                        <td>Basic</td>
-                                        <td>Reactive</td>
-                                        <td>Planned</td>
-                                        <td>Proactive</td>
-                                        <td>Resilent</td>
-                                    </tr>
-                
-                                </th>
-                                <tbody>
-                                    <tr>
-                                      
-                                        <td>An organisation's business strategies do not include Industry 4.0 and no roadmaps have been outlined.</td>
-                                        <td>Business strategies  include Industry 4.0, but no roadmaps have been outlined</td>
-                                        <td>Business strategies include Industry 4.0 and roadmaps have been outlined. However, there are no action plans towards implementation.</td>
-                                        <td>Business strategies include Industry 4.0 and roadmaps have been outlined. However, long-term action plans are ill-defined. </td>
-                                        <td>Business strategies include Industry 4.0 and comprehensive roadmaps have been outlined with short-, medium- and long-term action plans clearly defined.</td>
-                                    </tr>
-
-                                </tbody>
-
-                            </table>
-
-                        </div>
-
                         {% if data %}
-                        <table border="1" style="background-color: black;">
+
+                        <form action="/userSubmissionDataIntoTable" method="POST">
+
+                            <div>
+    
+                                <h1 style="background-color: black;">UNIQUE MATURITY CODE: {{ random_text }}</h1>
+    
+                                <input type="hidden" class="input_user" name="Unique_code_from_User"
+                                    placeholder="Please enter yor unique maturity code here before answering the questions"
+                                    value="{{ random_text }}">
+    
+    
+                            </div><br><br>
+    
+                            <div>
+                                <table style="background-color: black;">
+                                    <th>
+                                        <tr>
+                                      
+                                            <td>Basic</td>
+                                            <td>Reactive</td>
+                                            <td>Planned</td>
+                                            <td>Proactive</td>
+                                            <td>Resilent</td>
+                                        </tr>
+                    
+                                    </th>
+                                    <tbody>
+                                        <tr>
+                                          
+                                            <td>An organisation's business strategies do not include Industry 4.0 and no roadmaps have been outlined.</td>
+                                            <td>Business strategies  include Industry 4.0, but no roadmaps have been outlined</td>
+                                            <td>Business strategies include Industry 4.0 and roadmaps have been outlined. However, there are no action plans towards implementation.</td>
+                                            <td>Business strategies include Industry 4.0 and roadmaps have been outlined. However, long-term action plans are ill-defined. </td>
+                                            <td>Business strategies include Industry 4.0 and comprehensive roadmaps have been outlined with short-, medium- and long-term action plans clearly defined.</td>
+                                        </tr>
+    
+                                    </tbody>
+    
+                                </table>
+    
+                            </div>
+                        <table border="1" style="background-color: black;" class="item">
                             <thead>
                                 <tr>
                                     <th>MEASURING ELEMENT</th>
@@ -187,28 +184,28 @@
                                     <td>{{ row[2] }}</td>
                                     <td>{{ row[3] }}</td>
                                     <td>
-                                        <input type="hidden" name="Measuring_element_user[]" value="{{ row[0] }}">
-                                        <input type="hidden" name="Rting_User[]" value="{{ row[1] }}">
+                                        <input type="hidden" name="Measuring_element_user[]" value="{{ row[0] }}" class="input_user">
+                                        <input type="hidden" name="Rting_User[]" value="{{ row[1] }}" class="input_user">
                                         <input type="hidden" name="sub_category_for_user[]" value="{{ row[2] }}">
-                                        <input type="hidden" name="questions_user[]" value="{{ row[3] }}">
-                                        <select name="UserAnswerRating[]" class="input">
-                                            <option value="Selectanswer" disabled selected>Please choose an
-                                                answer</option>
-                                            <option value="1">Basic</option>
-                                            <option value="2">Reactive</option>
-                                            <option value="3">Planned</option>
-                                            <option value="4">Proactive</option>
-                                            <option value="5">Resilent</option>
+                                        <input type="hidden" name="questions_user[]" value="{{ row[3] }}" class="input_user">
+                                        <select name="UserAnswerRating[]" class="input_user" class="input_user">
+                                            <option class="input_user" value="Selectanswer" disabled selected>Select
+                                                answer "As Is"</option>
+                                            <option class="input_user" value="1">Basic</option>
+                                            <option class="input_user" value="2">Reactive</option>
+                                            <option class="input_user" value="3">Planned</option>
+                                            <option class="input_user" value="4">Proactive</option>
+                                            <option class="input_user" value="5">Resilent</option>
                                         </select>
                                     <td>
-                                        <select name="UserAnswerRatingToBe[]" class="input">
-                                            <option value="SelectanswerToBe" disabled selected>Please choose an
-                                                answer</option>
-                                            <option value="1">Basic</option>
-                                            <option value="2">Reactive</option>
-                                            <option value="3">Planned</option>
-                                            <option value="4">Proactive</option>
-                                            <option value="5">Resilent</option>
+                                        <select name="UserAnswerRatingToBe[]" class="input_user">
+                                            <option class="input_user" value="SelectanswerToBe" disabled selected>
+                                                Select answer "To Be"</option>
+                                            <option class="input_user" value="1">Basic</option>
+                                            <option class="input_user" value="2">Reactive</option>
+                                            <option class="input_user" value="3">Planned</option>
+                                            <option class="input_user" value="4">Proactive</option>
+                                            <option class="input_user" value="5">Resilent</option>
                                         </select>
                                     </td>
 
