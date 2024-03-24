@@ -444,14 +444,16 @@ def select_business_sector():
 def CombinedTiersForUser():
     if request.method == 'POST':
         UserSubmittedUniqueCode = request.form['Unique_code_from_User']
-        measuring_element_name_user = request.form.getlist('Measuring_element_user[]')
+        measuring_element_name_user = request.form.getlist(
+            'Measuring_element_user[]')
         Rating_User_MElt = request.form.getlist('Rting_User[]')
         subCategory_name_user = request.form.getlist('sub_category_for_user[]')
         SubCategoryQuestion_user = request.form.getlist('questions_user[]')
         QuestionAnswer_user = request.form.getlist('UserAnswerRating[]')
-        QuestionAnswer_userToBe = request.form.getlist('UserAnswerRatingToBe[]')
+        QuestionAnswer_userToBe = request.form.getlist(
+            'UserAnswerRatingToBe[]')
 
-        print(" TO BE",QuestionAnswer_userToBe[0])
+        print(" TO BE", QuestionAnswer_userToBe[0])
         print(" AS IS", QuestionAnswer_user[0])
 
         connection = sqlite3.connect('database.db')
@@ -460,8 +462,10 @@ def CombinedTiersForUser():
         for i in range(len(measuring_element_name_user)):
             for j in range(len(measuring_element_name_user)):
                 Rting_User = float(Rating_User_MElt[i])
-                UserAnswerRatingAsIs = float(QuestionAnswer_user[i])  # Use index i for UserAnswerRatingAsIs
-                UserAnswerRatingToBe = float(QuestionAnswer_userToBe[j])  # Use index j for UserAnswerRatingToBe
+                # Use index i for UserAnswerRatingAsIs
+                UserAnswerRatingAsIs = float(QuestionAnswer_user[i])
+                # Use index j for UserAnswerRatingToBe
+                UserAnswerRatingToBe = float(QuestionAnswer_userToBe[j])
                 MaxRatingUser = 5  # You may need to change this based on your requirement
 
             # Calculate the cumulative sums
@@ -473,8 +477,6 @@ def CombinedTiersForUser():
             print("As IS MULTIPLE: ", UserCumSumAsIs)
             print("TO BE MULTIPLE: ", UserCumSumToBe)
             print("EXPECTED MULTIPLE: ", ExpectedCumSum)
-           
-            
 
             # Insert data into the database
             cursor.execute('''
@@ -490,9 +492,9 @@ def CombinedTiersForUser():
     return render_template('userAccount.html')
 
 
-
 @app.route('/submit_code', methods=['POST'])
 def submit_code():
+
     if request.method == 'POST':
         unique_code = request.form['unique_code_user']
 
@@ -517,8 +519,8 @@ def submit_code():
         sum_user_cum_sum_t0_be = [record[3] for record in user_records]
 
         # Calculate percentage values
-        percentage_values = [round((user_cum_sum / expected_cum_sum) * 100, 2) if expected_cum_sum != 0 else 0
-                             for user_cum_sum, expected_cum_sum in zip(sum_user_cum_sum, sum_expected_cum_sum)]
+        percentage_values = [round((new / old) * 100, 2) if old != 0 else 0
+                             for new, old in zip(sum_user_cum_sum, sum_expected_cum_sum)]
 
         # Calculate percentage values for sum_user_cum_sum_to_be
         percentage_values_to_be = [round((user_cum_sum_to_be / expected_cum_sum) * 100, 2) if expected_cum_sum != 0 else 0
@@ -527,13 +529,48 @@ def submit_code():
 
         # Growth rate calculation
         percentage_growth_rate = [round(((new_value - old_value) / old_value) * 100, 2) if old_value != 0 else 0
-                                  for old_value, new_value in zip(sum_user_cum_sum, sum_user_cum_sum_t0_be)]
+                                  for old_value, new_value in zip(sum_user_cum_sum_t0_be, sum_expected_cum_sum)]
 
         # Calculate the duration in years
-        duration_years = [round(math.log(new_value / old_value) / math.log(1 + percentage_growth_rate / 100), 2)
+        duration_years = [round(math.log(new_value / old_value) / math.log(1 + percentage_growth_rate / 100), 4)
                           if percentage_growth_rate != 0 else 0
                           for old_value, new_value, percentage_growth_rate in
-                          zip(sum_user_cum_sum, sum_user_cum_sum_t0_be, percentage_growth_rate)]
+                          zip(sum_user_cum_sum_t0_be, sum_expected_cum_sum, percentage_growth_rate)]
+
+        # Check percentage_values range and assign feedback messages accordingly
+        feedback_messages = {}
+
+        for i in range(len(user_records)):
+            feedback_As_Is = None
+            feedback_To_Be = None
+            percentage_value = percentage_values[i]
+            percentage_value_to_be = percentage_values_to_be[i]
+
+            # Determine feedback for percentage_values
+            if 0 <= percentage_value <= 20:
+                feedback_As_Is = "Lagging Stage"
+            elif 21 <= percentage_value <= 40:
+                feedback_As_Is = "Emerging Stage"
+            elif 41 <= percentage_value <= 60:
+                feedback_As_Is = "Developing Stage"
+            elif 61 <= percentage_value <= 80:
+                feedback_As_Is = "Established Stage"
+            elif 81 <= percentage_value <= 100:
+                feedback_As_Is = "Advanced Stage"
+
+            # Determine feedback for percentage_values_to_be
+            if 0 <= percentage_value_to_be <= 20:
+                feedback_To_Be = "Lagging Stage"
+            elif 21 <= percentage_value_to_be <= 40:
+                feedback_To_Be = "Emerging Stage"
+            elif 41 <= percentage_value_to_be <= 60:
+                feedback_To_Be = "Developing Stage"
+            elif 61 <= percentage_value_to_be <= 80:
+                feedback_To_Be = "Established Stage"
+            elif 81 <= percentage_value_to_be <= 100:
+                feedback_To_Be = "Advanced Stage"
+
+            feedback_messages[user_records[i][0]] = (feedback_As_Is, feedback_To_Be)
 
         # Define the width of the bars
         bar_width = 0.3
@@ -542,24 +579,30 @@ def submit_code():
         indices = np.arange(len(measuring_elt_user))
 
         # Plotting
-        plt.figure(figsize=(12, 12))  # Increase figure width to accommodate x-labels
+        # Increase figure width to accommodate x-labels
+        plt.figure(figsize=(12, 12))
 
         # Create the first subplot for the bar plot
         plt.subplot(2, 1, 1)
 
         # Plot the bars for "MATURITY LEVEL 'WITH OTHER COMPANIES'"
-        plt.bar(indices - bar_width, sum_expected_cum_sum, width=bar_width, label='MATURITY LEVEL "WITH OTHER COMPANIES"')
+        plt.bar(indices - bar_width, sum_expected_cum_sum,
+                width=bar_width, label='MATURITY LEVEL "WITH OTHER COMPANIES"')
 
         # Plot the bars for "MATURITY LEVEL 'AS IS'"
-        plt.bar(indices, sum_user_cum_sum, width=bar_width, label='MATURITY LEVEL "AS IS"')
+        plt.bar(indices, sum_user_cum_sum, width=bar_width,
+                label='MATURITY LEVEL "AS IS"')
 
         # Plot the bars for "MATURITY LEVEL 'TO BE'"
-        plt.bar(indices + bar_width, sum_user_cum_sum_t0_be, width=bar_width, label='MATURITY LEVEL "TO BE"')
+        plt.bar(indices + bar_width, sum_user_cum_sum_t0_be,
+                width=bar_width, label='MATURITY LEVEL "TO BE"')
 
         plt.xlabel('MEASURING ELEMENT')
         plt.ylabel('MATURITY LEVEL')
-        plt.title('GRAPHICAL REPRESENTATION OF MATURITY LEVEL FOR DIFFERENT MEASURING ELEMENTS OF A BUSINESS SECTOR')
-        plt.xticks(indices, measuring_elt_user, rotation=90)  # Set x ticks to measuring elements
+        plt.title(
+            'GRAPHICAL REPRESENTATION OF MATURITY LEVEL FOR DIFFERENT MEASURING ELEMENTS OF A BUSINESS SECTOR')
+        # Set x ticks to measuring elements
+        plt.xticks(indices, measuring_elt_user, rotation=90)
         plt.legend()
 
         # Create the second subplot for the exponential growth curve
@@ -567,9 +610,12 @@ def submit_code():
 
         # Plot exponential growth curve for each measuring_elt_user
         for idx, measuring_elt in enumerate(measuring_elt_user):
-            x_values = np.linspace(0, duration_years[idx], 100)  # Assume duration_years is available
-            growth_rate = percentage_growth_rate[idx] / 100  # Convert percentage to decimal growth rate
-            y_values = sum_user_cum_sum_t0_be[idx] * np.exp(growth_rate * x_values)
+            # Assume duration_years is available
+            x_values = np.linspace(0, duration_years[idx], 100)
+            # Convert percentage to decimal growth rate
+            growth_rate = percentage_growth_rate[idx] / 100
+            y_values = sum_user_cum_sum_t0_be[idx] * \
+                np.exp(growth_rate * x_values)
             plt.plot(x_values, y_values, label=f'{measuring_elt} Growth Curve')
 
         plt.xlabel('Time (Years)')
@@ -587,12 +633,7 @@ def submit_code():
         # Render the template with the measuring elements data and their summed ExpectedCumSum
         return render_template('userAccount.html', user_records=user_records, percentages=percentage_values,
                                percenTobe=percentage_values_to_be, growth_rate=percentage_growth_rate,
-                               duration=duration_years, plot=img_str)
-
-
-
-
-
+                               duration=duration_years, plot=img_str, feedback_messages=feedback_messages)
 
 
 

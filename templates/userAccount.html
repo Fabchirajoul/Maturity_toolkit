@@ -18,7 +18,8 @@
             ,<div class="dashboard_main_admin">
                 <h1 class="item"><a href="" x-on:click="openUserAccount('select_your_business_sector')" class="item"
                         style="float: right;">USER CONTROL PANEL</a></h1>
-                <button class="create_user" x-on:click="openUserAccount('displayed_tiers_per_business_sector')">ENTER UNIQUE CODE</button>
+                <button class="create_user" x-on:click="openUserAccount('displayed_tiers_per_business_sector')">ENTER
+                    UNIQUE CODE</button>
                 <a href="/logout" class="item" style="float: right;">SIGN OUT</a>
             </div>
         </section><br>
@@ -49,33 +50,6 @@
 
                         </form><br><br><br>
 
-<!-- 
-                        <table border="1" style="background-color: black;">
-                            <thead>
-                                <tr>
-                                    <th>MEASURING ELEMENT</th>
-                                    <th>EXPECTED CUM SUM</th>
-                                    <th>CUM CUM SUM</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for user_records in user_records %}
-                                <tr>
-                                    <td>{{ user_records[0] }}</td>
-                                    <td>{{ user_records[1] }}</td>
-                                    <td>{{ user_records[2] }}</td>
-                                </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table> -->
-
-
-
-
-
-
-
-
                     </div>
 
                     <div x-show="select_your_business_sector">
@@ -93,8 +67,9 @@
                             <button type="submit" class="submit-btn">Submit</button>
                         </form>
 
-                        
-                        <button type="submit" class="submit-btn" x-on:click="view_maturity_analysis=!view_maturity_analysis">VIEW FEEDBACK ANALYSIS</button>
+
+                        <button type="submit" class="submit-btn"
+                            x-on:click="view_maturity_analysis=!view_maturity_analysis">VIEW FEEDBACK ANALYSIS</button>
                         <div x-show="view_maturity_analysis">
                             <h1 class="item">MATURITY ANALYSIS RESULTS</h1>
                             <table border="1" style="background-color: black;">
@@ -108,6 +83,8 @@
                                         <th>% "TO BE"</th>
                                         <th>GROWTH RATE</th>
                                         <th>DURATION</th>
+                                        <th>FEEDBACK "AS IS"</th>
+                                        <th>FEEDBACK "TO BE"</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -116,11 +93,15 @@
                                         <td>{{ user_records[i][0] }}</td>
                                         <td>{{ user_records[i][1] }}</td>
                                         <td>{{ user_records[i][2] }}</td>
-                                        <td>{{ percentages[i] }}</td> 
+                                        <td>{{ percentages[i] }}</td>
                                         <td>{{ user_records[i][3] }}</td>
-                                        <td>{{ percenTobe[i] }}</td> 
-                                        <td>{{ growth_rate[i] }}</td> 
-                                        <td>{{ duration[i] }}</td> 
+                                        <td>{{ percenTobe[i] }}</td>
+                                        <td>{{ growth_rate[i] }}</td>
+                                        <td>{{ duration[i] }}</td>
+                                        <td>{{ feedback_messages[user_records[i][0]][0] }}</td>
+                                        <!-- Feedback message for 'AS IS' -->
+                                        <td>{{ feedback_messages[user_records[i][0]][1] }}</td>
+                                        <!-- Feedback message for 'TO BE' -->
                                     </tr>
                                     {% endfor %}
                                 </tbody>
@@ -132,8 +113,7 @@
                             </div>
 
                             <div>
-                                <!-- Your other HTML content here -->
-                                <!-- <h1>Growth Curve dfghjkl</h1> -->
+
                                 <img src="data:image/png;base64,{{ growth_curve_plot }}">
                             </div>
                         </div>
@@ -157,6 +137,35 @@
 
 
                         </div><br><br>
+
+                        <div>
+                            <table style="background-color: black;">
+                                <th>
+                                    <tr>
+                                  
+                                        <td>Basic</td>
+                                        <td>Reactive</td>
+                                        <td>Planned</td>
+                                        <td>Proactive</td>
+                                        <td>Resilent</td>
+                                    </tr>
+                
+                                </th>
+                                <tbody>
+                                    <tr>
+                                      
+                                        <td>An organisation's business strategies do not include Industry 4.0 and no roadmaps have been outlined.</td>
+                                        <td>Business strategies  include Industry 4.0, but no roadmaps have been outlined</td>
+                                        <td>Business strategies include Industry 4.0 and roadmaps have been outlined. However, there are no action plans towards implementation.</td>
+                                        <td>Business strategies include Industry 4.0 and roadmaps have been outlined. However, long-term action plans are ill-defined. </td>
+                                        <td>Business strategies include Industry 4.0 and comprehensive roadmaps have been outlined with short-, medium- and long-term action plans clearly defined.</td>
+                                    </tr>
+
+                                </tbody>
+
+                            </table>
+
+                        </div>
 
                         {% if data %}
                         <table border="1" style="background-color: black;">
@@ -191,18 +200,18 @@
                                             <option value="4">Proactive</option>
                                             <option value="5">Resilent</option>
                                         </select>
-                                        <td>
-                                            <select name="UserAnswerRatingToBe[]" class="input">
-                                                <option value="SelectanswerToBe" disabled selected>Please choose an
-                                                    answer</option>
-                                                <option value="1">Basic</option>
-                                                <option value="2">Reactive</option>
-                                                <option value="3">Planned</option>
-                                                <option value="4">Proactive</option>
-                                                <option value="5">Resilent</option>
-                                            </select>
-                                        </td>
-                                        
+                                    <td>
+                                        <select name="UserAnswerRatingToBe[]" class="input">
+                                            <option value="SelectanswerToBe" disabled selected>Please choose an
+                                                answer</option>
+                                            <option value="1">Basic</option>
+                                            <option value="2">Reactive</option>
+                                            <option value="3">Planned</option>
+                                            <option value="4">Proactive</option>
+                                            <option value="5">Resilent</option>
+                                        </select>
+                                    </td>
+
                                     </td>
                                 </tr>
                                 {% endfor %}
