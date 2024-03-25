@@ -86,10 +86,44 @@ def create_user_submission_record_table():
     connection.commit()
     connection.close()
 
+def create_final_feedback_data():
+    connection = sqlite3.connect('database.db')
+    cursor = connection.cursor()
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS UserSubmittedFeddback (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            UniqueCodeUser TEXT,
+            name TEXT,
+            MeasuringEltUser TEXT,
+            RatingUser INTEGER,
+            SUbCategoryUser TEXT,
+            QuestionsUser TEXT,
+            AnswersUserAsIs TEXT,
+            AnswersUserToBe TEXT,   
+            MaxRatingUser INTEGER DEFAULT 5,
+            ExpectedCumSum INTEGER,
+            UserCumSumAsIs INTEGER,
+            UserCumSumToBe INTEGER,
+            OtherCompanies INTEGER,
+            MaturityAsIs INTEGER,
+            PercentMaturityAsIs INTEGER,
+            MaturityToBe INTEGER,
+            PercentMaturityToBe INTEGER,
+            GrowthRate INTEGER
+            Duration INTEGER
+            FeedbackAsIs TEXT,
+            FeedbackTobe TEXT 
+            
+        )
+    ''')
+    connection.commit()
+    connection.close()
+
 
 create_user_table()
 create_combined_table()
 create_user_submission_record_table()
+create_final_feedback_data()
 
 
 @app.route('/')
@@ -394,7 +428,7 @@ def upload_file():
 
 def process_csv(csv_file):
     connection = sqlite3.connect('database.db')
-    print("Connection established successfully for csv")  # Debugging
+
     cursor = connection.cursor()
 
     # Convert file object to text mode
@@ -421,27 +455,40 @@ def generate_random_text():
 
 @app.route('/select_business_sector_user', methods=['GET', 'POST'])
 def select_business_sector():
-    # Corrected this line
-    selected_sector = request.form['business_sector_user']
-    if selected_sector:
-        # Fetch data from CombinedTable based on selected business sector
-        connection = sqlite3.connect('database.db')
-        cursor = connection.cursor()
-        cursor.execute(
-            "SELECT MeasuringElt, Rating, SubCategory, Questions FROM CombinedTable WHERE BusinessSector=?", (selected_sector,))
-        sector_data = cursor.fetchall()
-        connection.close()
+    erro_message_user_business_sector = None
 
-        # Generate random text
-        random_text = generate_random_text()
-        return render_template('userAccount.html', data=sector_data, random_text=random_text)
-    else:
-        # Redirect back to administrator page
-        return redirect('/userSubmissionDataIntoTable')
+    if request.method == 'POST':
+        # Check if 'business_sector_user' exists in the form data
+        if 'business_sector_user' in request.form:
+            selected_sector = request.form['business_sector_user']
+            
+            if selected_sector:
+                # Fetch data from CombinedTable based on selected business sector
+                connection = sqlite3.connect('database.db')
+                cursor = connection.cursor()
+                cursor.execute(
+                    "SELECT MeasuringElt, Rating, SubCategory, Questions FROM CombinedTable WHERE BusinessSector=?", (selected_sector,))
+                sector_data = cursor.fetchall()
+                connection.close()
+
+                # Generate random text
+                random_text = generate_random_text()
+                return render_template('userAccount.html', data=sector_data, random_text=random_text, BusinessError=erro_message_user_business_sector)
+            else:
+                # Handle case when no sector is selected
+                erro_message_user_business_sector = "Please select a business sector"
+        else:
+            # Handle case when 'business_sector_user' is not in form data
+            erro_message_user_business_sector = "Invalid request. Please try again after selecting a business sector."
+
+    # Redirect back to administrator page or display error message
+    return render_template('userAccount.html', BusinessError=erro_message_user_business_sector)
+
 
 
 @app.route('/userSubmissionDataIntoTable', methods=['GET', 'POST'])
 def CombinedTiersForUser():
+    error_display_asistobe = None  # Initialize error_display_asistobe
     if request.method == 'POST':
         UserSubmittedUniqueCode = request.form['Unique_code_from_User']
         measuring_element_name_user = request.form.getlist(
@@ -453,47 +500,50 @@ def CombinedTiersForUser():
         QuestionAnswer_userToBe = request.form.getlist(
             'UserAnswerRatingToBe[]')
 
-        print(" TO BE", QuestionAnswer_userToBe[0])
-        print(" AS IS", QuestionAnswer_user[0])
+        # Check if the lengths of QuestionAnswer_user and QuestionAnswer_userToBe are the same
+        if not QuestionAnswer_user or not QuestionAnswer_userToBe:
+            error_display_asistobe = "An error occurred. Please make sure to select an answer for every question before submitting your answers."
+            print("First Error message:", error_display_asistobe)  # Check if the error message is set correctly
+        else:
+            connection = sqlite3.connect('database.db')
+            cursor = connection.cursor()
 
-        connection = sqlite3.connect('database.db')
-        cursor = connection.cursor()
-
-        for i in range(len(measuring_element_name_user)):
-            for j in range(len(measuring_element_name_user)):
+            for i in range(len(measuring_element_name_user)):
                 Rting_User = float(Rating_User_MElt[i])
                 # Use index i for UserAnswerRatingAsIs
                 UserAnswerRatingAsIs = float(QuestionAnswer_user[i])
                 # Use index j for UserAnswerRatingToBe
-                UserAnswerRatingToBe = float(QuestionAnswer_userToBe[j])
+                UserAnswerRatingToBe = float(QuestionAnswer_userToBe[i])
                 MaxRatingUser = 5  # You may need to change this based on your requirement
 
-            # Calculate the cumulative sums
-            ExpectedCumSum = Rting_User * MaxRatingUser
-            UserCumSumAsIs = Rting_User * UserAnswerRatingAsIs
-            UserCumSumToBe = Rting_User * UserAnswerRatingToBe
-            # UserCumSumToBe = Rting_User * 5
+                # Calculate the cumulative sums
+                ExpectedCumSum = Rting_User * MaxRatingUser
+                UserCumSumAsIs = Rting_User * UserAnswerRatingAsIs
+                UserCumSumToBe = Rting_User * UserAnswerRatingToBe
 
-            print("As IS MULTIPLE: ", UserCumSumAsIs)
-            print("TO BE MULTIPLE: ", UserCumSumToBe)
-            print("EXPECTED MULTIPLE: ", ExpectedCumSum)
+                # Insert data into the database
+                cursor.execute('''
+                        INSERT INTO UserSubmissionRecord (UniqueCodeUser, MeasuringEltUser, RatingUser, SUbCategoryUser, QuestionsUser, AnswersUserAsIs, AnswersUserToBe, MaxRatingUser, ExpectedCumSum, UserCumSumAsIs, UserCumSumToBe)
+                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                    ''', (UserSubmittedUniqueCode, measuring_element_name_user[i], Rting_User, subCategory_name_user[i], SubCategoryQuestion_user[i], QuestionAnswer_user[i], QuestionAnswer_userToBe[i], MaxRatingUser, ExpectedCumSum, UserCumSumAsIs, UserCumSumToBe))
+                
+            connection.commit()
+            connection.close()
 
-            # Insert data into the database
-            cursor.execute('''
-                INSERT INTO UserSubmissionRecord (UniqueCodeUser, MeasuringEltUser, RatingUser, SUbCategoryUser, QuestionsUser, AnswersUserAsIs, AnswersUserToBe, MaxRatingUser, ExpectedCumSum, UserCumSumAsIs, UserCumSumToBe)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-            ''', (UserSubmittedUniqueCode, measuring_element_name_user[i], Rting_User, subCategory_name_user[i], SubCategoryQuestion_user[i], QuestionAnswer_user[i], QuestionAnswer_userToBe[j], MaxRatingUser, ExpectedCumSum, UserCumSumAsIs, UserCumSumToBe))
+            return redirect('/userSubmissionDataIntoTable')
 
-        connection.commit()
-        connection.close()
+    print("Second Error message:", error_display_asistobe)  # Check if the error message is set correctly
+    return render_template('userAccount.html', error_display_asistobe=error_display_asistobe)
 
-        return redirect('/userSubmissionDataIntoTable')
 
-    return render_template('userAccount.html')
+
+
+
 
 
 @app.route('/submit_code', methods=['POST'])
 def submit_code():
+    error_message = None  # Initialize error message
 
     if request.method == 'POST':
         unique_code = request.form['unique_code_user']
@@ -508,9 +558,12 @@ def submit_code():
             GROUP BY MeasuringEltUser
         ''', (unique_code,))
         user_records = cursor.fetchall()
-        print("These are all the records", user_records)
-        print("first record", user_records[0])
+
         connection.close()
+
+        if not unique_code:
+            error_message = "Please go back and insert your unique code number"
+            
 
         # Extract data for plotting
         measuring_elt_user = [record[0] for record in user_records]
@@ -562,13 +615,13 @@ def submit_code():
             if 0 <= percentage_value_to_be <= 20:
                 feedback_To_Be = "Lagging Stage"
             elif 21 <= percentage_value_to_be <= 40:
-                feedback_To_Be = "Emerging Stage"
+                feedback_To_Be = "Emerging Stage\n\nInitial implementation of Industry 4.0 technologies\n\nNo integration yet\n\nPhysical systems can be represented virtually"
             elif 41 <= percentage_value_to_be <= 60:
-                feedback_To_Be = "Developing Stage"
+                feedback_To_Be = "Developing Stage\n\nVertical integration from shop floor to ERP level\n\nStandardisation of processes and operations"
             elif 61 <= percentage_value_to_be <= 80:
-                feedback_To_Be = "Established Stage"
+                feedback_To_Be = "Established Stage\n\nHorizontal integration across the value chain\n\nApplication of Industry 4.0 technologies such Big Data and artificial intelligence."
             elif 81 <= percentage_value_to_be <= 100:
-                feedback_To_Be = "Advanced Stage"
+                feedback_To_Be = "Advanced Stage\n\n With a full end-to-end system integration\n\n Having a continuous system\n\n With a Smart and autonomous optimisation"
 
             feedback_messages[user_records[i][0]] = (feedback_As_Is, feedback_To_Be)
 
@@ -633,7 +686,7 @@ def submit_code():
         # Render the template with the measuring elements data and their summed ExpectedCumSum
         return render_template('userAccount.html', user_records=user_records, percentages=percentage_values,
                                percenTobe=percentage_values_to_be, growth_rate=percentage_growth_rate,
-                               duration=duration_years, plot=img_str, feedback_messages=feedback_messages)
+                               duration=duration_years, plot=img_str, feedback_messages=feedback_messages, error_message=error_message)
 
 
 

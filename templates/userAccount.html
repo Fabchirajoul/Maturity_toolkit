@@ -20,6 +20,7 @@
                         style="float: right;">USER CONTROL PANEL</a></h1>
                 <button class="create_user" x-on:click="openUserAccount('displayed_tiers_per_business_sector')">ENTER
                     UNIQUE CODE</button>
+                <button class="create_user" x-on:click="openUserAccount('user_instructions')">INSTRUCTIONS</button>
                 <a href="/logout" class="item" style="float: right;">SIGN OUT</a>
             </div>
         </section><br>
@@ -48,7 +49,57 @@
 
                             <button type="submit" class="submit-btn">SUBMIT CODE</button>
 
+
+
                         </form><br><br><br>
+
+
+
+                    </div>
+
+                    <div x-show="user_instructions">
+
+                        <br><br>
+                        <table class="item">
+                            <tr>
+                                <td>S/N</td>
+                                <td>ACTION</td>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>SELECT AND SUBMIT A BUSINESS SECTOR</td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>COPY AND SAVE YOUR UNIQUE CODE</td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>ANSWER THE "AS IS" AND "TO BE"</td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td>SUBMIT THE ANSWERS</td>
+                            </tr>
+                            <tr>
+                                <td>5</td>
+                                <td>CLICK ON THE "ENTER UNIQUE CODE BUTTON"</td>
+                            </tr>
+
+                            <tr>
+                                <td>6</td>
+                                <td>ENTER AND SUBMIT THE COPIED UNIQUE CODE IN THE TEXT FIELD</td>
+                            </tr>
+
+                            <tr>
+                                <td>7</td>
+                                <td>CLICK ON THE "VIEW FEEDBACK ANALYSIS"</td>
+                            </tr>
+                        </table>
+
+
+
+
 
                     </div>
 
@@ -66,6 +117,27 @@
                             </select>
                             <button type="submit" class="submit-btn">Submit</button>
                         </form>
+                        <div>
+                            {% if BusinessError %}
+                            <p class="error">{{ BusinessError }}</p>
+                            {% endif %}
+                        </div>
+
+                        <div>
+                            {% if error_message %}
+                            <p class="error">{{ error_message }}</p>
+                            {% endif %}
+
+                        </div>
+
+                        <div>
+                            {% if error_display_asistobe %}
+                            <p class="error">{{ error_display_asistobe }}</p>
+                            {% endif %}
+
+                        </div>
+
+
 
 
                         <button type="submit" class="submit-btn"
@@ -122,49 +194,55 @@
 
                     </div><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 
-                        {% if data %}
+                    {% if data %}
 
-                        <form action="/userSubmissionDataIntoTable" method="POST">
+                    <form action="/userSubmissionDataIntoTable" method="POST">
 
-                            <div>
-    
-                                <h1 style="background-color: black;">UNIQUE MATURITY CODE: {{ random_text }}</h1>
-    
-                                <input type="hidden" class="input_user" name="Unique_code_from_User"
-                                    placeholder="Please enter yor unique maturity code here before answering the questions"
-                                    value="{{ random_text }}">
-    
-    
-                            </div><br><br>
-    
-                            <div>
-                                <table style="background-color: black;">
-                                    <th>
-                                        <tr>
-                                      
-                                            <td>Basic</td>
-                                            <td>Reactive</td>
-                                            <td>Planned</td>
-                                            <td>Proactive</td>
-                                            <td>Resilent</td>
-                                        </tr>
-                    
-                                    </th>
-                                    <tbody>
-                                        <tr>
-                                          
-                                            <td>An organisation's business strategies do not include Industry 4.0 and no roadmaps have been outlined.</td>
-                                            <td>Business strategies  include Industry 4.0, but no roadmaps have been outlined</td>
-                                            <td>Business strategies include Industry 4.0 and roadmaps have been outlined. However, there are no action plans towards implementation.</td>
-                                            <td>Business strategies include Industry 4.0 and roadmaps have been outlined. However, long-term action plans are ill-defined. </td>
-                                            <td>Business strategies include Industry 4.0 and comprehensive roadmaps have been outlined with short-, medium- and long-term action plans clearly defined.</td>
-                                        </tr>
-    
-                                    </tbody>
-    
-                                </table>
-    
-                            </div>
+                        <div>
+
+                            <h1 style="background-color: black;">UNIQUE MATURITY CODE: {{ random_text }}</h1>
+
+                            <input type="hidden" class="input_user" name="Unique_code_from_User"
+                                placeholder="Please enter yor unique maturity code here before answering the questions"
+                                value="{{ random_text }}">
+
+
+                        </div><br><br>
+
+                        <div>
+                            <table style="background-color: black;">
+                                <th>
+                                    <tr>
+
+                                        <td>Basic</td>
+                                        <td>Reactive</td>
+                                        <td>Planned</td>
+                                        <td>Proactive</td>
+                                        <td>Resilent</td>
+                                    </tr>
+
+                                </th>
+                                <tbody>
+                                    <tr>
+
+                                        <td>An organisation's business strategies do not include Industry 4.0 and no
+                                            roadmaps have been outlined.</td>
+                                        <td>Business strategies include Industry 4.0, but no roadmaps have been outlined
+                                        </td>
+                                        <td>Business strategies include Industry 4.0 and roadmaps have been outlined.
+                                            However, there are no action plans towards implementation.</td>
+                                        <td>Business strategies include Industry 4.0 and roadmaps have been outlined.
+                                            However, long-term action plans are ill-defined. </td>
+                                        <td>Business strategies include Industry 4.0 and comprehensive roadmaps have
+                                            been outlined with short-, medium- and long-term action plans clearly
+                                            defined.</td>
+                                    </tr>
+
+                                </tbody>
+
+                            </table>
+
+                        </div>
                         <table border="1" style="background-color: black;" class="item">
                             <thead>
                                 <tr>
@@ -184,10 +262,13 @@
                                     <td>{{ row[2] }}</td>
                                     <td>{{ row[3] }}</td>
                                     <td>
-                                        <input type="hidden" name="Measuring_element_user[]" value="{{ row[0] }}" class="input_user">
-                                        <input type="hidden" name="Rting_User[]" value="{{ row[1] }}" class="input_user">
+                                        <input type="hidden" name="Measuring_element_user[]" value="{{ row[0] }}"
+                                            class="input_user">
+                                        <input type="hidden" name="Rting_User[]" value="{{ row[1] }}"
+                                            class="input_user">
                                         <input type="hidden" name="sub_category_for_user[]" value="{{ row[2] }}">
-                                        <input type="hidden" name="questions_user[]" value="{{ row[3] }}" class="input_user">
+                                        <input type="hidden" name="questions_user[]" value="{{ row[3] }}"
+                                            class="input_user">
                                         <select name="UserAnswerRating[]" class="input_user" class="input_user">
                                             <option class="input_user" value="Selectanswer" disabled selected>Select
                                                 answer "As Is"</option>
@@ -214,9 +295,11 @@
                                 {% endfor %}
                             </tbody>
                         </table>
-                        <button class="submit-btn">SUBMIT</button>
+
+
+                        <button class="submit-btn">SUBMIT ANSWERS</button>
                         {% else %}
-                        <p>No data available for the selected sector.</p>
+
                         {% endif %}
                     </form>
 

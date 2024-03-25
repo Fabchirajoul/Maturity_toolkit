@@ -47,8 +47,8 @@
                         <h1 class="item">MAX RATING </h1><br>
 
                         <div class="create_delete_update_buttons">
-                            <button class="submit-btn" x-on:click="openHome('Create_Sub_Category')">CREATE</button>
-                            <button class="submit-btn" x-on:click="openHome('Update_Sub_Category')">UPDATE</button>
+                            <button class="submit-btn" x-on:click="openHome('Create_Sub_Category')">INSERT</button>
+                            <button class="submit-btn" x-on:click="openHome('Update_Sub_Category')">EDIT</button>
                             <!-- <button class="submit-btn" x-on:click="openHome('start_game')">DELETE</button> -->
                         </div>
                     </div>
@@ -117,11 +117,12 @@
                     <!-- Creating Business sector starts here  -->
                     <!-- Creating a Business Sector starts here  -->
                     <div x-show="Create_Business_Sector">
-                        <h1 class="item">CREATE A BUSINESS SECTOR</h1><br><br>
+                        <hr>
+                        <h1 class="item">UPLOAD CSV INTO THE DATABASE</h1><br><br>
                         <h1>UPLOAD CSV FILE</h1>
                         <form action="/" method="post" enctype="multipart/form-data">
                             <input type="file" name="file" accept=".csv">
-                            <button type="submit">Upload</button>
+                            <button type="submit" class="upload-btn">Upload</button>
                         </form>
 
                         <div class="item">
@@ -135,6 +136,8 @@
                             {% endif %}
                             {% endwith %}
                         </div>
+
+                        <hr>
                         <!-- To display all user accounts  -->
 
                         <br><br><br>

@@ -97,6 +97,19 @@ body {
   color: orange;
 }
 
+.upload-btn {
+  width: auto;
+  height: 30px;
+  cursor: pointer;
+  transition: all 0.3s;
+  border-radius: 10px;
+}
+
+.upload-btn:hover:not([disabled]) {
+  background: blue;
+  color: orange;
+}
+
 /* First dashboard for the admininstrator.html  */
 .dashboard_main_admin {
   width: 1200px;

@@ -23,6 +23,7 @@ document.addEventListener("alpine:init", () => {
       // userAccount logics
       select_your_business_sector: true,
       displayed_tiers_per_business_sector: false,
+      user_instructions: false,
       // choose_sub_category: false,
 
       // toolkit computation
@@ -31,6 +32,7 @@ document.addEventListener("alpine:init", () => {
       openUserAccount(UserSection) {
         this.select_your_business_sector = true;
         this.displayed_tiers_per_business_sector = false;
+        this.user_instructions=false;
         // this.choose_sub_category = false;
         // this.Maturity_toolkit_feedback = false;
         
@@ -38,10 +40,14 @@ document.addEventListener("alpine:init", () => {
         if (UserSection === "displayed_tiers_per_business_sector") {
           this.select_your_business_sector = false;
           this.displayed_tiers_per_business_sector = true;
+          this.user_instructions=false;
           
  
           
-        } else if (UserSection === "choose_sub_category") {
+        } else if (UserSection === "user_instructions") {
+          this.select_your_business_sector = false;
+          this.displayed_tiers_per_business_sector = false;
+          this.user_instructions=true;
   
           
         } else if (UserSection === "Maturity_toolkit_feedback") {
