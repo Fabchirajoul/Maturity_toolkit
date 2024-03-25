@@ -16,7 +16,7 @@
 
         <section>
             ,<div class="dashboard_main_admin">
-                <h1 class="item"><a href="" x-on:click="openUserAccount('select_your_business_sector')" class="item"
+                <h1 class="item"><a href="/select_business_sector_user"  class="item"
                         style="float: right;">USER CONTROL PANEL</a></h1>
                 <button class="create_user" x-on:click="openUserAccount('displayed_tiers_per_business_sector')">ENTER
                     UNIQUE CODE</button>
@@ -96,6 +96,9 @@
                                 <td>CLICK ON THE "VIEW FEEDBACK ANALYSIS"</td>
                             </tr>
                         </table>
+                        <br><br>
+
+                        <a href="/select_business_sector_user" class="item" style="float: right;">GET STARTED</a>
 
 
 
@@ -184,7 +187,7 @@
                                 <img src="data:image/png;base64,{{ plot }}" alt="Plot">
                             </div>
 
-                            <div>
+                            <div class="item">
 
                                 <img src="data:image/png;base64,{{ growth_curve_plot }}">
                             </div>
