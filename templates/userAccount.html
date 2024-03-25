@@ -149,17 +149,24 @@
                             <h1 class="item">MATURITY ANALYSIS RESULTS</h1>
                             <table border="1" style="background-color: black;">
                                 <thead>
+
+                                    <tr>
+                                        <th border="0"></th>
+                                        <th border="0"></th>
+                                        <th colspan="3">MATURITY AS IS WRT TO OTHER COMPANIES</th>
+                                        <th colspan="3">MATURITY TO BE WRT TO OTHER COMPANIES</th>
+                                    </tr>
                                     <tr>
                                         <th>MEASURING ELEMENT</th>
                                         <th>OTHER COMPANIES</th>
                                         <th>MATURITY "AS IS"</th>
                                         <th>% "AS IS"</th>
+                                        <th>FEEDBACK "AS IS"</th>
                                         <th>MATURITY "TO BE"</th>
                                         <th>% "TO BE"</th>
+                                        <th>FEEDBACK "TO BE"</th>
                                         <th>GROWTH RATE</th>
                                         <th>DURATION</th>
-                                        <th>FEEDBACK "AS IS"</th>
-                                        <th>FEEDBACK "TO BE"</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -169,14 +176,12 @@
                                         <td>{{ user_records[i][1] }}</td>
                                         <td>{{ user_records[i][2] }}</td>
                                         <td>{{ percentages[i] }}</td>
+                                        <td>{{ feedback_messages[user_records[i][0]][0] }}</td>
                                         <td>{{ user_records[i][3] }}</td>
                                         <td>{{ percenTobe[i] }}</td>
+                                        <td>{{ feedback_messages[user_records[i][0]][1] }}</td>
                                         <td>{{ growth_rate[i] }}</td>
                                         <td>{{ duration[i] }}</td>
-                                        <td>{{ feedback_messages[user_records[i][0]][0] }}</td>
-                                        <!-- Feedback message for 'AS IS' -->
-                                        <td>{{ feedback_messages[user_records[i][0]][1] }}</td>
-                                        <!-- Feedback message for 'TO BE' -->
                                     </tr>
                                     {% endfor %}
                                 </tbody>
