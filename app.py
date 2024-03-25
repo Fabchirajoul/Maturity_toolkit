@@ -625,7 +625,7 @@ def submit_code():
             elif 68 <= percentage_value_to_be <= 84:
                 feedback_To_Be = "Stage 4:\nLevel Predictable\nHorizontal integration across the value chain.\nApplication of Industry 4.0 technologies such Big Data and artificial intelligence.\nAutonomous optimisation."
             elif 85 <= percentage_value_to_be <= 100:
-                 feedback_To_Be = "Stage 5:<br>Level Optimizing\n>End-to-end integration.\nContinuous improvement.\nSmart and autonomous optimisation."
+                 feedback_To_Be = "Stage 5:\nLevel Optimizing\nEnd-to-end integration.\nContinuous improvement.\nSmart and autonomous optimisation."
 
 
             feedback_messages[user_records[i][0]] = (feedback_As_Is, feedback_To_Be)
