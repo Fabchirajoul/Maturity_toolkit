@@ -600,28 +600,33 @@ def submit_code():
             percentage_value_to_be = percentage_values_to_be[i]
 
             # Determine feedback for percentage_values
-            if 0 <= percentage_value <= 20:
-                feedback_As_Is = "Lagging Stage"
-            elif 21 <= percentage_value <= 40:
-                feedback_As_Is = "Emerging Stage"
-            elif 41 <= percentage_value <= 60:
-                feedback_As_Is = "Developing Stage"
-            elif 61 <= percentage_value <= 80:
-                feedback_As_Is = "Established Stage"
-            elif 81 <= percentage_value <= 100:
-                feedback_As_Is = "Advanced Stage"
+            if 0 <= percentage_value <= 16:
+                feedback_As_Is = "Stage 0:, Level: Incomplete, Aspect practices are yet to be implemented or incomplete, Organisation only performs essential operations."
+            elif 17 <= percentage_value <= 33:
+                feedback_As_Is = "Stage 1, Level Performed, Aspect practices are fully implemented. Transition to Industry 4.0 has commenced"
+            elif 34 <= percentage_value <= 50:
+                feedback_As_Is = "Stage 2, level Managed, Initial implementation of Industry 4.0 technologies.No integration yet.Physical systems can be represented virtually"
+            elif 51 <= percentage_value <= 67:
+                feedback_As_Is = "Stage 3: Level: Established, Vertical integration from shop floor to ERP level, Standardisation of processes and operations"
+            elif 68 <= percentage_value <= 84:
+                feedback_As_Is = "Stage 4: Level: Predictable, Horizontal integration across the value chain.Application of Industry 4.0 technologies such Big Data and artificial intelligence.autonomous optimisation"
+            elif 85 <= percentage_value <= 100:
+                feedback_As_Is = "Stage 5: Level: Optimizing, End-to-end integration.Continuous improvement.Smart and autonomous optimisation."
 
             # Determine feedback for percentage_values_to_be
-            if 0 <= percentage_value_to_be <= 20:
-                feedback_To_Be = "Lagging Stage"
-            elif 21 <= percentage_value_to_be <= 40:
-                feedback_To_Be = "Emerging Stage\n\nInitial implementation of Industry 4.0 technologies\n\nNo integration yet\n\nPhysical systems can be represented virtually"
-            elif 41 <= percentage_value_to_be <= 60:
-                feedback_To_Be = "Developing Stage\n\nVertical integration from shop floor to ERP level\n\nStandardisation of processes and operations"
-            elif 61 <= percentage_value_to_be <= 80:
-                feedback_To_Be = "Established Stage\n\nHorizontal integration across the value chain\n\nApplication of Industry 4.0 technologies such Big Data and artificial intelligence."
-            elif 81 <= percentage_value_to_be <= 100:
-                feedback_To_Be = "Advanced Stage\n\n With a full end-to-end system integration\n\n Having a continuous system\n\n With a Smart and autonomous optimisation"
+            if 0 <= percentage_value_to_be <= 16:
+                feedback_To_Be = "Stage 0:\nLevel: Incomplete\nAspect practices are yet to be implemented or incomplete\nOrganisation only performs essential operations."
+            elif 17 <= percentage_value_to_be <= 33:
+                feedback_To_Be = "Stage 1:\nLevel Performed\nAspect practices are fully implemented.\nTransition to Industry 4.0 has commenced."
+            elif 34 <= percentage_value_to_be <= 50:
+                feedback_To_Be = "Stage 2:\nLevel Managed\nInitial implementation of Industry 4.0 technologies.\nNo integration yet.\nPhysical systems can be represented virtually."
+            elif 51 <= percentage_value_to_be <= 67:
+                feedback_To_Be = "Stage 3:\nLevel Established\nVertical integration from shop floor to ERP level.\nStandardisation of processes and operations."
+            elif 68 <= percentage_value_to_be <= 84:
+                feedback_To_Be = "Stage 4:\nLevel Predictable\nHorizontal integration across the value chain.\nApplication of Industry 4.0 technologies such Big Data and artificial intelligence.\nAutonomous optimisation."
+            elif 85 <= percentage_value_to_be <= 100:
+                 feedback_To_Be = "Stage 5:<br>Level Optimizing<\br>End-to-end integration.\nContinuous improvement.\nSmart and autonomous optimisation."
+
 
             feedback_messages[user_records[i][0]] = (feedback_As_Is, feedback_To_Be)
 
