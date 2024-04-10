@@ -1,0 +1,195 @@
+﻿id,BusinessSector,Business Functional,MeasuringElt,Rating,SUbCategory,Questions,Answers ,RateAnswer ,MAXIMUM RATING
+1,MINING,"Exploration and Geology, Mining Operations,Health, Safety, and Environment (HSE),Supply Chain and Logistics,Finance and Accounting,Corporate Development and Strategy",Data Utilization and Analytics,,Data Collection,,Basic,1,5
+2,MINING,"Exploration and Geology,Mining Operations,Health, Safety, and Environment (HSE),Supply Chain and Logistics,Finance and Accounting,Corporate Development and Strategy",,,Data Storage,,Basic,1,5
+3,MINING,"Exploration and Geology,Mining Operations,Health, Safety, and Environment (HSE),Supply Chain and Logistics,Finance and Accounting,Corporate Development and Strategy",,,Data Management,,Reactive,2,5
+4,MINING,"Exploration and Geology,Mining Operations,Health, Safety, and Environment (HSE),Supply Chain and Logistics,Finance and Accounting,Corporate Development and Strategy",,,Data Analysis,,Planned,3,5
+5,MINING,"Exploration and Geology,Mining Operations,Health, Safety, and Environment (HSE),Supply Chain and Logistics,Finance and Accounting,Corporate Development and Strategy",,,Use of ML,,Proactive,4,5
+6,MINING,Mining Operations,Automation and Robotics,,Automation of the drilling production process,,Resilent,5,5
+7,MINING,Mining Operations,,,"Utilization of advanced production technologies e.g., additive manufacturing",,,,
+8,MINING,Mining Operations,,,Automation of the blasting production process,,Basic,1,5
+9,MINING,Mining Operations,,,Automation of the loading production process,,Reactive,2,5
+10,MINING,Mining Operations,,,Use of digital device for seismicity measurement for geotechnical analysis,,,,
+11,MINING,Mining Operations,,,Use of digital device and technology in ascertaining rock properties for geotechnical analysis,,,,
+12,MINING,Mining Operations,,,Use of technology for the loading and hauling and hoisting fuel cost,,,,
+13,MINING,Mining Operations,,,Stability risk analysis,,,,
+14,MINING,Mining Operations,,,Continuous geotechnical monitoring,,,,
+15,MINING,Mining Operations,,,Automating the type of mining method as per the rock quality,,,,
+16,MINING,Mining Operations,,,Digital device in slope geometry,,,,
+17,MINING,Mining Operations,,,Automation of the hauling production process,,Planned,3,5
+18,MINING,Mining Operations,,,Debottlenecking,,,,
+19,MINING,Mining Operations,,,Value Chain Visualisation,,,,
+20,MINING,Mining Operations,,,Pit to Port,,,,
+21,MINING,Mining Operations,,,Automation of the hoisting production process,,Proactive,4,5
+22,MINING,Mining Operations,Internet of Things (IoT) Integration,,Equipment performance,,Resilent,5,5
+23,MINING,Mining Operations,,,Environmental conditions,,Basic,1,5
+24,MINING,Mining Operations,,,digital communication Utilization with stakeholders,,,,
+25,MINING,Mining Operations,,,"Collect, update, and distribute project documents through digital platform",,,,
+26,MINING,Mining Operations,,,"Computer-aided calculation, optimization, and simulation",,,,
+27,MINING,Mining Operations,,,"Utilize IoT-solutions, advanced analytics, or artificial intelligence",,,,
+28,MINING,Mining Operations,,,Digitally monitor problem issues and solving process,,,,
+29,MINING,Mining Operations,,,Decision making,,Planned,3,5
+30,MINING,Mining Operations,Internet of Things (IoT) Integration,,Workflow optimization,,Proactive,4,5
+31,MINING,"Mining Operations,Health, Safety, and Environment (HSE),Processing and Metallurgy,Supply Chain and Logistics",Digital Twin Technologies,,Predictive Maintenance,,Resilent,5,5
+32,MINING,"Mining Operations,Health, Safety, and Environment (HSE),Processing and Metallurgy,Supply Chain and Logistics",,,Asset Optimization,,Basic,1,5
+33,MINING,"Mining Operations,Health, Safety, and Environment (HSE),Processing and Metallurgy,Supply Chain and Logistics",Digital Twin Technologies,,Power Plant Simulation,,Reactive,2,5
+34,MINING,"Mining Operations,Health, Safety, and Environment (HSE),Processing and Metallurgy,Supply Chain and Logistics",,,Grid Simulation,,,,
+35,MINING,"Mining Operations,Health, Safety, and Environment (HSE),Processing and Metallurgy,Supply Chain and Logistics",,,Building Energy Management,,,,
+36,MINING,"Mining Operations,Health, Safety, and Environment (HSE),Processing and Metallurgy,Supply Chain and Logistics",,,Demand Response Optimization,,,,
+37,MINING,"Mining Operations,Health, Safety, and Environment (HSE),Processing and Metallurgy,Supply Chain and Logistics",,,Wind and Solar Farm Modeling,,,,
+38,MINING,"Mining Operations,Health, Safety, and Environment (HSE),Processing and Metallurgy,Supply Chain and Logistics",,,Energy Storage Optimization,,,,
+39,MINING,"Mining Operations,Health, Safety, and Environment (HSE),Processing and Metallurgy,Supply Chain and Logistics",,,Fault Detection and Isolation,,,,
+40,MINING,"Mining Operations,Health, Safety, and Environment (HSE),Processing and Metallurgy,Supply Chain and Logistics",,,Emissions Monitoring and Mitigation,,,,
+41,MINING,"Mining Operations,Health, Safety, and Environment (HSE),Processing and Metallurgy,Supply Chain and Logistics",,,Disaster Response Planning,,,,
+42,MINING,"Mining Operations,Health, Safety, and Environment (HSE),Processing and Metallurgy,Supply Chain and Logistics",Digital Twin Technologies,,Compliance Modeling,,Planned,3,5
+43,MINING,"Supply Chain and Logistics,Health, Safety, and Environment (HSE),Corporate Development and Strategy,Human Resources (HR),Mining Operations",Advanced Communication and Connectivity,,Wireless network,,Proactive,4,5
+44,MINING,"Supply Chain and Logistics,Health, Safety, and Environment (HSE),Corporate Development and Strategy,Human Resources (HR),Mining Operations",,,Satelite communication,,Resilent,5,5
+45,MINING,"Supply Chain and Logistics,Health, Safety, and Environment (HSE),Corporate Development and Strategy,Human Resources (HR),Mining Operations",Advanced Communication and Connectivity,,Fibre optics,,Basic,1,5
+46,MINING,"Supply Chain and Logistics,Health, Safety, and Environment (HSE),Corporate Development and Strategy,Human Resources (HR),Mining Operations",,,Sensitive data,,,,
+47,MINING,Legal and Compliance,Cybersecurity and Data Privacy,,Infrastructure,,Reactive,2,5
+48,MINING,Legal and Compliance,,,Operational systems,,Planned,3,5
+49,MINING,Legal and Compliance,Cybersecurity and Data Privacy,,Data privacy,,Proactive,4,5
+50,MINING,Legal and Compliance,,,Intrusion Detection and Prevention,,,,
+51,MINING,Legal and Compliance,,,Data Encryption and Secure Communication,,,,
+52,MINING,Legal and Compliance,,,Access Control and Authentication,,,,
+53,MINING,Legal and Compliance,,,Incident Response and Recovery,,,,
+54,MINING,Legal and Compliance,,,Compliance with Regulatory Requirements,,,,
+55,MINING,Legal and Compliance,Cybersecurity and Data Privacy,,Continuous Monitoring and Auditing,,,,
+56,MINING,Supply Chain and Logistics,Supply Chain Digitization,,Procurement,,Basic,1,5
+57,MINING,Supply Chain and Logistics,,,Logistics,,Reactive,2,5
+58,MINING,Supply Chain and Logistics,Supply Chain Digitization,,Inventory management,,Planned,3,5
+59,MINING,Supply Chain and Logistics,Supply Chain Digitization,,Real time tracking,,Proactive,4,5
+60,MINING,Human Resources (HR),Workforce Skills and Training,,Training programs,,Resilent,5,5
+61,MINING,Human Resources (HR),,,Knowledge transfer initiatives,,Basic,1,5
+62,MINING,Human Resources (HR),Workforce Skills and Training,,Workforce development strategies,,Reactive,2,5
+63,MINING,Human Resources (HR),Workforce Skills and Training,,Digital literacy and skills,,Planned,3,5
+64,MINING,"Health, Safety, and Environment (HSE),Community and Stakeholder Relations",Environmental and Sustainability Solutions,,Environmental impact,,Proactive,4,5
+65,MINING,"Health, Safety, and Environment (HSE),Community and Stakeholder Relations",,,Energy consumption,,Resilent,5,5
+66,MINING,"Health, Safety, and Environment (HSE),Community and Stakeholder Relations",Environmental and Sustainability Solutions,,Sustainable mining practice,,Basic,1,5
+67,MINING,"Health, Safety, and Environment (HSE),Community and Stakeholder Relations",Environmental and Sustainability Solutions,,smart energy management,,Reactive,2,5
+68,MINING,"Health, Safety, and Environment (HSE),Community and Stakeholder Relations",Environmental and Sustainability Solutions,,waste reduction,,Planned,3,5
+69,MINING,"Health, Safety, and Environment (HSE),Community and Stakeholder Relations",Environmental and Sustainability Solutions,,Rehabilitation,,Proactive,4,5
+70,MINING,"Health, Safety, and Environment (HSE),Community and Stakeholder Relations",Environmental and Sustainability Solutions,,Digital authority involvement in environmental issues,,,,
+71,MINING,"Health, Safety, and Environment (HSE),Community and Stakeholder Relations",Environmental and Sustainability Solutions,,"Digital plan, monitoring and tracking of environmental issues",,,,
+72,MINING,"Finance and Accounting,Corporate Development and Strategy",Strategic Vision and Leadership,,Strategic vision,,Resilent,5,5
+73,MINING,"Finance and Accounting,Corporate Development and Strategy",,,Leadership commitment,,Basic,1,5
+74,MINING,"Finance and Accounting,Corporate Development and Strategy",Strategic Vision and Leadership,,Organizational structure,,Reactive,2,5
+75,MINING,"Health, Safety, and Environment (HSE)",Remote Monitoring and Diagnostics,,Enabling Real-Time Visibility,,Reactive,2,5
+76,MINING,"Health, Safety, and Environment (HSE)",,,Alarms,,Reactive,2,5
+77,MINING,"Health, Safety, and Environment (HSE)",,,Alerts,,Reactive,2,5
+78,MINING,"Health, Safety, and Environment (HSE)",Remote Monitoring and Diagnostics,,Remote Troubleshooting Capabilities,,Reactive,2,5
+79,MINING,Mining Operations,Power Generation ,,Transmission Infrastructure,,Reactive,2,5
+80,MINING,Mining Operations,,,Distribution Networks,,Reactive,2,5
+81,MINING,Mining Operations,,,Grid Stability and Reliability,,Reactive,2,5
+82,MINING,Mining Operations,,,Renewable Integration,,Reactive,2,5
+83,MINING,Mining Operations,,,Environmental Impact,,Reactive,2,5
+84,MINING,Mining Operations,,,Generation Capacity,,Reactive,2,5
+85,MINING,Mining Operations,,,Electricity Generation,,Reactive,2,5
+86,MINING,Mining Operations,generation technology,,Heat Rate,,Reactive,2,5
+87,MINING,Mining Operations,,,Forced Outage Rate,,Reactive,2,5
+88,MINING,Mining Operations,,,Conversion Efficiency,,Reactive,2,5
+89,MINING,Mining Operations,,,Emissions Intensity,,Reactive,2,5
+90,MINING,Mining Operations,,,Fuel Cost,,Reactive,2,5
+91,MINING,Mining Operations,,,Interconnection Capacity,,Reactive,2,5
+92,MINING,Mining Operations,,,Nuclear Capacity Factor,,Reactive,2,5
+93,MINING,Mining Operations,,,Electricity Generation,,Reactive,2,5
+94,MINING,Finance and Accounting,Digital Capability,,IT Infrastructure,,Reactive,2,5
+95,MINING,Finance and Accounting,,,Descriptive Analysis,,Reactive,2,5
+96,MINING, Finance and Accounting,,,Predictive Analysis,,Reactive,2,5
+97,MINING,Human Resources (HR),Human Resources,,Training on digital platforms,,Reactive,2,5
+98,MINING,Human Resources (HR),,,Monitor skills on digital platforms,,Reactive,2,5
+99,MINING,Human Resources (HR),,,Digitally monitor staff health status,,Reactive,2,5
+100,MINING,Human Resources (HR),,,Change Management,,Reactive,2,5
+101,MINING,Human Resources (HR),,,Reskilling,,Reactive,2,5
+102,MINING,Human Resources (HR),,,Stakeholder Engagement,,Reactive,2,5
+103,MINING,Human Resources (HR),Worker Enablement,,Quick Decision,,Reactive,2,5
+104,MINING,Human Resources (HR),,,Making Employee,,Reactive,2,5
+105,MINING,Human Resources (HR),,,Enablement,,Reactive,2,5
+106,MINING,Human Resources (HR),,,Employee Effectiveness,,Reactive,2,5
+107,MINING,Human Resources (HR),Culture,,Work Transformation,,Reactive,2,5
+108,MINING,Human Resources (HR),,,Changing Behaviour,,Reactive,2,5
+109,MINING,Human Resources (HR),,,Departmental Transformation,,Reactive,2,5
+110,MINING,Human Resources (HR),,,People Transformation,,Reactive,2,5
+111,MINING,"Marketing and sales,Corporate Development and Strategy",Customer Experience,,Customer Satisfaction,,Reactive,2,5
+112,MINING,Marketing and sales.Corporate Development and Strategy,,,Mine to Customer,,Reactive,2,5
+113,MINING,"Corporate Development and Strategy, Supply Chain and Logistics",Unified Data ,,Integrated Operations Centres,,Reactive,2,5
+114,MINING,"Corporate Development and Strategy, Supply Chain and Logistics",,,Realtime data,,Reactive,2,5
+115,MINING,"Corporate Development and Strategy, Supply Chain and Logistics",,,Integration,,Reactive,2,5
+116,MINING,"Corporate Development and Strategy, Supply Chain and Logistics",,,Data-Driven Mine,,Reactive,2,5
+117,MINING,"Corporate Development and Strategy, Supply Chain and Logistics",,,Eliminating Silos,,Reactive,2,5
+118,MINING,"Corporate Development and Strategy, Supply Chain and Logistics",,,Single Platform,,Reactive,2,5
+119,MINING,Human Resources (HR),Performance Management,,Value Chain Optimisation,,Reactive,2,5
+120,MINING,Human Resources (HR),,,Business Intelligence,,Reactive,2,5
+121,MINING,Human Resources (HR),,,Business Improvement,,Reactive,2,5
+122,MINING,Human Resources (HR),,,Shareholder Returns,,Reactive,2,5
+123,MINING,Human Resources (HR),,,Key Performance Indicators,,Reactive,2,5
+124,MINING,Community and Stakeholder Relations,Stakeholder Involvement,,Labour,,Reactive,2,5
+125,MINING,Community and Stakeholder Relations,,,Unions,,Reactive,2,5
+126,MINING,Community and Stakeholder Relations,,,Employees,,Reactive,2,5
+127,MINING,"Mining Operations,Human Resources (HR)",Ease of Use and Adoption,,Practicality of technologies,,Reactive,2,5
+128,MINING,"Mining Operations,Human Resources (HR)",,,Project Value Realisation,,Reactive,2,5
+129,MINING,"Mining Operations,Human Resources (HR)",,,Motivation (No Incentives),,Reactive,2,5
+130,MINING,Corporate Development and Strategy, Change Management,,Ineffective change management,,Reactive,2,5
+131,MINING,Corporate Development and Strategy,,,communication,,Reactive,2,5
+132,MINING,Corporate Development and Strategy,,,Change Resistance,,Reactive,2,5
+133,MINING,Corporate Development and Strategy,,,Reskilling,,Reactive,2,5
+134,MINING,"Mining Operations,Health, Safety, and Environment (HSE)",Worker Safety,,Safety message announcement,,Reactive,2,5
+135,MINING,"Mining Operations,Health, Safety, and Environment (HSE)",,,Monitoring of staff and visitor presence,,Reactive,2,5
+136,MINING,Legal and Compliance,Contract management,,Digitally update and follow-up contracts towards clients,,Reactive,2,5
+137,MINING,Legal and Compliance,,,Digitally track sub-contractor and supplier,,Reactive,2,5
+138,MINING,Legal and Compliance,,,payment management,,Reactive,2,5
+139,MINING,Mining Operations,Quality control,,Collect and monitor progress reports,,Reactive,2,5
+140,MINING,Mining Operations,,,Quality inspections with mobile devices,,Reactive,2,5
+141,MINING,Mining Operations,Scheduling,,"Create, assign, and prioritize tasks in real time and distribute to mobile devices",,Reactive,2,5
+142,MINING,Mining Operations,,,Plan and simulate site progress in 4D-software,,Reactive,2,5
+143,MINING,Mining Operations,,,Maintain a digital construction site disposition plan,,Reactive,2,5
+144,MINING,Mining Operations,Logistics,,"Identify, track and locate material and equipment on-site with digital tools",,Reactive,2,5
+145,MINING,Mining Operations,,,"Digitally monitor procurement orders, receipts, use, and quality issues",,Reactive,2,5
+146,MINING,Mining Operations,,,Maintain digital bill of quantities,,Reactive,2,5
+147,MINING,Mining Operations,Design management,,Visualize drawings and 3D models on-site on mobile platforms,,Reactive,2,5
+148,MINING,Mining Operations,,,"Update digital drawings, models and technical information with notes and asbuilt records",,Reactive,2,5
+149,MINING,Mining Operations,Ventiltion requirements,,Dust control measures,,Reactive,2,5
+150,MINING,Mining Operations,,,control measures,,Reactive,2,5
+151,MINING,Mining Operations,,,Satbilization of haul road surfaces,,Reactive,2,5
+152,MINING,Mining Operations,,,Utilization of fog cannons for visible dust,,Reactive,2,5
+153,MINING,Mining Operations,,,Dust supression installation systems,,Reactive,2,5
+154,MINING,"Mining Operations,Processing and Metallurgy",Mineral processing,,Comminution,,Reactive,2,5
+155,MINING,"Mining Operations,Processing and Metallurgy",,,Ore characterization,,Reactive,2,5
+156,MINING,"Mining Operations,Processing and Metallurgy",,,Process facilities,,Reactive,2,5
+157,MINING,"Mining Operations,Processing and Metallurgy",,,Plant operation and mainatainance philosophy,,Reactive,2,5
+158,MINING,"Mining Operations,Processing and Metallurgy",,,Expandability and expansion options,,Reactive,2,5
+159,MINING,"Mining Operations,Processing and Metallurgy",,,Classification,,Reactive,2,5
+160,MINING,"Mining Operations,Processing and Metallurgy",,,Gravity Separation,,Reactive,2,5
+161,MINING,"Mining Operations,Processing and Metallurgy",,,Flotation,,Reactive,2,5
+162,MINING,"Mining Operations,Processing and Metallurgy",,,Magnetic Separation,,Reactive,2,5
+163,MINING,"Mining Operations,Processing and Metallurgy",,,Leaching,,Reactive,2,5
+164,MINING,"Mining Operations,Processing and Metallurgy",,,Dewatering,,Reactive,2,5
+165,MINING,"Mining Operations,Processing and Metallurgy",,,Smelting and Refining,,Reactive,2,5
+166,MINING,Mining Operations,Mine access,,Blind splot,,Reactive,2,5
+167,MINING,Mining Operations,,,Intersections,,Reactive,2,5
+168,MINING,Mining Operations,,,Safety berms and ditches,,Reactive,2,5
+169,MINING,Mining Operations,,,Equipment selection process,,Reactive,2,5
+170,MINING,Mining Operations,,,Material handling,,Reactive,2,5
+171,MINING,Mining Operations,,,haul road cross-sections,,Reactive,2,5
+172,MINING,Mining Operations,,,drainage requirements,,Reactive,2,5
+173,MINING,Mining Operations,,,road construction materials,,Reactive,2,5
+174,MINING,"Exploration and Geology,Marketing and sales",Market analysis,,Product specification,,Reactive,2,5
+175,MINING,"Exploration and Geology,Marketing and sales",,,Demand and supply forecast,,Reactive,2,5
+176,MINING,"Exploration and Geology,Marketing and sales",,,Pricing strategy,,Reactive,2,5
+177,MINING,"Exploration and Geology,Marketing and sales",,,Competitors,,Reactive,2,5
+178,MINING,"Exploration and Geology,Marketing and sales",,,Revenue forecast,,Reactive,2,5
+179,MINING,"Exploration and Geology,Marketing and sales",,,Product shipping storage and distribution,,Reactive,2,5
+180,MINING,Mining Operations,Undeground and surface infrastructure,,Utilities,,Reactive,2,5
+181,MINING,Mining Operations,,,Change rooms,,Reactive,2,5
+182,MINING,Mining Operations,,,Underground waiting areas,,Reactive,2,5
+183,MINING,Mining Operations,,,Transport infrastructures,,Reactive,2,5
+184,MINING,Mining Operations,,,Temporary infrastructures,,Reactive,2,5
+185,MINING,Mining Operations,,,Communication,,Reactive,2,5
+186,MINING,Mining Operations,,,Building and facilities ,,Reactive,2,5
+,IT,"Hardware, Software",Fabchi,100,Building and facilities ,,Reactive,2,5
+,IT,"fghjkl,slrtyk",Fabchi,100,Building and facilities ,,Reactive,2,5
+,IT,"Operations, Funitute",Rajour,90,Building and facilities ,,Reactive,2,5
+,IT,"fghjk,tyuyiio",Rajour,90,Building and facilities ,,Reactive,2,5
+,IT,"Yes, No",Jumfan,80,Building and facilities ,,Reactive,2,5
+,IT,"oiuijhgf,fgfhgjkjkll",Jumfan,80,Building and facilities ,,Reactive,2,5
+,IT,"Why me, again",Einsteinds,70,Building and facilities ,,Reactive,2,5
+,IT,"again, we here",Einsteinds,70,Building and facilities ,,Reactive,2,5

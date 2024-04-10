@@ -51,6 +51,7 @@ def create_combined_table():
         CREATE TABLE IF NOT EXISTS CombinedTable (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             BusinessSector TEXT,
+            BusinessFunction TEXT,
             MeasuringElt TEXT,
             Rating INTEGER,
             SUbCategory TEXT,
@@ -71,6 +72,7 @@ def create_user_submission_record_table():
         CREATE TABLE IF NOT EXISTS UserSubmissionRecord (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             UniqueCodeUser TEXT,
+            BusinessFunction TEXT,  
             MeasuringEltUser TEXT,
             RatingUser INTEGER,
             SUbCategoryUser TEXT,
@@ -86,6 +88,7 @@ def create_user_submission_record_table():
     connection.commit()
     connection.close()
 
+
 def create_final_feedback_data():
     connection = sqlite3.connect('database.db')
     cursor = connection.cursor()
@@ -94,6 +97,7 @@ def create_final_feedback_data():
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             UniqueCodeUser TEXT,
             name TEXT,
+            BusinessFunction TEXT, 
             MeasuringEltUser TEXT,
             RatingUser INTEGER,
             SUbCategoryUser TEXT,
@@ -120,10 +124,29 @@ def create_final_feedback_data():
     connection.close()
 
 
+def create_affinity_relationship_table():
+    connection = sqlite3.connect('database.db')
+    cursor = connection.cursor()
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS UserSubmissionAffinity (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            UniqueCodeUser TEXT,
+            BusinessFunction TEXT,  
+            MeasuringEltUser TEXT,
+            FOREIGN KEY (UniqueCodeUser) REFERENCES UserSubmissionRecord(UniqueCodeUser)
+        )
+    ''')
+    connection.commit()
+    connection.close()
+
+create_affinity_relationship_table()
+
+
 create_user_table()
 create_combined_table()
 create_user_submission_record_table()
 create_final_feedback_data()
+create_affinity_relationship_table()
 
 
 @app.route('/')
@@ -259,6 +282,7 @@ def dashboardAdministrator():
 def CombinedTiers():
     if request.method == 'POST':
         business_sector_name = request.form['business_sector_name']
+        business_function_name = request.form['business_function']
         measuring_element_name = request.form['Measuring_Element']
         rating = request.form['Rating']
         subCategory_name = request.form['subCategory_name']
@@ -270,9 +294,9 @@ def CombinedTiers():
         connection = sqlite3.connect('database.db')
         cursor = connection.cursor()
         cursor.execute('''
-            INSERT INTO CombinedTable (BusinessSector,MeasuringElt,Rating,SUbCategory,Questions,Answers,RateAnswer,MaxRating)
-            VALUES (?,?,?,?,?,?,?,?)
-        ''', (business_sector_name, measuring_element_name, rating, subCategory_name, SubCategoryQuestion, QuestionAnswer, AnswerRating, MaxRating))
+            INSERT INTO CombinedTable (BusinessSector,BusinessFunction,MeasuringElt,Rating,SUbCategory,Questions,Answers,RateAnswer,MaxRating)
+            VALUES (?,?,?,?,?,?,?,?,?)
+        ''', (business_sector_name, business_function_name, measuring_element_name, rating, subCategory_name, SubCategoryQuestion, QuestionAnswer, AnswerRating, MaxRating))
         connection.commit()
         connection.close()
 
@@ -287,6 +311,7 @@ def UpdateCombinedTiers():
     if request.method == 'POST':
         # Extract old values from the form
         oldbusiness_sector_name = request.form['oldbusiness_sector_name']
+        oldbusiness_function = request.form['oldbusiness_function']
         oldmeasuring_element_name = request.form['oldMeasuring_Element']
         oldrating = request.form['oldRating']
         oldsubCategory_name = request.form['oldsubCategory_name']
@@ -297,6 +322,7 @@ def UpdateCombinedTiers():
 
         # Extract new values from the form
         newbusiness_sector_name = request.form['newbusiness_sector_name']
+        newbusiness_function = request.form['newbusiness_function']
         newmeasuring_element_name = request.form['newMeasuring_Element']
         newrating = request.form['newRating']  # Corrected parameter name
         newsubCategory_name = request.form['newsubCategory_name']
@@ -312,10 +338,10 @@ def UpdateCombinedTiers():
         # Execute the SQL update query
         cursor.execute('''
             UPDATE CombinedTable 
-            SET  BusinessSector=?, MeasuringElt=?, Rating=?, SUbCategory=?, Questions=?, Answers=?, RateAnswer=?, MaxRating=?
-            WHERE BusinessSector=? AND MeasuringElt=? AND Rating=? AND SUbCategory=? AND Questions=? AND Answers=? AND RateAnswer=? AND MaxRating=?
-        ''', (newbusiness_sector_name, newmeasuring_element_name, newrating, newsubCategory_name, newSubCategoryQuestion,
-              newQuestionAnswer, newAnswerRating, newMaxRating, oldbusiness_sector_name, oldmeasuring_element_name,
+            SET  BusinessSector=?, BusinessFunction=?, MeasuringElt=?, Rating=?, SUbCategory=?, Questions=?, Answers=?, RateAnswer=?, MaxRating=?
+            WHERE BusinessSector=? AND BusinessFunction=? AND MeasuringElt=? AND Rating=? AND SUbCategory=? AND Questions=? AND Answers=? AND RateAnswer=? AND MaxRating=?
+        ''', (newbusiness_sector_name, newbusiness_function, newmeasuring_element_name, newrating, newsubCategory_name, newSubCategoryQuestion,
+              newQuestionAnswer, newAnswerRating, newMaxRating, oldbusiness_sector_name, oldbusiness_function, oldmeasuring_element_name,
               oldrating, oldsubCategory_name, oldSubCategoryQuestion, oldQuestionAnswer, oldAnswerRating, oldMaxRating))
 
         # Commit changes and close connection
@@ -386,7 +412,7 @@ def view_combined_data():
     connection = sqlite3.connect('database.db')
     cursor = connection.cursor()
     cursor.execute('''
-        SELECT id, BusinessSector, MeasuringElt, Rating, SUbCategory, Questions, Answers, RateAnswer, MaxRating
+        SELECT id, BusinessSector, BusinessFunction, MeasuringElt, Rating, SUbCategory, Questions, Answers, RateAnswer, MaxRating
         FROM CombinedTable
     ''')
     combined_data = cursor.fetchall()
@@ -421,7 +447,7 @@ def upload_file():
             process_csv(file)
             # Redirect to view data
             return redirect(url_for('view_combined_data'))
-    return render_template('upload.html')
+    return render_template('admininstrator.html')
 
 # Process uploaded CSV file and insert into database
 
@@ -438,12 +464,13 @@ def process_csv(csv_file):
     next(csv_data)  # Skip header row if present
     for row in csv_data:
         cursor.execute('''
-            INSERT INTO CombinedTable (id, BusinessSector, MeasuringElt, Rating, SUbCategory, Questions, Answers, RateAnswer, MaxRating)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+            INSERT INTO CombinedTable (id, BusinessSector, BusinessFunction, MeasuringElt, Rating, SUbCategory, Questions, Answers, RateAnswer, MaxRating)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         ''', row)
 
     connection.commit()
     connection.close()
+
 
 # Define a function to generate random 12-letter words
 
@@ -461,13 +488,13 @@ def select_business_sector():
         # Check if 'business_sector_user' exists in the form data
         if 'business_sector_user' in request.form:
             selected_sector = request.form['business_sector_user']
-            
+
             if selected_sector:
                 # Fetch data from CombinedTable based on selected business sector
                 connection = sqlite3.connect('database.db')
                 cursor = connection.cursor()
                 cursor.execute(
-                    "SELECT MeasuringElt, Rating, SubCategory, Questions FROM CombinedTable WHERE BusinessSector=?", (selected_sector,))
+                    "SELECT BusinessFunction, MeasuringElt, Rating, SubCategory, Questions FROM CombinedTable WHERE BusinessSector=?", (selected_sector,))
                 sector_data = cursor.fetchall()
                 connection.close()
 
@@ -485,58 +512,53 @@ def select_business_sector():
     return render_template('userAccount.html', BusinessError=erro_message_user_business_sector)
 
 
-
 @app.route('/userSubmissionDataIntoTable', methods=['GET', 'POST'])
 def CombinedTiersForUser():
     error_display_asistobe = None  # Initialize error_display_asistobe
+
     if request.method == 'POST':
         UserSubmittedUniqueCode = request.form['Unique_code_from_User']
-        measuring_element_name_user = request.form.getlist(
-            'Measuring_element_user[]')
+        business_function_name_user = request.form.getlist('business_function_user[]')
+        measuring_element_name_user = request.form.getlist('Measuring_element_user[]')
         Rating_User_MElt = request.form.getlist('Rting_User[]')
         subCategory_name_user = request.form.getlist('sub_category_for_user[]')
         SubCategoryQuestion_user = request.form.getlist('questions_user[]')
         QuestionAnswer_user = request.form.getlist('UserAnswerRating[]')
-        QuestionAnswer_userToBe = request.form.getlist(
-            'UserAnswerRatingToBe[]')
+        QuestionAnswer_userToBe = request.form.getlist('UserAnswerRatingToBe[]')
 
-        # Check if the lengths of QuestionAnswer_user and QuestionAnswer_userToBe are the same
         if not QuestionAnswer_user or not QuestionAnswer_userToBe:
             error_display_asistobe = "An error occurred. Please make sure to select an answer for every question before submitting your answers."
-            print("First Error message:", error_display_asistobe)  # Check if the error message is set correctly
+            print("First Error message:", error_display_asistobe)
         else:
             connection = sqlite3.connect('database.db')
             cursor = connection.cursor()
 
             for i in range(len(measuring_element_name_user)):
                 Rting_User = float(Rating_User_MElt[i])
-                # Use index i for UserAnswerRatingAsIs
                 UserAnswerRatingAsIs = float(QuestionAnswer_user[i])
-                # Use index j for UserAnswerRatingToBe
                 UserAnswerRatingToBe = float(QuestionAnswer_userToBe[i])
-                MaxRatingUser = 5  # You may need to change this based on your requirement
+                MaxRatingUser = 5
 
-                # Calculate the cumulative sums
                 ExpectedCumSum = Rting_User * MaxRatingUser
                 UserCumSumAsIs = Rting_User * UserAnswerRatingAsIs
                 UserCumSumToBe = Rting_User * UserAnswerRatingToBe
 
-                # Insert data into the database
                 cursor.execute('''
-                        INSERT INTO UserSubmissionRecord (UniqueCodeUser, MeasuringEltUser, RatingUser, SUbCategoryUser, QuestionsUser, AnswersUserAsIs, AnswersUserToBe, MaxRatingUser, ExpectedCumSum, UserCumSumAsIs, UserCumSumToBe)
-                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-                    ''', (UserSubmittedUniqueCode, measuring_element_name_user[i], Rting_User, subCategory_name_user[i], SubCategoryQuestion_user[i], QuestionAnswer_user[i], QuestionAnswer_userToBe[i], MaxRatingUser, ExpectedCumSum, UserCumSumAsIs, UserCumSumToBe))
-                
+                        INSERT INTO UserSubmissionRecord (UniqueCodeUser, BusinessFunction, MeasuringEltUser, RatingUser, SUbCategoryUser, QuestionsUser, AnswersUserAsIs, AnswersUserToBe, MaxRatingUser, ExpectedCumSum, UserCumSumAsIs, UserCumSumToBe)
+                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                    ''', (UserSubmittedUniqueCode, business_function_name_user[i], measuring_element_name_user[i], Rting_User, subCategory_name_user[i], SubCategoryQuestion_user[i], QuestionAnswer_user[i], QuestionAnswer_userToBe[i], MaxRatingUser, ExpectedCumSum, UserCumSumAsIs, UserCumSumToBe))
+
+                cursor.execute('''
+                        INSERT INTO UserSubmissionAffinity (UniqueCodeUser, BusinessFunction, MeasuringEltUser)
+                        VALUES (?, ?, ?)
+                    ''', (UserSubmittedUniqueCode, business_function_name_user[i], measuring_element_name_user[i]))
+
             connection.commit()
             connection.close()
 
             return redirect('/userSubmissionDataIntoTable')
 
-    print("Second Error message:", error_display_asistobe)  # Check if the error message is set correctly
     return render_template('userAccount.html', error_display_asistobe=error_display_asistobe)
-
-
-
 
 
 
@@ -545,6 +567,18 @@ def CombinedTiersForUser():
 def submit_code():
     error_message = None  # Initialize error message
 
+
+    # Function to fetch data from UserSubmissionAffinity table
+    def fetch_user_submission_affinities_data(unique_code):
+        connection = sqlite3.connect('database.db')
+        cursor = connection.cursor()
+        cursor.execute("SELECT BusinessFunction, MeasuringEltUser FROM UserSubmissionAffinity WHERE UniqueCodeUser = ?", (unique_code,))
+        user_submission_affinities = cursor.fetchall()
+        connection.close()
+
+        print(user_submission_affinities)
+        return user_submission_affinities
+
     if request.method == 'POST':
         unique_code = request.form['unique_code_user']
 
@@ -552,7 +586,7 @@ def submit_code():
         connection = sqlite3.connect('database.db')
         cursor = connection.cursor()
         cursor.execute('''
-            SELECT DISTINCT MeasuringEltUser, SUM(ExpectedCumSum), SUM(UserCumSumAsIs), SUM(UserCumSumToBe)
+            SELECT DISTINCT MeasuringEltUser, SUM(ExpectedCumSum), SUM(UserCumSumAsIs), SUM(UserCumSumToBe), BusinessFunction
             FROM UserSubmissionRecord 
             WHERE UniqueCodeUser = ?
             GROUP BY MeasuringEltUser
@@ -563,13 +597,13 @@ def submit_code():
 
         if not unique_code:
             error_message = "Please go back and insert your unique code number"
-            
 
         # Extract data for plotting
         measuring_elt_user = [record[0] for record in user_records]
         sum_expected_cum_sum = [record[1] for record in user_records]
         sum_user_cum_sum = [record[2] for record in user_records]
         sum_user_cum_sum_t0_be = [record[3] for record in user_records]
+        # business_function = [record[4] for record in user_records]
 
         # Calculate percentage values
         percentage_values = [round((new / old) * 100, 2) if old != 0 else 0
@@ -600,9 +634,9 @@ def submit_code():
             percentage_value_to_be = percentage_values_to_be[i]
 
             # Determine feedback for percentage_values
-            if 0 <= percentage_value <= 16:
+            if 0 <= percentage_value <= 15:
                 feedback_As_Is = "Stage 0:, Level: Incomplete, Aspect practices are yet to be implemented or incomplete, Organisation only performs essential operations."
-            elif 17 <= percentage_value <= 33:
+            elif 16 <= percentage_value <= 34:
                 feedback_As_Is = "Stage 1, Level Performed, Aspect practices are fully implemented. Transition to Industry 4.0 has commenced"
             elif 34 <= percentage_value <= 50:
                 feedback_As_Is = "Stage 2, level Managed, Initial implementation of Industry 4.0 technologies.No integration yet.Physical systems can be represented virtually"
@@ -625,10 +659,10 @@ def submit_code():
             elif 68 <= percentage_value_to_be <= 84:
                 feedback_To_Be = "Stage 4:\nLevel Predictable\nHorizontal integration across the value chain.\nApplication of Industry 4.0 technologies such Big Data and artificial intelligence.\nAutonomous optimisation."
             elif 85 <= percentage_value_to_be <= 100:
-                 feedback_To_Be = "Stage 5:\nLevel Optimizing\nEnd-to-end integration.\nContinuous improvement.\nSmart and autonomous optimisation."
+                feedback_To_Be = "Stage 5:\nLevel Optimizing\nEnd-to-end integration.\nContinuous improvement.\nSmart and autonomous optimisation."
 
-
-            feedback_messages[user_records[i][0]] = (feedback_As_Is, feedback_To_Be)
+            feedback_messages[user_records[i][0]] = (
+                feedback_As_Is, feedback_To_Be)
 
         # Define the width of the bars
         bar_width = 0.3
@@ -688,10 +722,14 @@ def submit_code():
         img_buffer.seek(0)
         img_str = base64.b64encode(img_buffer.getvalue()).decode()
 
+        # Fetch user submission affinities data for the given unique code
+        submission_affinities_data = fetch_user_submission_affinities_data(unique_code)
+
         # Render the template with the measuring elements data and their summed ExpectedCumSum
         return render_template('userAccount.html', user_records=user_records, percentages=percentage_values,
                                percenTobe=percentage_values_to_be, growth_rate=percentage_growth_rate,
-                               duration=duration_years, plot=img_str, feedback_messages=feedback_messages, error_message=error_message)
+                               duration=duration_years, plot=img_str, feedback_messages=feedback_messages, error_message=error_message, submission_affinities_data=submission_affinities_data)
+
 
 
 

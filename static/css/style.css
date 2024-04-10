@@ -118,6 +118,13 @@ body {
   display: flex;
 }
 
+.dashboard_main_admin_record {
+  width: 100%;
+  height: auto;
+  margin: 0px auto;
+  display: flex;
+}
+
 /* This section controls the alignment of the tabs where there are the create and update buttons  */
 .dashboard_tabs {
   width: 400px;
@@ -254,23 +261,20 @@ body {
 }
 
 .table_style_datase {
-  border-collapse: collapse;
+  /* border-collapse: collapse; */
   border-spacing: 10px;
-  width: auto;
+  width: 100%;
   height: auto;
   text-align: center;
-  vertical-align: middle;
   background-color: black;
-  font-family: Arial, Helvetica, sans-serif;
-  padding: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  justify-content: center;
+  /* font-family: Arial, Helvetica, sans-serif; */
+
   font-size: larger;
 }
 .table_style_user {
   border-collapse: collapse;
   border-spacing: 10px;
-  width: auto;
+  width: 1200px;
   height: auto;
   text-align: center;
   vertical-align: middle;

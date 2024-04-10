@@ -100,10 +100,6 @@
 
                         <a href="/select_business_sector_user" class="item" style="float: right;">GET STARTED</a>
 
-
-
-
-
                     </div>
 
                     <div x-show="select_your_business_sector">
@@ -145,58 +141,106 @@
 
                         <button type="submit" class="submit-btn"
                             x-on:click="view_maturity_analysis=!view_maturity_analysis">VIEW FEEDBACK ANALYSIS</button>
-                        <div x-show="view_maturity_analysis">
-                            <h1 class="item">MATURITY ANALYSIS RESULTS</h1>
-                            <table border="1" style="background-color: black;">
-                                <thead>
 
+
+                            <form action="/userSubmissionDataIntoAffinityTable" method="POST">
+                            <div x-show="view_maturity_analysis">
+                                <h1 class="item">MATURITY ANALYSIS RESULTS</h1>
+
+
+                            <!-- table for the affinity results comes here  -->
+
+
+                            <!-- affinity data  -->
+                            <table border="1">
+                                <thead>
                                     <tr>
-                                        <th border="0"></th>
-                                        <th border="0"></th>
-                                        <th colspan="3">MATURITY AS IS WRT TO OTHER COMPANIES</th>
-                                        <th colspan="3">MATURITY TO BE WRT TO OTHER COMPANIES</th>
-                                    </tr>
-                                    <tr>
-                                        <th>MEASURING ELEMENT</th>
-                                        <th>OTHER COMPANIES</th>
-                                        <th>MATURITY "AS IS"</th>
-                                        <th>% "AS IS"</th>
-                                        <th>FEEDBACK "AS IS"</th>
-                                        <th>MATURITY "TO BE"</th>
-                                        <th>% "TO BE"</th>
-                                        <th>FEEDBACK "TO BE"</th>
-                                        <th>GROWTH RATE</th>
-                                        <th>DURATION</th>
+                                        <th>Business Function</th>
+                                        <th>Measuring Element</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {% for i in range(user_records|length) %}
+                                    {% for affinity in submission_affinities_data %}
                                     <tr>
-                                        <td>{{ user_records[i][0] }}</td>
-                                        <td>{{ user_records[i][1] }}</td>
-                                        <td>{{ user_records[i][2] }}</td>
-                                        <td>{{ percentages[i] }}</td>
-                                        <td>{{ feedback_messages[user_records[i][0]][0] }}</td>
-                                        <td>{{ user_records[i][3] }}</td>
-                                        <td>{{ percenTobe[i] }}</td>
-                                        <td>{{ feedback_messages[user_records[i][0]][1] }}</td>
-                                        <td>{{ growth_rate[i] }}</td>
-                                        <td>{{ duration[i] }}</td>
+                                        <td>{{ affinity[0] }}</td>
+                                        <td>{{ affinity[1] }}</td>
                                     </tr>
                                     {% endfor %}
                                 </tbody>
                             </table>
 
-                            <div>
-                                <h1 class="item">GRAPHICAL DISPLAY</h1>
-                                <img src="data:image/png;base64,{{ plot }}" alt="Plot">
-                            </div>
+                            
+                                <table border="1" style="background-color: black;">
+                                    <thead>
+    
+                                        <tr>
+                                            <th border="0"></th>
+                                            <th border="0"></th>
+                                            <th colspan="3">MATURITY AS IS WRT TO OTHER COMPANIES</th>
+                                            <th colspan="3">MATURITY TO BE WRT TO OTHER COMPANIES</th>
+                                        </tr>
+                                        <tr>
+                                            <th>BUSINESS FUNCTIONS</th>
+                                            <th>MEASURING ELEMENT</th>
+                                            <th>OTHER COMPANIES</th>
+                                            <th>MATURITY "AS IS"</th>
+                                            <th>% "AS IS"</th>
+                                            <th>FEEDBACK "AS IS"</th>
+                                            <th>MATURITY "TO BE"</th>
+                                            <th>% "TO BE"</th>
+                                            <th>FEEDBACK "TO BE"</th>
+                                            <th>GROWTH RATE</th>
+                                            <th>DURATION</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for i in range(user_records|length) %}
+                                        <tr>
+                                            <td>{{ user_records[i][4] }}</td>
 
-                            <div class="item">
+                                            <input type="hidden" name="business_function_for_affinity[]" value="{{ user_records[i][4]  }}">
 
-                                <img src="data:image/png;base64,{{ growth_curve_plot }}">
+
+                                            <td>{{ user_records[i][0] }}</td>
+
+                                            <input type="hidden" name="measuring_element_for_affinity[]" value="{{ user_records[i][0] }}">
+
+                                            <td>{{ user_records[i][1] }}</td>
+                                            <td>{{ user_records[i][2] }}</td>
+                                            <td>{{ percentages[i] }}</td>
+                                            <td>{{ feedback_messages[user_records[i][0]][0] }}</td>
+                                            <td>{{ user_records[i][3] }}</td>
+                                            <td>{{ percenTobe[i] }}</td>
+                                            <td>{{ feedback_messages[user_records[i][0]][1] }}</td>
+                                            <td>{{ growth_rate[i] }}</td>
+                                            <td>{{ duration[i] }}</td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+
+                                <div>
+
+                                    <input type="hidden" class="input_user" name="Unique_code_from_User" 
+                                        placeholder="Please enter yor unique maturity code here before answering the questions"
+                                        value="{{ Unique_code_from_User}}">
+        
+        
+                                </div>
+
+                                <button class="submit-btn">SAVE RESULT</button>
+    
+                                <div>
+                                    <h1 class="item">GRAPHICAL DISPLAY</h1>
+                                    <img src="data:image/png;base64,{{ plot }}" alt="Plot">
+                                </div>
+    
+                                <div class="item">
+    
+                                    <img src="data:image/png;base64,{{ growth_curve_plot }}">
+                                </div>
                             </div>
-                        </div>
+                        </form>
 
 
 
@@ -254,6 +298,7 @@
                         <table border="1" style="background-color: black;" class="item">
                             <thead>
                                 <tr>
+                                    <th>BUSINESS FUNCTION</th>
                                     <th>MEASURING ELEMENT</th>
                                     <th>RATING</th>
                                     <th>SUB-CATEGORY</th>
@@ -265,17 +310,21 @@
                             <tbody>
                                 {% for row in data %}
                                 <tr>
-                                    <td>{{ row[0] }}</td>
+                                    <td><input type="text" name="business_function_user[]" value="{{ row[0] }}">  </td>
+                                
+                                     
+                                    
                                     <td>{{ row[1] }}</td>
                                     <td>{{ row[2] }}</td>
                                     <td>{{ row[3] }}</td>
+                                    <td>{{ row[4] }}</td>
                                     <td>
-                                        <input type="hidden" name="Measuring_element_user[]" value="{{ row[0] }}"
+                                        <input type="hidden" name="Measuring_element_user[]" value="{{ row[1] }}"
                                             class="input_user">
-                                        <input type="hidden" name="Rting_User[]" value="{{ row[1] }}"
+                                        <input type="hidden" name="Rting_User[]" value="{{ row[2] }}"
                                             class="input_user">
-                                        <input type="hidden" name="sub_category_for_user[]" value="{{ row[2] }}">
-                                        <input type="hidden" name="questions_user[]" value="{{ row[3] }}"
+                                        <input type="hidden" name="sub_category_for_user[]" value="{{ row[3] }}">
+                                        <input type="hidden" name="questions_user[]" value="{{ row[4] }}"
                                             class="input_user">
                                         <select name="UserAnswerRating[]" class="input_user" class="input_user">
                                             <option class="input_user" value="Selectanswer" disabled selected>Select
