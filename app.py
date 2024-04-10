@@ -139,6 +139,7 @@ def create_affinity_relationship_table():
     connection.commit()
     connection.close()
 
+
 create_affinity_relationship_table()
 
 
@@ -518,13 +519,16 @@ def CombinedTiersForUser():
 
     if request.method == 'POST':
         UserSubmittedUniqueCode = request.form['Unique_code_from_User']
-        business_function_name_user = request.form.getlist('business_function_user[]')
-        measuring_element_name_user = request.form.getlist('Measuring_element_user[]')
+        business_function_name_user = request.form.getlist(
+            'business_function_user[]')
+        measuring_element_name_user = request.form.getlist(
+            'Measuring_element_user[]')
         Rating_User_MElt = request.form.getlist('Rting_User[]')
         subCategory_name_user = request.form.getlist('sub_category_for_user[]')
         SubCategoryQuestion_user = request.form.getlist('questions_user[]')
         QuestionAnswer_user = request.form.getlist('UserAnswerRating[]')
-        QuestionAnswer_userToBe = request.form.getlist('UserAnswerRatingToBe[]')
+        QuestionAnswer_userToBe = request.form.getlist(
+            'UserAnswerRatingToBe[]')
 
         if not QuestionAnswer_user or not QuestionAnswer_userToBe:
             error_display_asistobe = "An error occurred. Please make sure to select an answer for every question before submitting your answers."
@@ -561,23 +565,28 @@ def CombinedTiersForUser():
     return render_template('userAccount.html', error_display_asistobe=error_display_asistobe)
 
 
-
-
 @app.route('/submit_code', methods=['POST'])
 def submit_code():
     error_message = None  # Initialize error message
-
 
     # Function to fetch data from UserSubmissionAffinity table
     def fetch_user_submission_affinities_data(unique_code):
         connection = sqlite3.connect('database.db')
         cursor = connection.cursor()
-        cursor.execute("SELECT BusinessFunction, MeasuringEltUser FROM UserSubmissionAffinity WHERE UniqueCodeUser = ?", (unique_code,))
+        cursor.execute(
+            "SELECT BusinessFunction, MeasuringEltUser FROM UserSubmissionAffinity WHERE UniqueCodeUser = ?", (unique_code,))
         user_submission_affinities = cursor.fetchall()
         connection.close()
 
-        print(user_submission_affinities)
-        return user_submission_affinities
+        # Split Business Function and create separate records
+        processed_affinities = []
+        for BusinessFunction, MeasuringEltUser in user_submission_affinities:
+            business_function_split = BusinessFunction.split(',')
+            for element in business_function_split:
+                processed_affinities.append(
+                    (element.strip(), MeasuringEltUser))
+
+        return processed_affinities
 
     if request.method == 'POST':
         unique_code = request.form['unique_code_user']
@@ -603,7 +612,6 @@ def submit_code():
         sum_expected_cum_sum = [record[1] for record in user_records]
         sum_user_cum_sum = [record[2] for record in user_records]
         sum_user_cum_sum_t0_be = [record[3] for record in user_records]
-        # business_function = [record[4] for record in user_records]
 
         # Calculate percentage values
         percentage_values = [round((new / old) * 100, 2) if old != 0 else 0
@@ -723,14 +731,14 @@ def submit_code():
         img_str = base64.b64encode(img_buffer.getvalue()).decode()
 
         # Fetch user submission affinities data for the given unique code
-        submission_affinities_data = fetch_user_submission_affinities_data(unique_code)
+        submission_affinities_data = fetch_user_submission_affinities_data(
+            unique_code)
 
         # Render the template with the measuring elements data and their summed ExpectedCumSum
         return render_template('userAccount.html', user_records=user_records, percentages=percentage_values,
                                percenTobe=percentage_values_to_be, growth_rate=percentage_growth_rate,
-                               duration=duration_years, plot=img_str, feedback_messages=feedback_messages, error_message=error_message, submission_affinities_data=submission_affinities_data)
-
-
+                               duration=duration_years, plot=img_str, feedback_messages=feedback_messages,
+                               error_message=error_message, submission_affinities_data=submission_affinities_data)
 
 
 if __name__ == '__main__':
