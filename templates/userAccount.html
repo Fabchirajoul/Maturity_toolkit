@@ -16,8 +16,8 @@
 
         <section>
             ,<div class="dashboard_main_admin">
-                <h1 class="item"><a href="/select_business_sector_user"  class="item"
-                        style="float: right;">USER CONTROL PANEL</a></h1>
+                <h1 class="item"><a href="/select_business_sector_user" class="item" style="float: right;">USER CONTROL
+                        PANEL</a></h1>
                 <button class="create_user" x-on:click="openUserAccount('displayed_tiers_per_business_sector')">ENTER
                     UNIQUE CODE</button>
                 <button class="create_user" x-on:click="openUserAccount('user_instructions')">INSTRUCTIONS</button>
@@ -143,36 +143,39 @@
                             x-on:click="view_maturity_analysis=!view_maturity_analysis">VIEW FEEDBACK ANALYSIS</button>
 
 
-                            <form action="/userSubmissionDataIntoAffinityTable" method="POST">
+                        <form action="/userSubmissionDataIntoAffinityTable" method="POST">
                             <div x-show="view_maturity_analysis">
                                 <h1 class="item">MATURITY ANALYSIS RESULTS</h1>
 
 
-                            <!-- table for the affinity results comes here  -->
+                                <!-- table for the affinity results comes here  -->
 
-
-                            <!-- affinity data  -->
-                            <table border="1">
-                                <thead>
+                                <br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+                                <!-- affinity data  -->
+                                <table border="1" style="background-color: black;">
                                     <tr>
                                         <th>Business Function</th>
                                         <th>Measuring Element</th>
                                     </tr>
-                                </thead>
-                                <tbody>
-                                    {% for affinity in submission_affinities_data %}
-                                    <tr>
-                                        <td>{{ affinity[0] }}</td>
-                                        <td>{{ affinity[1] }}</td>
-                                    </tr>
+                                    {% for function, elements in business_function_map.items() %}
+                                        <tr>
+                                            <td>{{ function }}</td>
+                                            <td>{{ elements[0] }}</td>
+                                        </tr>
+                                        {% for element in elements[1:] %}
+                                            <tr>
+                                                <td></td> <!-- Empty cell for Business Function to align Measuring Elements under the parent Business Function -->
+                                                <td>{{ element }}</td>
+                                            </tr>
+                                        {% endfor %}
                                     {% endfor %}
-                                </tbody>
-                            </table>
+                                </table>
+                                
 
-                            
+                                <br><br><br><br>
                                 <table border="1" style="background-color: black;">
                                     <thead>
-    
+
                                         <tr>
                                             <th border="0"></th>
                                             <th border="0"></th>
@@ -180,7 +183,7 @@
                                             <th colspan="3">MATURITY TO BE WRT TO OTHER COMPANIES</th>
                                         </tr>
                                         <tr>
-                                            <th>BUSINESS FUNCTIONS</th>
+                                            <!-- <th>BUSINESS FUNCTIONS</th> -->
                                             <th>MEASURING ELEMENT</th>
                                             <th>OTHER COMPANIES</th>
                                             <th>MATURITY "AS IS"</th>
@@ -196,14 +199,16 @@
                                     <tbody>
                                         {% for i in range(user_records|length) %}
                                         <tr>
-                                            <td>{{ user_records[i][4] }}</td>
+                                            <!-- <td>{{ user_records[i][4] }}</td> -->
 
-                                            <input type="hidden" name="business_function_for_affinity[]" value="{{ user_records[i][4]  }}">
+                                            <input type="hidden" name="business_function_for_affinity[]"
+                                                value="{{ user_records[i][4]  }}">
 
 
                                             <td>{{ user_records[i][0] }}</td>
 
-                                            <input type="hidden" name="measuring_element_for_affinity[]" value="{{ user_records[i][0] }}">
+                                            <input type="hidden" name="measuring_element_for_affinity[]"
+                                                value="{{ user_records[i][0] }}">
 
                                             <td>{{ user_records[i][1] }}</td>
                                             <td>{{ user_records[i][2] }}</td>
@@ -221,22 +226,22 @@
 
                                 <div>
 
-                                    <input type="hidden" class="input_user" name="Unique_code_from_User" 
+                                    <input type="hidden" class="input_user" name="Unique_code_from_User"
                                         placeholder="Please enter yor unique maturity code here before answering the questions"
                                         value="{{ Unique_code_from_User}}">
-        
-        
+
+
                                 </div>
 
                                 <button class="submit-btn">SAVE RESULT</button>
-    
+
                                 <div>
                                     <h1 class="item">GRAPHICAL DISPLAY</h1>
                                     <img src="data:image/png;base64,{{ plot }}" alt="Plot">
                                 </div>
-    
+
                                 <div class="item">
-    
+
                                     <img src="data:image/png;base64,{{ growth_curve_plot }}">
                                 </div>
                             </div>
@@ -298,7 +303,7 @@
                         <table border="1" style="background-color: black;" class="item">
                             <thead>
                                 <tr>
-                                    <th>BUSINESS FUNCTION</th>
+                                    <!-- <th>BUSINESS FUNCTION</th> -->
                                     <th>MEASURING ELEMENT</th>
                                     <th>RATING</th>
                                     <th>SUB-CATEGORY</th>
@@ -310,10 +315,10 @@
                             <tbody>
                                 {% for row in data %}
                                 <tr>
-                                    <td><input type="text" name="business_function_user[]" value="{{ row[0] }}">  </td>
-                                
-                                     
-                                    
+                                    <input type="hidden" name="business_function_user[]" value="{{ row[0] }}">
+
+
+
                                     <td>{{ row[1] }}</td>
                                     <td>{{ row[2] }}</td>
                                     <td>{{ row[3] }}</td>

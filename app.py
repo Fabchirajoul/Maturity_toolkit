@@ -133,6 +133,8 @@ def create_affinity_relationship_table():
             UniqueCodeUser TEXT,
             BusinessFunction TEXT,  
             MeasuringEltUser TEXT,
+            UserCumSumAsIs INTEGER,
+            UserCumSumToBe INTEGER,
             FOREIGN KEY (UniqueCodeUser) REFERENCES UserSubmissionRecord(UniqueCodeUser)
         )
     ''')
@@ -553,9 +555,9 @@ def CombinedTiersForUser():
                     ''', (UserSubmittedUniqueCode, business_function_name_user[i], measuring_element_name_user[i], Rting_User, subCategory_name_user[i], SubCategoryQuestion_user[i], QuestionAnswer_user[i], QuestionAnswer_userToBe[i], MaxRatingUser, ExpectedCumSum, UserCumSumAsIs, UserCumSumToBe))
 
                 cursor.execute('''
-                        INSERT INTO UserSubmissionAffinity (UniqueCodeUser, BusinessFunction, MeasuringEltUser)
-                        VALUES (?, ?, ?)
-                    ''', (UserSubmittedUniqueCode, business_function_name_user[i], measuring_element_name_user[i]))
+                        INSERT INTO UserSubmissionAffinity (UniqueCodeUser, BusinessFunction, MeasuringEltUser, UserCumSumAsIs, UserCumSumToBe)
+                        VALUES (?, ?, ?, ?, ?)
+                    ''', (UserSubmittedUniqueCode, business_function_name_user[i], measuring_element_name_user[i], UserCumSumAsIs, UserCumSumToBe))
 
             connection.commit()
             connection.close()
@@ -578,15 +580,23 @@ def submit_code():
         user_submission_affinities = cursor.fetchall()
         connection.close()
 
-        # Split Business Function and create separate records
-        processed_affinities = []
+        # Dictionary to map business functions to sets of measuring elements
+        business_function_map = {}
+
         for BusinessFunction, MeasuringEltUser in user_submission_affinities:
             business_function_split = BusinessFunction.split(',')
             for element in business_function_split:
-                processed_affinities.append(
-                    (element.strip(), MeasuringEltUser))
+                element = element.strip()
+                if element not in business_function_map:
+                    business_function_map[element] = set()
+                business_function_map[element].add(MeasuringEltUser)
 
-        return processed_affinities
+        # Convert the sets to lists and sort them
+        for business_function in business_function_map:
+            business_function_map[business_function] = sorted(
+                list(business_function_map[business_function]))
+
+        return business_function_map
 
     if request.method == 'POST':
         unique_code = request.form['unique_code_user']
@@ -731,14 +741,14 @@ def submit_code():
         img_str = base64.b64encode(img_buffer.getvalue()).decode()
 
         # Fetch user submission affinities data for the given unique code
-        submission_affinities_data = fetch_user_submission_affinities_data(
-            unique_code)
+        submission_affinities_data = fetch_user_submission_affinities_data(unique_code)
 
-        # Render the template with the measuring elements data and their summed ExpectedCumSum
+# Pass the fetched data to the template using the correct variable name
         return render_template('userAccount.html', user_records=user_records, percentages=percentage_values,
-                               percenTobe=percentage_values_to_be, growth_rate=percentage_growth_rate,
-                               duration=duration_years, plot=img_str, feedback_messages=feedback_messages,
-                               error_message=error_message, submission_affinities_data=submission_affinities_data)
+                       percenTobe=percentage_values_to_be, growth_rate=percentage_growth_rate,
+                       duration=duration_years, plot=img_str, feedback_messages=feedback_messages,
+                       error_message=error_message, business_function_map=submission_affinities_data)
+
 
 
 if __name__ == '__main__':
