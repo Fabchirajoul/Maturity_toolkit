@@ -152,25 +152,29 @@
 
                                 <br><br><br><br><br><br><br><br><br><br><br><br><br><br>
                                 <!-- affinity data  -->
+                                {% if business_function_map %}
                                 <table border="1" style="background-color: black;">
                                     <tr>
                                         <th>Business Function</th>
                                         <th>Measuring Element</th>
                                     </tr>
                                     {% for function, elements in business_function_map.items() %}
-                                        <tr>
-                                            <td>{{ function }}</td>
-                                            <td>{{ elements[0] }}</td>
-                                        </tr>
-                                        {% for element in elements[1:] %}
-                                            <tr>
-                                                <td></td> <!-- Empty cell for Business Function to align Measuring Elements under the parent Business Function -->
-                                                <td>{{ element }}</td>
-                                            </tr>
-                                        {% endfor %}
+                                    <tr>
+                                        <td>{{ function }}</td>
+                                        <td>{{ elements[0] }}</td>
+                                    </tr>
+                                    {% for element in elements[1:] %}
+                                    <tr>
+                                        <td></td>
+                                        <!-- Empty cell for Business Function to align Measuring Elements under the parent Business Function -->
+                                        <td>{{ element }}</td>
+                                    </tr>
+                                    {% endfor %}
                                     {% endfor %}
                                 </table>
-                                
+                                {% endif %}
+
+
 
                                 <br><br><br><br>
                                 <table border="1" style="background-color: black;">

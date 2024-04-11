@@ -503,7 +503,8 @@ def select_business_sector():
 
                 # Generate random text
                 random_text = generate_random_text()
-                return render_template('userAccount.html', data=sector_data, random_text=random_text, BusinessError=erro_message_user_business_sector)
+                return render_template('userAccount.html', data=sector_data, random_text=random_text, BusinessError=erro_message_user_business_sector, business_function_map={})
+
             else:
                 # Handle case when no sector is selected
                 erro_message_user_business_sector = "Please select a business sector"
@@ -741,13 +742,14 @@ def submit_code():
         img_str = base64.b64encode(img_buffer.getvalue()).decode()
 
         # Fetch user submission affinities data for the given unique code
+
         submission_affinities_data = fetch_user_submission_affinities_data(unique_code)
 
-# Pass the fetched data to the template using the correct variable name
+        # Pass the fetched data to the template using the correct variable name
         return render_template('userAccount.html', user_records=user_records, percentages=percentage_values,
-                       percenTobe=percentage_values_to_be, growth_rate=percentage_growth_rate,
-                       duration=duration_years, plot=img_str, feedback_messages=feedback_messages,
-                       error_message=error_message, business_function_map=submission_affinities_data)
+                               percenTobe=percentage_values_to_be, growth_rate=percentage_growth_rate,
+                               duration=duration_years, plot=img_str, feedback_messages=feedback_messages,
+                               error_message=error_message, business_function_map=submission_affinities_data)
 
 
 
