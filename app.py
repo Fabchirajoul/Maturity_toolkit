@@ -6,6 +6,8 @@ import string
 import math
 from flask import jsonify
 import matplotlib.pyplot as plt
+import matplotlib
+matplotlib.use('Agg')  # Use a non-GUI backend
 import base64
 import csv
 import io
@@ -558,7 +560,6 @@ def CombinedTiersForUser():
 def submit_code():
     error_message = None  # Initialize error message
 
-
     def fetch_user_submission_affinities_data(unique_code):
         connection = sqlite3.connect('database.db')
         cursor = connection.cursor()
@@ -637,7 +638,7 @@ def submit_code():
                           if percentage_growth_rate != 0 else 0
                           for old_value, new_value, percentage_growth_rate in
                           zip(sum_user_cum_sum_t0_be, sum_expected_cum_sum, percentage_growth_rate)]
-        
+
         # Update the UserSubmittedFeedback table
         for measuring_elt, percent_as_is, percent_to_be in zip(measuring_elt_user, percentage_values, percentage_values_to_be):
             cursor.execute('''
@@ -654,10 +655,11 @@ def submit_code():
                 SELECT DISTINCT BusinessFunction, MeasuringEltUser, PercentMaturityAsIs, PercentMaturityToBe 
                 FROM UserSubmittedFeedback
                 WHERE UniqueCodeUser = ?
-            ''',(unique_code,))
+            ''', (unique_code,))
 
         affinity_record = cursor.fetchall()
-        affinity_record_sorted = sorted(affinity_record, key=lambda x: (x[0], -x[2]))
+        affinity_record_sorted = sorted(
+            affinity_record, key=lambda x: (x[0], -x[2]))
 
         connection.commit()
         connection.close()
@@ -771,9 +773,64 @@ def submit_code():
         return render_template('userAccount.html', user_records=user_records, percentages=percentage_values,
                                percenTobe=percentage_values_to_be, growth_rate=percentage_growth_rate,
                                duration=duration_years, plot=img_str, feedback_messages=feedback_messages,
-                               error_message=error_message, business_function_map=submission_affinities_data, affinity_record =affinity_record_sorted)
-    #    inserting into database so I can use it to make the affinity relationship
+                               error_message=error_message, business_function_map=submission_affinities_data, affinity_record=affinity_record_sorted)
 
+
+@app.route('/generate_plot/', methods=['GET', 'POST'])  # Change the route to handle GET and POST
+def fetch_and_plot_data():
+    if request.method == 'POST':
+        unique_code = request.form['unique_code']  # Assuming your form has an input with name="unique_code"
+        connection = sqlite3.connect('database.db')
+        cursor = connection.cursor()
+        cursor.execute('''
+            SELECT BusinessFunction, MeasuringEltUser, PercentMaturityAsIs, PercentMaturityToBe
+            FROM UserSubmittedFeedback
+            WHERE UniqueCodeUser = ?
+            GROUP BY BusinessFunction, MeasuringEltUser
+            ORDER BY BusinessFunction, MeasuringEltUser;
+        ''', (unique_code,))
+        rows = cursor.fetchall()
+        connection.close()
+
+        business_functions_data = {}
+        for row in rows:
+            business_function, measuring_elt_user, percent_maturity_as_is, percent_maturity_to_be = row
+            if business_function not in business_functions_data:
+                business_functions_data[business_function] = []
+            business_functions_data[business_function].append(
+                (measuring_elt_user, percent_maturity_as_is, percent_maturity_to_be)
+            )
+
+        plot_images = []
+        for business_function, data in business_functions_data.items():
+            labels = [item[0] for item in data]
+            as_is = [item[1] for item in data]
+            to_be = [item[2] for item in data]
+            angles = np.linspace(0, 2 * np.pi, len(labels), endpoint=False).tolist()
+            angles += angles[:1]
+
+            plt.figure(figsize=(4, 4))
+            ax = plt.subplot(111, polar=True)
+            ax.plot(angles, as_is + [as_is[0]], 'o-', linewidth=2, label='AS IS', color='red')
+            ax.fill(angles, as_is + [as_is[0]], alpha=0.4, color='red')
+            ax.plot(angles, to_be + [to_be[0]], 'o-', linewidth=2, label='TO BE', color='blue')
+            ax.fill(angles, to_be + [to_be[0]], alpha=0.4, color='blue')
+            ax.set_xticks(angles[:-1])
+            ax.set_xticklabels(labels, color='grey', size=8)
+
+            buf = io.BytesIO()
+            plt.savefig(buf, format='png')
+            buf.seek(0)
+            plot_image = base64.b64encode(buf.getvalue()).decode('utf-8')
+            plot_images.append(plot_image)
+            plt.close()
+
+        return render_template('userAccount.html', plot_images=plot_images)
+    else:
+        # When method is GET, just return the initial form page
+        return render_template('userAccount.html')  # Make sure you create this template
 
 if __name__ == '__main__':
     app.run(debug=True)
+
+

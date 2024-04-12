@@ -143,142 +143,155 @@
                             x-on:click="view_maturity_analysis=!view_maturity_analysis">VIEW FEEDBACK ANALYSIS</button>
 
 
-                        <form >
-                            <div x-show="view_maturity_analysis">
-                                <h1 class="item">MATURITY ANALYSIS RESULTS</h1>
 
 
-                                <!-- table for the affinity results comes here  -->
 
-                                <br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-                                <!-- affinity data  -->
-                                {% if business_function_map %}
-                                <table border="1" style="background-color: black;">
+
+
+                        <div x-show="view_maturity_analysis">
+                            <h1 class="item">MATURITY ANALYSIS RESULTS</h1>
+
+
+                            <!-- table for the affinity results comes here  -->
+
+                            <br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+                            <!-- affinity data  -->
+                            {% if business_function_map %}
+                            <table border="1" style="background-color: black;">
+                                <tr>
+                                    <th>Business Function</th>
+                                    <th>Measuring Element</th>
+                                    <th>Cumulated AS IS</th>
+                                    <th>Cumulated TO BE</th>
+                                </tr>
+                                {% for function, elements in business_function_map.items() %}
+                                <tr>
+                                    <td>{{ function }}</td>
+                                    <td>{{ elements[0] }}</td>
+
+                                </tr>
+                                {% for element in elements[1:] %}
+                                <tr>
+                                    <td></td>
+                                    <!-- Empty cell for Business Function to align Measuring Elements under the parent Business Function -->
+                                    <td>{{ element }}</td>
+
+
+                                </tr>
+                                {% endfor %}
+                                {% endfor %}
+                            </table>
+                            {% endif %}
+
+
+                            <!-- checking the select  -->
+
+                            <table border="1" style="background-color: black;">
+                                <tr>
+                                    <th>BUSINESS FUNCTION</th>
+                                    <th>MEASURING ELEMENT</th>
+                                    <th>AS IS %</th>
+                                    <th>TO BE %</th>
+                                </tr>
+
+                                <tbody>
+                                    {% for affinity in affinity_record %}
                                     <tr>
-                                        <th>Business Function</th>
-                                        <th>Measuring Element</th>
-                                        <th>Cumulated AS IS</th>
-                                        <th>Cumulated TO BE</th>
+                                        <td>{{affinity[0]}}</td>
+                                        <td>{{affinity[1]}}</td>
+                                        <td>{{affinity[2]}}</td>
+                                        <td>{{affinity[3]}}</td>
                                     </tr>
-                                    {% for function, elements in business_function_map.items() %}
-                                    <tr>
-                                        <td>{{ function }}</td>
-                                        <td>{{ elements[0] }}</td>
 
-                                    </tr>
-                                    {% for element in elements[1:] %}
-                                    <tr>
-                                        <td></td>
-                                        <!-- Empty cell for Business Function to align Measuring Elements under the parent Business Function -->
-                                        <td>{{ element }}</td>
-
-                                        
-                                    </tr>
                                     {% endfor %}
-                                    {% endfor %}
-                                </table>
-                                {% endif %}
+                                </tbody>
+                            </table>
 
+                            <button class="submit-btn">SAVE RESULT</button>
 
-                                <!-- checking the select  -->
+                            <br><br><br><br>
+                            <table border="1" style="background-color: black;">
+                                <thead>
 
-                                <table border="1" style="background-color: black;">
                                     <tr>
-                                        <th>BUSINESS FUNCTION</th>
+                                        <th border="0"></th>
+                                        <th border="0"></th>
+                                        <th colspan="3">MATURITY AS IS WRT TO OTHER COMPANIES</th>
+                                        <th colspan="3">MATURITY TO BE WRT TO OTHER COMPANIES</th>
+                                    </tr>
+                                    <tr>
+                                        <!-- <th>BUSINESS FUNCTIONS</th> -->
                                         <th>MEASURING ELEMENT</th>
-                                        <th>AS IS %</th>
-                                        <th>TO BE %</th>
+                                        <th>OTHER COMPANIES</th>
+                                        <th>MATURITY "AS IS"</th>
+                                        <th>% "AS IS"</th>
+                                        <th>FEEDBACK "AS IS"</th>
+                                        <th>MATURITY "TO BE"</th>
+                                        <th>% "TO BE"</th>
+                                        <th>FEEDBACK "TO BE"</th>
+                                        <th>GROWTH RATE</th>
+                                        <th>DURATION</th>
                                     </tr>
+                                </thead>
+                                <tbody>
+                                    {% for i in range(user_records|length) %}
+                                    <tr>
+                                        <!-- <td>{{ user_records[i][4] }}</td> -->
 
-                                    <tbody>
-                                        {% for affinity in affinity_record  %}
-                                        <tr>
-                                            <td>{{affinity[0]}}</td>
-                                            <td>{{affinity[1]}}</td>
-                                            <td>{{affinity[2]}}</td>
-                                            <td>{{affinity[3]}}</td>
-                                        </tr>
-
-                                        {% endfor %}
-                                    </tbody>
-                                </table>
-
-                                <button class="submit-btn">SAVE RESULT</button>
-
-                                <br><br><br><br>
-                                <table border="1" style="background-color: black;">
-                                    <thead>
-
-                                        <tr>
-                                            <th border="0"></th>
-                                            <th border="0"></th>
-                                            <th colspan="3">MATURITY AS IS WRT TO OTHER COMPANIES</th>
-                                            <th colspan="3">MATURITY TO BE WRT TO OTHER COMPANIES</th>
-                                        </tr>
-                                        <tr>
-                                            <!-- <th>BUSINESS FUNCTIONS</th> -->
-                                            <th>MEASURING ELEMENT</th>
-                                            <th>OTHER COMPANIES</th>
-                                            <th>MATURITY "AS IS"</th>
-                                            <th>% "AS IS"</th>
-                                            <th>FEEDBACK "AS IS"</th>
-                                            <th>MATURITY "TO BE"</th>
-                                            <th>% "TO BE"</th>
-                                            <th>FEEDBACK "TO BE"</th>
-                                            <th>GROWTH RATE</th>
-                                            <th>DURATION</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {% for i in range(user_records|length) %}
-                                        <tr>
-                                            <!-- <td>{{ user_records[i][4] }}</td> -->
-
-                                            <input type="hidden" name="business_function_for_affinity[]"
-                                                value="{{ user_records[i][4]  }}">
+                                        <input type="hidden" name="business_function_for_affinity[]"
+                                            value="{{ user_records[i][4]  }}">
 
 
-                                            <td>{{ user_records[i][0] }}</td>
+                                        <td>{{ user_records[i][0] }}</td>
 
-                                            <input type="hidden" name="measuring_element_for_affinity[]"
-                                                value="{{ user_records[i][0] }}">
+                                        <input type="hidden" name="measuring_element_for_affinity[]"
+                                            value="{{ user_records[i][0] }}">
 
-                                            <td>{{ user_records[i][1] }}</td>
-                                            <td>{{ user_records[i][2] }}</td>
-                                            <td>{{ percentages[i] }}</td>
-                                            <td>{{ feedback_messages[user_records[i][0]][0] }}</td>
-                                            <td>{{ user_records[i][3] }}</td>
-                                            <td>{{ percenTobe[i] }}</td>
-                                            <td>{{ feedback_messages[user_records[i][0]][1] }}</td>
-                                            <td>{{ growth_rate[i] }}</td>
-                                            <td>{{ duration[i] }}</td>
-                                        </tr>
-                                        {% endfor %}
-                                    </tbody>
-                                </table>
+                                        <td>{{ user_records[i][1] }}</td>
+                                        <td>{{ user_records[i][2] }}</td>
+                                        <td>{{ percentages[i] }}</td>
+                                        <td>{{ feedback_messages[user_records[i][0]][0] }}</td>
+                                        <td>{{ user_records[i][3] }}</td>
+                                        <td>{{ percenTobe[i] }}</td>
+                                        <td>{{ feedback_messages[user_records[i][0]][1] }}</td>
+                                        <td>{{ growth_rate[i] }}</td>
+                                        <td>{{ duration[i] }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
 
-                                <div>
+                            <div>
 
-                                    <input type="hidden" class="input_user" name="Unique_code_from_User"
-                                        placeholder="Please enter yor unique maturity code here before answering the questions"
-                                        value="{{ Unique_code_from_User}}">
+                                <input type="hidden" class="input_user" name="Unique_code_from_User"
+                                    placeholder="Please enter yor unique maturity code here before answering the questions"
+                                    value="{{ Unique_code_from_User}}">
 
 
-                                </div>
-
-                                
-
-                                <div>
-                                    <h1 class="item">GRAPHICAL DISPLAY</h1>
-                                    <img src="data:image/png;base64,{{ plot }}" alt="Plot">
-                                </div>
-
-                                <div class="item">
-
-                                    <img src="data:image/png;base64,{{ growth_curve_plot }}">
-                                </div>
                             </div>
-                        </form>
+
+
+
+                            <div>
+                                <h1 class="item">GRAPHICAL DISPLAY</h1>
+                                <img src="data:image/png;base64,{{ plot }}" alt="Plot">
+                            </div>
+
+                            <div class="item">
+
+                                <img src="data:image/png;base64,{{ growth_curve_plot }}">
+                            </div>
+
+                            <div>
+                                <h1>Enter your unique code to generate plots</h1>
+                                <form action="/generate_plot/" method="post">
+                                    <label for="unique_code">Unique Code:</label>
+                                    <input type="text" id="unique_code" name="unique_code" required>
+                                    <button type="submit">Submit</button>
+                                </form>
+                            </div>
+                        </div>
+
 
 
 
@@ -403,7 +416,14 @@
         </section>
 
         <section>
-            <div style="background-color: black;" x-show="displayed_tiers_per_business_sector">
+            <div style="background-color: black;">
+
+                <div>
+                    <h1>Business Function Analysis</h1>
+                    {% for image in plot_images %}
+                    <img src="data:image/png;base64,{{ image }}" alt="Business Function Plot">
+                    {% endfor %}
+                </div>
 
             </div>
 
