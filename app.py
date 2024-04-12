@@ -818,6 +818,12 @@ def fetch_and_plot_data():
             ax.set_xticks(angles[:-1])
             ax.set_xticklabels(labels, color='grey', size=8)
 
+            # Setting the title of the plot
+            ax.set_title(business_function, size=10, color='black', weight='bold')
+
+            # Adding the legend outside the plot area
+            ax.legend(loc='upper right', bbox_to_anchor=(0.1, 0.1))
+
             buf = io.BytesIO()
             plt.savefig(buf, format='png')
             buf.seek(0)
@@ -832,5 +838,3 @@ def fetch_and_plot_data():
 
 if __name__ == '__main__':
     app.run(debug=True)
-
-
