@@ -143,7 +143,7 @@
                             x-on:click="view_maturity_analysis=!view_maturity_analysis">VIEW FEEDBACK ANALYSIS</button>
 
 
-                        <form action="/userSubmissionDataIntoAffinityTable" method="POST">
+                        <form >
                             <div x-show="view_maturity_analysis">
                                 <h1 class="item">MATURITY ANALYSIS RESULTS</h1>
 
@@ -157,17 +157,22 @@
                                     <tr>
                                         <th>Business Function</th>
                                         <th>Measuring Element</th>
+                                        <th>Cumulated AS IS</th>
+                                        <th>Cumulated TO BE</th>
                                     </tr>
                                     {% for function, elements in business_function_map.items() %}
                                     <tr>
                                         <td>{{ function }}</td>
                                         <td>{{ elements[0] }}</td>
+
                                     </tr>
                                     {% for element in elements[1:] %}
                                     <tr>
                                         <td></td>
                                         <!-- Empty cell for Business Function to align Measuring Elements under the parent Business Function -->
                                         <td>{{ element }}</td>
+
+                                        
                                     </tr>
                                     {% endfor %}
                                     {% endfor %}
@@ -175,6 +180,30 @@
                                 {% endif %}
 
 
+                                <!-- checking the select  -->
+
+                                <table border="1" style="background-color: black;">
+                                    <tr>
+                                        <th>BUSINESS FUNCTION</th>
+                                        <th>MEASURING ELEMENT</th>
+                                        <th>AS IS %</th>
+                                        <th>TO BE %</th>
+                                    </tr>
+
+                                    <tbody>
+                                        {% for affinity in affinity_record  %}
+                                        <tr>
+                                            <td>{{affinity[0]}}</td>
+                                            <td>{{affinity[1]}}</td>
+                                            <td>{{affinity[2]}}</td>
+                                            <td>{{affinity[3]}}</td>
+                                        </tr>
+
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+
+                                <button class="submit-btn">SAVE RESULT</button>
 
                                 <br><br><br><br>
                                 <table border="1" style="background-color: black;">
@@ -237,7 +266,7 @@
 
                                 </div>
 
-                                <button class="submit-btn">SAVE RESULT</button>
+                                
 
                                 <div>
                                     <h1 class="item">GRAPHICAL DISPLAY</h1>

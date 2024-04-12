@@ -93,31 +93,17 @@ def create_final_feedback_data():
     connection = sqlite3.connect('database.db')
     cursor = connection.cursor()
     cursor.execute('''
-        CREATE TABLE IF NOT EXISTS UserSubmittedFeddback (
+        CREATE TABLE IF NOT EXISTS UserSubmittedFeedback (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            UniqueCodeUser TEXT,
-            name TEXT,
             BusinessFunction TEXT, 
             MeasuringEltUser TEXT,
-            RatingUser INTEGER,
-            SUbCategoryUser TEXT,
-            QuestionsUser TEXT,
-            AnswersUserAsIs TEXT,
-            AnswersUserToBe TEXT,   
-            MaxRatingUser INTEGER DEFAULT 5,
-            ExpectedCumSum INTEGER,
-            UserCumSumAsIs INTEGER,
-            UserCumSumToBe INTEGER,
-            OtherCompanies INTEGER,
-            MaturityAsIs INTEGER,
+            SubCategoryUser TEXT,
             PercentMaturityAsIs INTEGER,
-            MaturityToBe INTEGER,
             PercentMaturityToBe INTEGER,
-            GrowthRate INTEGER
-            Duration INTEGER
             FeedbackAsIs TEXT,
-            FeedbackTobe TEXT 
-            
+            FeedbackTobe TEXT,
+            UniqueCodeUser TEXT,
+            FOREIGN KEY (UniqueCodeUser) REFERENCES UserSubmissionRecord(UniqueCodeUser)
         )
     ''')
     connection.commit()
@@ -572,14 +558,13 @@ def CombinedTiersForUser():
 def submit_code():
     error_message = None  # Initialize error message
 
-    # Function to fetch data from UserSubmissionAffinity table
+
     def fetch_user_submission_affinities_data(unique_code):
         connection = sqlite3.connect('database.db')
         cursor = connection.cursor()
         cursor.execute(
             "SELECT BusinessFunction, MeasuringEltUser FROM UserSubmissionAffinity WHERE UniqueCodeUser = ?", (unique_code,))
         user_submission_affinities = cursor.fetchall()
-        connection.close()
 
         # Dictionary to map business functions to sets of measuring elements
         business_function_map = {}
@@ -591,6 +576,16 @@ def submit_code():
                 if element not in business_function_map:
                     business_function_map[element] = set()
                 business_function_map[element].add(MeasuringEltUser)
+
+                # Insert into UserSubmittedFeddback table
+                cursor.execute('''
+                    INSERT INTO UserSubmittedFeedback (BusinessFunction, MeasuringEltUser, UniqueCodeUser)
+                    VALUES (?, ?, ?)
+                ''', (element, MeasuringEltUser, unique_code))
+
+        # Commit changes and close connection
+        connection.commit()
+        connection.close()
 
         # Convert the sets to lists and sort them
         for business_function in business_function_map:
@@ -613,7 +608,7 @@ def submit_code():
         ''', (unique_code,))
         user_records = cursor.fetchall()
 
-        connection.close()
+        # connection.close()
 
         if not unique_code:
             error_message = "Please go back and insert your unique code number"
@@ -642,6 +637,32 @@ def submit_code():
                           if percentage_growth_rate != 0 else 0
                           for old_value, new_value, percentage_growth_rate in
                           zip(sum_user_cum_sum_t0_be, sum_expected_cum_sum, percentage_growth_rate)]
+        
+        # Update the UserSubmittedFeedback table
+        for measuring_elt, percent_as_is, percent_to_be in zip(measuring_elt_user, percentage_values, percentage_values_to_be):
+            cursor.execute('''
+                UPDATE UserSubmittedFeedback
+                SET PercentMaturityAsIs = ?, PercentMaturityToBe = ?
+                WHERE UniqueCodeUser = ? AND MeasuringEltUser = ?
+            ''', (percent_as_is, percent_to_be, unique_code, measuring_elt))
+
+        # Commit changes to the database and close the connection
+        connection.commit()
+        # connection.close()
+
+        cursor.execute('''
+                SELECT DISTINCT BusinessFunction, MeasuringEltUser, PercentMaturityAsIs, PercentMaturityToBe 
+                FROM UserSubmittedFeedback
+                WHERE UniqueCodeUser = ?
+            ''',(unique_code,))
+
+        affinity_record = cursor.fetchall()
+        affinity_record_sorted = sorted(affinity_record, key=lambda x: (x[0], -x[2]))
+
+        connection.commit()
+        connection.close()
+
+        # print(affinity_record)
 
         # Check percentage_values range and assign feedback messages accordingly
         feedback_messages = {}
@@ -653,29 +674,29 @@ def submit_code():
             percentage_value_to_be = percentage_values_to_be[i]
 
             # Determine feedback for percentage_values
-            if 0 <= percentage_value <= 15:
+            if 0 <= percentage_value <= 15.5:
                 feedback_As_Is = "Stage 0:, Level: Incomplete, Aspect practices are yet to be implemented or incomplete, Organisation only performs essential operations."
-            elif 16 <= percentage_value <= 34:
+            elif 16 <= percentage_value <= 34.5:
                 feedback_As_Is = "Stage 1, Level Performed, Aspect practices are fully implemented. Transition to Industry 4.0 has commenced"
-            elif 34 <= percentage_value <= 50:
+            elif 35 <= percentage_value <= 50.5:
                 feedback_As_Is = "Stage 2, level Managed, Initial implementation of Industry 4.0 technologies.No integration yet.Physical systems can be represented virtually"
-            elif 51 <= percentage_value <= 67:
+            elif 51 <= percentage_value <= 67.5:
                 feedback_As_Is = "Stage 3: Level: Established, Vertical integration from shop floor to ERP level, Standardisation of processes and operations"
-            elif 68 <= percentage_value <= 84:
+            elif 68 <= percentage_value <= 84.5:
                 feedback_As_Is = "Stage 4: Level: Predictable, Horizontal integration across the value chain.Application of Industry 4.0 technologies such Big Data and artificial intelligence.autonomous optimisation"
             elif 85 <= percentage_value <= 100:
                 feedback_As_Is = "Stage 5: Level: Optimizing, End-to-end integration.Continuous improvement.Smart and autonomous optimisation."
 
             # Determine feedback for percentage_values_to_be
-            if 0 <= percentage_value_to_be <= 16:
+            if 0 <= percentage_value_to_be <= 15.5:
                 feedback_To_Be = "Stage 0:\nLevel: Incomplete\nAspect practices are yet to be implemented or incomplete\nOrganisation only performs essential operations."
-            elif 17 <= percentage_value_to_be <= 33:
+            elif 16 <= percentage_value_to_be <= 34.5:
                 feedback_To_Be = "Stage 1:\nLevel Performed\nAspect practices are fully implemented.\nTransition to Industry 4.0 has commenced."
-            elif 34 <= percentage_value_to_be <= 50:
+            elif 35 <= percentage_value_to_be <= 50.5:
                 feedback_To_Be = "Stage 2:\nLevel Managed\nInitial implementation of Industry 4.0 technologies.\nNo integration yet.\nPhysical systems can be represented virtually."
-            elif 51 <= percentage_value_to_be <= 67:
+            elif 51 <= percentage_value_to_be <= 67.5:
                 feedback_To_Be = "Stage 3:\nLevel Established\nVertical integration from shop floor to ERP level.\nStandardisation of processes and operations."
-            elif 68 <= percentage_value_to_be <= 84:
+            elif 68 <= percentage_value_to_be <= 84.5:
                 feedback_To_Be = "Stage 4:\nLevel Predictable\nHorizontal integration across the value chain.\nApplication of Industry 4.0 technologies such Big Data and artificial intelligence.\nAutonomous optimisation."
             elif 85 <= percentage_value_to_be <= 100:
                 feedback_To_Be = "Stage 5:\nLevel Optimizing\nEnd-to-end integration.\nContinuous improvement.\nSmart and autonomous optimisation."
@@ -743,14 +764,15 @@ def submit_code():
 
         # Fetch user submission affinities data for the given unique code
 
-        submission_affinities_data = fetch_user_submission_affinities_data(unique_code)
+        submission_affinities_data = fetch_user_submission_affinities_data(
+            unique_code)
 
         # Pass the fetched data to the template using the correct variable name
         return render_template('userAccount.html', user_records=user_records, percentages=percentage_values,
                                percenTobe=percentage_values_to_be, growth_rate=percentage_growth_rate,
                                duration=duration_years, plot=img_str, feedback_messages=feedback_messages,
-                               error_message=error_message, business_function_map=submission_affinities_data)
-
+                               error_message=error_message, business_function_map=submission_affinities_data, affinity_record =affinity_record_sorted)
+    #    inserting into database so I can use it to make the affinity relationship
 
 
 if __name__ == '__main__':
