@@ -1,0 +1,6 @@
+﻿id,BusinessSector,BusinessFunction,MeasuringElt,Rating,SUbCategory,AsIsQuestions,ToBeQuestions,MAXIMUM RATING
+401,Test,"Exploration and Geology, Mining Operations",Data Utilization and Analytics,90,Data Collection,,,5
+402,Test,Corporate Development and Strategy,Data Utilization and Analytics,90,Data Storage,,,5
+403,Test,"Health  Safety  and Environment (HSE),Supply Chain and Logistics",Data Utilization and Analytics,90,Data Management,,,5
+404,Test,Mining Operations,Automation and Robotics,80,Automation of the drilling production process,,,5
+405,Test,Mining Operations,Automation and Robotics,80,"Utilization of advanced production technologies e.g., additive manufacturing",,,5

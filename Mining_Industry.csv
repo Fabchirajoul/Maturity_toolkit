@@ -1,195 +1,187 @@
-﻿id,BusinessSector,BusinessFunction,MeasuringElt,Rating,SUbCategory,Questions,Answers ,RateAnswer ,MAXIMUM RATING
-1,MINING,"Exploration and Geology, Mining Operations,Health  Safety  and Environment (HSE),Supply Chain and Logistics,Finance and Accounting,Corporate Development and Strategy",Data Utilization and Analytics,90,Data Collection,,Basic,1,5
-2,MINING,"Exploration and Geology,Mining Operations,Health  Safety  and Environment (HSE),Supply Chain and Logistics,Finance and Accounting,Corporate Development and Strategy",Data Utilization and Analytics,90,Data Storage,,Basic,1,5
-3,MINING,"Exploration and Geology,Mining Operations,Health  Safety  and Environment (HSE),Supply Chain and Logistics,Finance and Accounting,Corporate Development and Strategy",Data Utilization and Analytics,90,Data Management,,Reactive,2,5
-4,MINING,"Exploration and Geology,Mining Operations,Health  Safety  and Environment (HSE),Supply Chain and Logistics,Finance and Accounting,Corporate Development and Strategy",Data Utilization and Analytics,90,Data Analysis,,Planned,3,5
-5,MINING,"Exploration and Geology,Mining Operations,Health  Safety  and Environment (HSE),Supply Chain and Logistics,Finance and Accounting,Corporate Development and Strategy",Data Utilization and Analytics,90,Use of ML,,Proactive,4,5
-6,MINING,Mining Operations,Automation and Robotics,80,Automation of the drilling production process,,Resilent,5,5
-7,MINING,Mining Operations,Automation and Robotics,80,"Utilization of advanced production technologies e.g., additive manufacturing",,,,
-8,MINING,Mining Operations,Automation and Robotics,80,Automation of the blasting production process,,Basic,1,5
-9,MINING,Mining Operations,Automation and Robotics,80,Automation of the loading production process,,Reactive,2,5
-10,MINING,Mining Operations,Automation and Robotics,80,Use of digital device for seismicity measurement for geotechnical analysis,,,,
-11,MINING,Mining Operations,Automation and Robotics,80,Use of digital device and technology in ascertaining rock properties for geotechnical analysis,,,,
-12,MINING,Mining Operations,Automation and Robotics,80,Use of technology for the loading and hauling and hoisting fuel cost,,,,
-13,MINING,Mining Operations,Automation and Robotics,80,Stability risk analysis,,,,
-14,MINING,Mining Operations,Automation and Robotics,80,Continuous geotechnical monitoring,,,,
-15,MINING,Mining Operations,Automation and Robotics,80,Automating the type of mining method as per the rock quality,,,,
-16,MINING,Mining Operations,Automation and Robotics,80,Digital device in slope geometry,,,,
-17,MINING,Mining Operations,Automation and Robotics,80,Automation of the hauling production process,,Planned,3,5
-18,MINING,Mining Operations,Automation and Robotics,80,Debottlenecking,,,,
-19,MINING,Mining Operations,Automation and Robotics,80,Value Chain Visualisation,,,,
-20,MINING,Mining Operations,Automation and Robotics,80,Pit to Port,,,,
-21,MINING,Mining Operations,Automation and Robotics,80,Automation of the hoisting production process,,Proactive,4,5
-22,MINING,Mining Operations,Internet of Things (IoT) Integration,70,Equipment performance,,Resilent,5,5
-23,MINING,Mining Operations,Internet of Things (IoT) Integration,70,Environmental conditions,,Basic,1,5
-24,MINING,Mining Operations,Internet of Things (IoT) Integration,70,digital communication Utilization with stakeholders,,,,
-25,MINING,Mining Operations,Internet of Things (IoT) Integration,70,"Collect, update, and distribute project documents through digital platform",,,,
-26,MINING,Mining Operations,Internet of Things (IoT) Integration,70,"Computer-aided calculation, optimization, and simulation",,,,
-27,MINING,Mining Operations,Internet of Things (IoT) Integration,70,"Utilize IoT-solutions, advanced analytics, or artificial intelligence",,,,
-28,MINING,Mining Operations,Internet of Things (IoT) Integration,70,Digitally monitor problem issues and solving process,,,,
-29,MINING,Mining Operations,Internet of Things (IoT) Integration,70,Decision making,,Planned,3,5
-30,MINING,Mining Operations,Internet of Things (IoT) Integration,70,Workflow optimization,,Proactive,4,5
-31,MINING,"Mining Operations,Health  Safety  and Environment (HSE),Processing and Metallurgy,Supply Chain and Logistics",Digital Twin Technologies,60,Predictive Maintenance,,Resilent,5,5
-32,MINING,"Mining Operations,Health  Safety  and Environment (HSE),Processing and Metallurgy,Supply Chain and Logistics",Digital Twin Technologies,60,Asset Optimization,,Basic,1,5
-33,MINING,"Mining Operations,Health  Safety  and Environment (HSE),Processing and Metallurgy,Supply Chain and Logistics",Digital Twin Technologies,60,Power Plant Simulation,,Reactive,2,5
-34,MINING,"Mining Operations,Health  Safety  and Environment (HSE),Processing and Metallurgy,Supply Chain and Logistics",Digital Twin Technologies,60,Grid Simulation,,,,
-35,MINING,"Mining Operations,Health  Safety  and Environment (HSE),Processing and Metallurgy,Supply Chain and Logistics",Digital Twin Technologies,60,Building Energy Management,,,,
-36,MINING,"Mining Operations,Health  Safety  and Environment (HSE),Processing and Metallurgy,Supply Chain and Logistics",Digital Twin Technologies,60,Demand Response Optimization,,,,
-37,MINING,"Mining Operations,Health  Safety  and Environment (HSE),Processing and Metallurgy,Supply Chain and Logistics",Digital Twin Technologies,60,Wind and Solar Farm Modeling,,,,
-38,MINING,"Mining Operations,Health  Safety  and Environment (HSE),Processing and Metallurgy,Supply Chain and Logistics",Digital Twin Technologies,60,Energy Storage Optimization,,,,
-39,MINING,"Mining Operations,Health  Safety  and Environment (HSE),Processing and Metallurgy,Supply Chain and Logistics",Digital Twin Technologies,60,Fault Detection and Isolation,,,,
-40,MINING,"Mining Operations,Health  Safety  and Environment (HSE),Processing and Metallurgy,Supply Chain and Logistics",Digital Twin Technologies,60,Emissions Monitoring and Mitigation,,,,
-41,MINING,"Mining Operations,Health  Safety  and Environment (HSE),Processing and Metallurgy,Supply Chain and Logistics",Digital Twin Technologies,60,Disaster Response Planning,,,,
-42,MINING,"Mining Operations,Health  Safety  and Environment (HSE),Processing and Metallurgy,Supply Chain and Logistics",Digital Twin Technologies,60,Compliance Modeling,,Planned,3,5
-43,MINING,"Supply Chain and Logistics,Health  Safety  and Environment (HSE),Corporate Development and Strategy,Human Resources (HR),Mining Operations",Advanced Communication and Connectivity,50,Wireless network,,Proactive,4,5
-44,MINING,"Supply Chain and Logistics,Health  Safety  and Environment (HSE),Corporate Development and Strategy,Human Resources (HR),Mining Operations",Advanced Communication and Connectivity,50,Satelite communication,,Resilent,5,5
-45,MINING,"Supply Chain and Logistics,Health  Safety  and Environment (HSE),Corporate Development and Strategy,Human Resources (HR),Mining Operations",Advanced Communication and Connectivity,50,Fibre optics,,Basic,1,5
-46,MINING,"Supply Chain and Logistics,Health  Safety  and Environment (HSE),Corporate Development and Strategy,Human Resources (HR),Mining Operations",Advanced Communication and Connectivity,50,Sensitive data,,,,
-47,MINING,Legal and Compliance,Cybersecurity and Data Privacy,40,Infrastructure,,Reactive,2,5
-48,MINING,Legal and Compliance,Cybersecurity and Data Privacy,40,Operational systems,,Planned,3,5
-49,MINING,Legal and Compliance,Cybersecurity and Data Privacy,40,Data privacy,,Proactive,4,5
-50,MINING,Legal and Compliance,Cybersecurity and Data Privacy,40,Intrusion Detection and Prevention,,,,
-51,MINING,Legal and Compliance,Cybersecurity and Data Privacy,40,Data Encryption and Secure Communication,,,,
-52,MINING,Legal and Compliance,Cybersecurity and Data Privacy,40,Access Control and Authentication,,,,
-53,MINING,Legal and Compliance,Cybersecurity and Data Privacy,40,Incident Response and Recovery,,,,
-54,MINING,Legal and Compliance,Cybersecurity and Data Privacy,40,Compliance with Regulatory Requirements,,,,
-55,MINING,Legal and Compliance,Cybersecurity and Data Privacy,40,Continuous Monitoring and Auditing,,,,
-56,MINING,Supply Chain and Logistics,Supply Chain Digitization,30,Procurement,,Basic,1,5
-57,MINING,Supply Chain and Logistics,Supply Chain Digitization,30,Logistics,,Reactive,2,5
-58,MINING,Supply Chain and Logistics,Supply Chain Digitization,30,Inventory management,,Planned,3,5
-59,MINING,Supply Chain and Logistics,Supply Chain Digitization,30,Real time tracking,,Proactive,4,5
-60,MINING,Human Resources (HR),Workforce Skills and Training,50,Training programs,,Resilent,5,5
-61,MINING,Human Resources (HR),Workforce Skills and Training,50,Knowledge transfer initiatives,,Basic,1,5
-62,MINING,Human Resources (HR),Workforce Skills and Training,50,Workforce development strategies,,Reactive,2,5
-63,MINING,Human Resources (HR),Workforce Skills and Training,50,Digital literacy and skills,,Planned,3,5
-64,MINING,"Health  Safety  and Environment (HSE),Community and Stakeholder Relations",Environmental and Sustainability Solutions,60,Environmental impact,,Proactive,4,5
-65,MINING,"Health  Safety  and Environment (HSE),Community and Stakeholder Relations",Environmental and Sustainability Solutions,60,Energy consumption,,Resilent,5,5
-66,MINING,"Health  Safety  and Environment (HSE),Community and Stakeholder Relations",Environmental and Sustainability Solutions,60,Sustainable mining practice,,Basic,1,5
-67,MINING,"Health  Safety  and Environment (HSE),Community and Stakeholder Relations",Environmental and Sustainability Solutions,60,smart energy management,,Reactive,2,5
-68,MINING,"Health  Safety  and Environment (HSE),Community and Stakeholder Relations",Environmental and Sustainability Solutions,60,waste reduction,,Planned,3,5
-69,MINING,"Health  Safety  and Environment (HSE),Community and Stakeholder Relations",Environmental and Sustainability Solutions,60,Rehabilitation,,Proactive,4,5
-70,MINING,"Health  Safety  and Environment (HSE),Community and Stakeholder Relations",Environmental and Sustainability Solutions,60,Digital authority involvement in environmental issues,,,,
-71,MINING,"Health  Safety  and Environment (HSE),Community and Stakeholder Relations",Environmental and Sustainability Solutions,60,"Digital plan, monitoring and tracking of environmental issues",,,,
-72,MINING,"Finance and Accounting,Corporate Development and Strategy",Strategic Vision and Leadership,65,Strategic vision,,Resilent,5,5
-73,MINING,"Finance and Accounting,Corporate Development and Strategy",Strategic Vision and Leadership,65,Leadership commitment,,Basic,1,5
-74,MINING,"Finance and Accounting,Corporate Development and Strategy",Strategic Vision and Leadership,65,Organizational structure,,Reactive,2,5
-75,MINING,Health  Safety  and Environment (HSE),Remote Monitoring and Diagnostics,75,Enabling Real-Time Visibility,,,,
-76,MINING,Health  Safety  and Environment (HSE),Remote Monitoring and Diagnostics,75,Alarms,,,,
-77,MINING,Health  Safety  and Environment (HSE),Remote Monitoring and Diagnostics,75,Alerts,,,,
-78,MINING,Health  Safety  and Environment (HSE),Remote Monitoring and Diagnostics,75,Remote Troubleshooting Capabilities,,,,
-79,MINING,Mining Operations,Power Generation ,66,Transmission Infrastructure,,,,
-80,MINING,Mining Operations,Power Generation ,66,Distribution Networks,,,,
-81,MINING,Mining Operations,Power Generation ,66,Grid Stability and Reliability,,,,
-82,MINING,Mining Operations,Power Generation ,66,Renewable Integration,,,,
-83,MINING,Mining Operations,Power Generation ,66,Environmental Impact,,,,
-84,MINING,Mining Operations,Power Generation ,66,Generation Capacity,,,,
-85,MINING,Mining Operations,Power Generation ,66,Electricity Generation,,,,
-86,MINING,Mining Operations,generation technology,69,Heat Rate,,,,
-87,MINING,Mining Operations,generation technology,69,Forced Outage Rate,,,,
-88,MINING,Mining Operations,generation technology,69,Conversion Efficiency,,,,
-89,MINING,Mining Operations,generation technology,69,Emissions Intensity,,,,
-90,MINING,Mining Operations,generation technology,69,Fuel Cost,,,,
-91,MINING,Mining Operations,generation technology,69,Interconnection Capacity,,,,
-92,MINING,Mining Operations,generation technology,69,Nuclear Capacity Factor,,,,
-93,MINING,Mining Operations,generation technology,69,Electricity Generation,,,,
-94,MINING,Finance and Accounting,Digital Capability,68,IT Infrastructure,,,,
-95,MINING,Finance and Accounting,Digital Capability,68,Descriptive Analysis,,,,
-96,MINING, Finance and Accounting,Digital Capability,68,Predictive Analysis,,,,
-97,MINING,Human Resources (HR),Human Resources,88,Training on digital platforms,,,,
-98,MINING,Human Resources (HR),Human Resources,88,Monitor skills on digital platforms,,,,
-99,MINING,Human Resources (HR),Human Resources,88,Digitally monitor staff health status,,,,
-100,MINING,Human Resources (HR),Human Resources,88,Change Management,,,,
-101,MINING,Human Resources (HR),Human Resources,88,Reskilling,,,,
-102,MINING,Human Resources (HR),Human Resources,88,Stakeholder Engagement,,,,
-103,MINING,Human Resources (HR),Worker Enablement,87,Quick Decision,,,,
-104,MINING,Human Resources (HR),Worker Enablement,87,Making Employee,,,,
-105,MINING,Human Resources (HR),Worker Enablement,87,Enablement,,,,
-106,MINING,Human Resources (HR),Worker Enablement,87,Employee Effectiveness,,,,
-107,MINING,Human Resources (HR),Culture,85,Work Transformation,,,,
-108,MINING,Human Resources (HR),Culture,85,Changing Behaviour,,,,
-109,MINING,Human Resources (HR),Culture,85,Departmental Transformation,,,,
-110,MINING,Human Resources (HR),Culture,85,People Transformation,,,,
-111,MINING,"Marketing and sales,Corporate Development and Strategy",Customer Experience,77,Customer Satisfaction,,,,
-112,MINING,"Marketing and sales,Corporate Development and Strategy",Customer Experience,77,Mine to Customer,,,,
-113,MINING,"Corporate Development and Strategy, Supply Chain and Logistics",Unified Data ,63,Integrated Operations Centres,,,,
-114,MINING,"Corporate Development and Strategy, Supply Chain and Logistics",Unified Data ,63,Realtime data,,,,
-115,MINING,"Corporate Development and Strategy, Supply Chain and Logistics",Unified Data ,63,Integration,,,,
-116,MINING,"Corporate Development and Strategy, Supply Chain and Logistics",Unified Data ,63,Data-Driven Mine,,,,
-117,MINING,"Corporate Development and Strategy, Supply Chain and Logistics",Unified Data ,63,Eliminating Silos,,,,
-118,MINING,"Corporate Development and Strategy, Supply Chain and Logistics",Unified Data ,63,Single Platform,,,,
-119,MINING,Human Resources (HR),Performance Management,99,Value Chain Optimisation,,,,
-120,MINING,Human Resources (HR),Performance Management,99,Business Intelligence,,,,
-121,MINING,Human Resources (HR),Performance Management,99,Business Improvement,,,,
-122,MINING,Human Resources (HR),Performance Management,99,Shareholder Returns,,,,
-123,MINING,Human Resources (HR),Performance Management,99,Key Performance Indicators,,,,
-124,MINING,Community and Stakeholder Relations,Stakeholder Involvement,55,Labour,,,,
-125,MINING,Community and Stakeholder Relations,Stakeholder Involvement,55,Unions,,,,
-126,MINING,Community and Stakeholder Relations,Stakeholder Involvement,55,Employees,,,,
-127,MINING,"Mining Operations,Human Resources (HR)",Ease of Use and Adoption,53,Practicality of technologies,,,,
-128,MINING,"Mining Operations,Human Resources (HR)",Ease of Use and Adoption,53,Project Value Realisation,,,,
-129,MINING,"Mining Operations,Human Resources (HR)",Ease of Use and Adoption,53,Motivation (No Incentives),,,,
-130,MINING,Corporate Development and Strategy, Change Management,52,Ineffective change management,,,,
-131,MINING,Corporate Development and Strategy, Change Management,52,communication,,,,
-132,MINING,Corporate Development and Strategy, Change Management,52,Change Resistance,,,,
-133,MINING,Corporate Development and Strategy, Change Management,52,Reskilling,,,,
-134,MINING,"Mining Operations,Health  Safety  and Environment (HSE)",Worker Safety,50,Safety message announcement,,,,
-135,MINING,"Mining Operations,Health  Safety  and Environment (HSE)",Worker Safety,50,Monitoring of staff and visitor presence,,,,
-136,MINING,Legal and Compliance,Contract management,51,Digitally update and follow-up contracts towards clients,,,,
-137,MINING,Legal and Compliance,Contract management,51,Digitally track sub-contractor and supplier,,,,
-138,MINING,Legal and Compliance,Contract management,51,payment management,,,,
-139,MINING,Mining Operations,Quality control,54,Collect and monitor progress reports,,,,
-140,MINING,Mining Operations,Quality control,54,Quality inspections with mobile devices,,,,
-141,MINING,Mining Operations,Scheduling,57,"Create, assign, and prioritize tasks in real time and distribute to mobile devices",,,,
-142,MINING,Mining Operations,Scheduling,57,Plan and simulate site progress in 4D-software,,,,
-143,MINING,Mining Operations,Scheduling,57,Maintain a digital construction site disposition plan,,,,
-144,MINING,Mining Operations,Logistics,52,"Identify, track and locate material and equipment on-site with digital tools",,,,
-145,MINING,Mining Operations,Logistics,52,"Digitally monitor procurement orders, receipts, use, and quality issues",,,,
-146,MINING,Mining Operations,Logistics,52,Maintain digital bill of quantities,,,,
-147,MINING,Mining Operations,Design management,50,Visualize drawings and 3D models on-site on mobile platforms,,,,
-148,MINING,Mining Operations,Design management,50,"Update digital drawings, models and technical information with notes and asbuilt records",,,,
-149,MINING,Mining Operations,Ventiltion requirements,96,Dust control measures,,,,
-150,MINING,Mining Operations,Ventiltion requirements,96,control measures,,,,
-151,MINING,Mining Operations,Ventiltion requirements,96,Satbilization of haul road surfaces,,,,
-152,MINING,Mining Operations,Ventiltion requirements,96,Utilization of fog cannons for visible dust,,,,
-153,MINING,Mining Operations,Ventiltion requirements,96,Dust supression installation systems,,,,
-154,MINING,"Mining Operations,Processing and Metallurgy",Mineral processing,97,Comminution,,,,
-155,MINING,"Mining Operations,Processing and Metallurgy",Mineral processing,97,Ore characterization,,,,
-156,MINING,"Mining Operations,Processing and Metallurgy",Mineral processing,97,Process facilities,,,,
-157,MINING,"Mining Operations,Processing and Metallurgy",Mineral processing,97,Plant operation and mainatainance philosophy,,,,
-158,MINING,"Mining Operations,Processing and Metallurgy",Mineral processing,97,Expandability and expansion options,,,,
-159,MINING,"Mining Operations,Processing and Metallurgy",Mineral processing,97,Classification,,,,
-160,MINING,"Mining Operations,Processing and Metallurgy",Mineral processing,97,Gravity Separation,,,,
-161,MINING,"Mining Operations,Processing and Metallurgy",Mineral processing,97,Flotation,,,,
-162,MINING,"Mining Operations,Processing and Metallurgy",Mineral processing,97,Magnetic Separation,,,,
-163,MINING,"Mining Operations,Processing and Metallurgy",Mineral processing,97,Leaching,,,,
-164,MINING,"Mining Operations,Processing and Metallurgy",Mineral processing,97,Dewatering,,,,
-165,MINING,"Mining Operations,Processing and Metallurgy",Mineral processing,97,Smelting and Refining,,,,
-166,MINING,Mining Operations,Mine access,89,Blind splot,,,,
-167,MINING,Mining Operations,Mine access,89,Intersections,,,,
-168,MINING,Mining Operations,Mine access,89,Safety berms and ditches,,,,
-169,MINING,Mining Operations,Mine access,89,Equipment selection process,,,,
-170,MINING,Mining Operations,Mine access,89,Material handling,,,,
-171,MINING,Mining Operations,Mine access,89,haul road cross-sections,,,,
-172,MINING,Mining Operations,Mine access,89,drainage requirements,,,,
-173,MINING,Mining Operations,Mine access,89,road construction materials,,,,
-174,MINING,"Exploration and Geology,Marketing and sales",Market analysis,78,Product specification,,,,
-175,MINING,"Exploration and Geology,Marketing and sales",Market analysis,78,Demand and supply forecast,,,,
-176,MINING,"Exploration and Geology,Marketing and sales",Market analysis,78,Pricing strategy,,,,
-177,MINING,"Exploration and Geology,Marketing and sales",Market analysis,78,Competitors,,,,
-178,MINING,"Exploration and Geology,Marketing and sales",Market analysis,78,Revenue forecast,,,,
-179,MINING,"Exploration and Geology,Marketing and sales",Market analysis,78,Product shipping storage and distribution,,,,
-180,MINING,Mining Operations,Undeground and surface infrastructure,74,Utilities,,,,
-181,MINING,Mining Operations,Undeground and surface infrastructure,74,Change rooms,,,,
-182,MINING,Mining Operations,Undeground and surface infrastructure,74,Underground waiting areas,,,,
-183,MINING,Mining Operations,Undeground and surface infrastructure,74,Transport infrastructures,,,,
-184,MINING,Mining Operations,Undeground and surface infrastructure,74,Temporary infrastructures,,,,
-185,MINING,Mining Operations,Undeground and surface infrastructure,74,Communication,,,,
-186,MINING,Mining Operations,Undeground and surface infrastructure,74,Building and facilities ,,,,
-187,IT,"Hardware, Software",Fabchi,100,Building and facilities ,,Reactive,2,5
-188,IT,"fghjkl,slrtyk",Fabchi,100,Building and facilities ,,Reactive,2,5
-189,IT,"Operations, Funitute",Rajour,90,Building and facilities ,,Reactive,2,5
-190,IT,"fghjk,tyuyiio",Rajour,90,Building and facilities ,,Reactive,2,5
-191,IT,"Yes, No",Jumfan,80,Building and facilities ,,Reactive,2,5
-192,IT,"oiuijhgf,fgfhgjkjkll",Jumfan,80,Building and facilities ,,Reactive,2,5
-193,IT,"Why me, again",Einsteinds,70,Building and facilities ,,Reactive,2,5
-194,IT,"again, we here",Einsteinds,70,Building and facilities ,,Reactive,2,5
+﻿id,BusinessSector,BusinessFunction,MeasuringElt,Rating,SUbCategory,AsIsQuestions,ToBeQuestions,MAXIMUM RATING
+1,MINING,"Exploration and Geology, Mining Operations,Health  Safety  and Environment (HSE),Supply Chain and Logistics,Finance and Accounting,Corporate Development and Strategy",Data Utilization and Analytics,90,Data Collection,,,5
+2,MINING,"Exploration and Geology,Mining Operations,Health  Safety  and Environment (HSE),Supply Chain and Logistics,Finance and Accounting,Corporate Development and Strategy",Data Utilization and Analytics,90,Data Storage,,,5
+3,MINING,"Exploration and Geology,Mining Operations,Health  Safety  and Environment (HSE),Supply Chain and Logistics,Finance and Accounting,Corporate Development and Strategy",Data Utilization and Analytics,90,Data Management,,,5
+4,MINING,"Exploration and Geology,Mining Operations,Health  Safety  and Environment (HSE),Supply Chain and Logistics,Finance and Accounting,Corporate Development and Strategy",Data Utilization and Analytics,90,Data Analysis,,,5
+5,MINING,"Exploration and Geology,Mining Operations,Health  Safety  and Environment (HSE),Supply Chain and Logistics,Finance and Accounting,Corporate Development and Strategy",Data Utilization and Analytics,90,Use of ML,,,5
+6,MINING,Mining Operations,Automation and Robotics,80,Automation of the drilling production process,,,5
+7,MINING,Mining Operations,Automation and Robotics,80,"Utilization of advanced production technologies e.g., additive manufacturing",,,5
+8,MINING,Mining Operations,Automation and Robotics,80,Automation of the blasting production process,,,5
+9,MINING,Mining Operations,Automation and Robotics,80,Automation of the loading production process,,,5
+10,MINING,Mining Operations,Automation and Robotics,80,Use of digital device for seismicity measurement for geotechnical analysis,,,5
+11,MINING,Mining Operations,Automation and Robotics,80,Use of digital device and technology in ascertaining rock properties for geotechnical analysis,,,5
+12,MINING,Mining Operations,Automation and Robotics,80,Use of technology for the loading and hauling and hoisting fuel cost,,,5
+13,MINING,Mining Operations,Automation and Robotics,80,Stability risk analysis,,,5
+14,MINING,Mining Operations,Automation and Robotics,80,Continuous geotechnical monitoring,,,5
+15,MINING,Mining Operations,Automation and Robotics,80,Automating the type of mining method as per the rock quality,,,5
+16,MINING,Mining Operations,Automation and Robotics,80,Digital device in slope geometry,,,5
+17,MINING,Mining Operations,Automation and Robotics,80,Automation of the hauling production process,,,5
+18,MINING,Mining Operations,Automation and Robotics,80,Debottlenecking,,,5
+19,MINING,Mining Operations,Automation and Robotics,80,Value Chain Visualisation,,,5
+20,MINING,Mining Operations,Automation and Robotics,80,Pit to Port,,,5
+21,MINING,Mining Operations,Automation and Robotics,80,Automation of the hoisting production process,,,5
+22,MINING,Mining Operations,Internet of Things (IoT) Integration,70,Equipment performance,,,5
+23,MINING,Mining Operations,Internet of Things (IoT) Integration,70,Environmental conditions,,,5
+24,MINING,Mining Operations,Internet of Things (IoT) Integration,70,digital communication Utilization with stakeholders,,,5
+25,MINING,Mining Operations,Internet of Things (IoT) Integration,70,"Collect, update, and distribute project documents through digital platform",,,5
+26,MINING,Mining Operations,Internet of Things (IoT) Integration,70,"Computer-aided calculation, optimization, and simulation",,,5
+27,MINING,Mining Operations,Internet of Things (IoT) Integration,70,"Utilize IoT-solutions, advanced analytics, or artificial intelligence",,,5
+28,MINING,Mining Operations,Internet of Things (IoT) Integration,70,Digitally monitor problem issues and solving process,,,5
+29,MINING,Mining Operations,Internet of Things (IoT) Integration,70,Decision making,,,5
+30,MINING,Mining Operations,Internet of Things (IoT) Integration,70,Workflow optimization,,,5
+31,MINING,"Mining Operations,Health  Safety  and Environment (HSE),Processing and Metallurgy,Supply Chain and Logistics",Digital Twin Technologies,60,Predictive Maintenance,,,5
+32,MINING,"Mining Operations,Health  Safety  and Environment (HSE),Processing and Metallurgy,Supply Chain and Logistics",Digital Twin Technologies,60,Asset Optimization,,,5
+33,MINING,"Mining Operations,Health  Safety  and Environment (HSE),Processing and Metallurgy,Supply Chain and Logistics",Digital Twin Technologies,60,Power Plant Simulation,,,5
+34,MINING,"Mining Operations,Health  Safety  and Environment (HSE),Processing and Metallurgy,Supply Chain and Logistics",Digital Twin Technologies,60,Grid Simulation,,,5
+35,MINING,"Mining Operations,Health  Safety  and Environment (HSE),Processing and Metallurgy,Supply Chain and Logistics",Digital Twin Technologies,60,Building Energy Management,,,5
+36,MINING,"Mining Operations,Health  Safety  and Environment (HSE),Processing and Metallurgy,Supply Chain and Logistics",Digital Twin Technologies,60,Demand Response Optimization,,,5
+37,MINING,"Mining Operations,Health  Safety  and Environment (HSE),Processing and Metallurgy,Supply Chain and Logistics",Digital Twin Technologies,60,Wind and Solar Farm Modeling,,,5
+38,MINING,"Mining Operations,Health  Safety  and Environment (HSE),Processing and Metallurgy,Supply Chain and Logistics",Digital Twin Technologies,60,Energy Storage Optimization,,,5
+39,MINING,"Mining Operations,Health  Safety  and Environment (HSE),Processing and Metallurgy,Supply Chain and Logistics",Digital Twin Technologies,60,Fault Detection and Isolation,,,5
+40,MINING,"Mining Operations,Health  Safety  and Environment (HSE),Processing and Metallurgy,Supply Chain and Logistics",Digital Twin Technologies,60,Emissions Monitoring and Mitigation,,,5
+41,MINING,"Mining Operations,Health  Safety  and Environment (HSE),Processing and Metallurgy,Supply Chain and Logistics",Digital Twin Technologies,60,Disaster Response Planning,,,5
+42,MINING,"Mining Operations,Health  Safety  and Environment (HSE),Processing and Metallurgy,Supply Chain and Logistics",Digital Twin Technologies,60,Compliance Modeling,,,5
+43,MINING,"Supply Chain and Logistics,Health  Safety  and Environment (HSE),Corporate Development and Strategy,Human Resources (HR),Mining Operations",Advanced Communication and Connectivity,50,Wireless network,,,5
+44,MINING,"Supply Chain and Logistics,Health  Safety  and Environment (HSE),Corporate Development and Strategy,Human Resources (HR),Mining Operations",Advanced Communication and Connectivity,50,Satelite communication,,,5
+45,MINING,"Supply Chain and Logistics,Health  Safety  and Environment (HSE),Corporate Development and Strategy,Human Resources (HR),Mining Operations",Advanced Communication and Connectivity,50,Fibre optics,,,5
+46,MINING,"Supply Chain and Logistics,Health  Safety  and Environment (HSE),Corporate Development and Strategy,Human Resources (HR),Mining Operations",Advanced Communication and Connectivity,50,Sensitive data,,,5
+47,MINING,Legal and Compliance,Cybersecurity and Data Privacy,40,Infrastructure,,,5
+48,MINING,Legal and Compliance,Cybersecurity and Data Privacy,40,Operational systems,,,5
+49,MINING,Legal and Compliance,Cybersecurity and Data Privacy,40,Data privacy,,,5
+50,MINING,Legal and Compliance,Cybersecurity and Data Privacy,40,Intrusion Detection and Prevention,,,5
+51,MINING,Legal and Compliance,Cybersecurity and Data Privacy,40,Data Encryption and Secure Communication,,,5
+52,MINING,Legal and Compliance,Cybersecurity and Data Privacy,40,Access Control and Authentication,,,5
+53,MINING,Legal and Compliance,Cybersecurity and Data Privacy,40,Incident Response and Recovery,,,5
+54,MINING,Legal and Compliance,Cybersecurity and Data Privacy,40,Compliance with Regulatory Requirements,,,5
+55,MINING,Legal and Compliance,Cybersecurity and Data Privacy,40,Continuous Monitoring and Auditing,,,5
+56,MINING,Supply Chain and Logistics,Supply Chain Digitization,30,Procurement,,,5
+57,MINING,Supply Chain and Logistics,Supply Chain Digitization,30,Logistics,,,5
+58,MINING,Supply Chain and Logistics,Supply Chain Digitization,30,Inventory management,,,5
+59,MINING,Supply Chain and Logistics,Supply Chain Digitization,30,Real time tracking,,,5
+60,MINING,Human Resources (HR),Workforce Skills and Training,50,Training programs,,,5
+61,MINING,Human Resources (HR),Workforce Skills and Training,50,Knowledge transfer initiatives,,,5
+62,MINING,Human Resources (HR),Workforce Skills and Training,50,Workforce development strategies,,,5
+63,MINING,Human Resources (HR),Workforce Skills and Training,50,Digital literacy and skills,,,5
+64,MINING,"Health  Safety  and Environment (HSE),Community and Stakeholder Relations",Environmental and Sustainability Solutions,60,Environmental impact,,,5
+65,MINING,"Health  Safety  and Environment (HSE),Community and Stakeholder Relations",Environmental and Sustainability Solutions,60,Energy consumption,,,5
+66,MINING,"Health  Safety  and Environment (HSE),Community and Stakeholder Relations",Environmental and Sustainability Solutions,60,Sustainable mining practice,,,5
+67,MINING,"Health  Safety  and Environment (HSE),Community and Stakeholder Relations",Environmental and Sustainability Solutions,60,smart energy management,,,5
+68,MINING,"Health  Safety  and Environment (HSE),Community and Stakeholder Relations",Environmental and Sustainability Solutions,60,waste reduction,,,5
+69,MINING,"Health  Safety  and Environment (HSE),Community and Stakeholder Relations",Environmental and Sustainability Solutions,60,Rehabilitation,,,5
+70,MINING,"Health  Safety  and Environment (HSE),Community and Stakeholder Relations",Environmental and Sustainability Solutions,60,Digital authority involvement in environmental issues,,,5
+71,MINING,"Health  Safety  and Environment (HSE),Community and Stakeholder Relations",Environmental and Sustainability Solutions,60,"Digital plan, monitoring and tracking of environmental issues",,,5
+72,MINING,"Finance and Accounting,Corporate Development and Strategy",Strategic Vision and Leadership,65,Strategic vision,,,5
+73,MINING,"Finance and Accounting,Corporate Development and Strategy",Strategic Vision and Leadership,65,Leadership commitment,,,5
+74,MINING,"Finance and Accounting,Corporate Development and Strategy",Strategic Vision and Leadership,65,Organizational structure,,,5
+75,MINING,Health  Safety  and Environment (HSE),Remote Monitoring and Diagnostics,75,Enabling Real-Time Visibility,,,5
+76,MINING,Health  Safety  and Environment (HSE),Remote Monitoring and Diagnostics,75,Alarms,,,5
+77,MINING,Health  Safety  and Environment (HSE),Remote Monitoring and Diagnostics,75,Alerts,,,5
+78,MINING,Health  Safety  and Environment (HSE),Remote Monitoring and Diagnostics,75,Remote Troubleshooting Capabilities,,,5
+79,MINING,Mining Operations,Power Generation ,66,Transmission Infrastructure,,,5
+80,MINING,Mining Operations,Power Generation ,66,Distribution Networks,,,5
+81,MINING,Mining Operations,Power Generation ,66,Grid Stability and Reliability,,,5
+82,MINING,Mining Operations,Power Generation ,66,Renewable Integration,,,5
+83,MINING,Mining Operations,Power Generation ,66,Environmental Impact,,,5
+84,MINING,Mining Operations,Power Generation ,66,Generation Capacity,,,5
+85,MINING,Mining Operations,Power Generation ,66,Electricity Generation,,,5
+86,MINING,Mining Operations,generation technology,69,Heat Rate,,,5
+87,MINING,Mining Operations,generation technology,69,Forced Outage Rate,,,5
+88,MINING,Mining Operations,generation technology,69,Conversion Efficiency,,,5
+89,MINING,Mining Operations,generation technology,69,Emissions Intensity,,,5
+90,MINING,Mining Operations,generation technology,69,Fuel Cost,,,5
+91,MINING,Mining Operations,generation technology,69,Interconnection Capacity,,,5
+92,MINING,Mining Operations,generation technology,69,Nuclear Capacity Factor,,,5
+93,MINING,Mining Operations,generation technology,69,Electricity Generation,,,5
+94,MINING,Finance and Accounting,Digital Capability,68,IT Infrastructure,,,5
+95,MINING,Finance and Accounting,Digital Capability,68,Descriptive Analysis,,,5
+96,MINING, Finance and Accounting,Digital Capability,68,Predictive Analysis,,,5
+97,MINING,Human Resources (HR),Human Resources,88,Training on digital platforms,,,5
+98,MINING,Human Resources (HR),Human Resources,88,Monitor skills on digital platforms,,,5
+99,MINING,Human Resources (HR),Human Resources,88,Digitally monitor staff health status,,,5
+100,MINING,Human Resources (HR),Human Resources,88,Change Management,,,5
+101,MINING,Human Resources (HR),Human Resources,88,Reskilling,,,5
+102,MINING,Human Resources (HR),Human Resources,88,Stakeholder Engagement,,,5
+103,MINING,Human Resources (HR),Worker Enablement,87,Quick Decision,,,5
+104,MINING,Human Resources (HR),Worker Enablement,87,Making Employee,,,5
+105,MINING,Human Resources (HR),Worker Enablement,87,Enablement,,,5
+106,MINING,Human Resources (HR),Worker Enablement,87,Employee Effectiveness,,,5
+107,MINING,Human Resources (HR),Culture,85,Work Transformation,,,5
+108,MINING,Human Resources (HR),Culture,85,Changing Behaviour,,,5
+109,MINING,Human Resources (HR),Culture,85,Departmental Transformation,,,5
+110,MINING,Human Resources (HR),Culture,85,People Transformation,,,5
+111,MINING,"Marketing and sales,Corporate Development and Strategy",Customer Experience,77,Customer Satisfaction,,,5
+112,MINING,"Marketing and sales,Corporate Development and Strategy",Customer Experience,77,Mine to Customer,,,5
+113,MINING,"Corporate Development and Strategy, Supply Chain and Logistics",Unified Data ,63,Integrated Operations Centres,,,5
+114,MINING,"Corporate Development and Strategy, Supply Chain and Logistics",Unified Data ,63,Realtime data,,,5
+115,MINING,"Corporate Development and Strategy, Supply Chain and Logistics",Unified Data ,63,Integration,,,5
+116,MINING,"Corporate Development and Strategy, Supply Chain and Logistics",Unified Data ,63,Data-Driven Mine,,,5
+117,MINING,"Corporate Development and Strategy, Supply Chain and Logistics",Unified Data ,63,Eliminating Silos,,,5
+118,MINING,"Corporate Development and Strategy, Supply Chain and Logistics",Unified Data ,63,Single Platform,,,5
+119,MINING,Human Resources (HR),Performance Management,99,Value Chain Optimisation,,,5
+120,MINING,Human Resources (HR),Performance Management,99,Business Intelligence,,,5
+121,MINING,Human Resources (HR),Performance Management,99,Business Improvement,,,5
+122,MINING,Human Resources (HR),Performance Management,99,Shareholder Returns,,,5
+123,MINING,Human Resources (HR),Performance Management,99,Key Performance Indicators,,,5
+124,MINING,Community and Stakeholder Relations,Stakeholder Involvement,55,Labour,,,5
+125,MINING,Community and Stakeholder Relations,Stakeholder Involvement,55,Unions,,,5
+126,MINING,Community and Stakeholder Relations,Stakeholder Involvement,55,Employees,,,5
+127,MINING,"Mining Operations,Human Resources (HR)",Ease of Use and Adoption,53,Practicality of technologies,,,5
+128,MINING,"Mining Operations,Human Resources (HR)",Ease of Use and Adoption,53,Project Value Realisation,,,5
+129,MINING,"Mining Operations,Human Resources (HR)",Ease of Use and Adoption,53,Motivation (No Incentives),,,5
+130,MINING,Corporate Development and Strategy, Change Management,52,Ineffective change management,,,5
+131,MINING,Corporate Development and Strategy, Change Management,52,communication,,,5
+132,MINING,Corporate Development and Strategy, Change Management,52,Change Resistance,,,5
+133,MINING,Corporate Development and Strategy, Change Management,52,Reskilling,,,5
+134,MINING,"Mining Operations,Health  Safety  and Environment (HSE)",Worker Safety,50,Safety message announcement,,,5
+135,MINING,"Mining Operations,Health  Safety  and Environment (HSE)",Worker Safety,50,Monitoring of staff and visitor presence,,,5
+136,MINING,Legal and Compliance,Contract management,51,Digitally update and follow-up contracts towards clients,,,5
+137,MINING,Legal and Compliance,Contract management,51,Digitally track sub-contractor and supplier,,,5
+138,MINING,Legal and Compliance,Contract management,51,payment management,,,5
+139,MINING,Mining Operations,Quality control,54,Collect and monitor progress reports,,,5
+140,MINING,Mining Operations,Quality control,54,Quality inspections with mobile devices,,,5
+141,MINING,Mining Operations,Scheduling,57,"Create, assign, and prioritize tasks in real time and distribute to mobile devices",,,5
+142,MINING,Mining Operations,Scheduling,57,Plan and simulate site progress in 4D-software,,,5
+143,MINING,Mining Operations,Scheduling,57,Maintain a digital construction site disposition plan,,,5
+144,MINING,Mining Operations,Logistics,52,"Identify, track and locate material and equipment on-site with digital tools",,,5
+145,MINING,Mining Operations,Logistics,52,"Digitally monitor procurement orders, receipts, use, and quality issues",,,5
+146,MINING,Mining Operations,Logistics,52,Maintain digital bill of quantities,,,5
+147,MINING,Mining Operations,Design management,50,Visualize drawings and 3D models on-site on mobile platforms,,,5
+148,MINING,Mining Operations,Design management,50,"Update digital drawings, models and technical information with notes and asbuilt records",,,5
+149,MINING,Mining Operations,Ventiltion requirements,96,Dust control measures,,,5
+150,MINING,Mining Operations,Ventiltion requirements,96,control measures,,,5
+151,MINING,Mining Operations,Ventiltion requirements,96,Satbilization of haul road surfaces,,,5
+152,MINING,Mining Operations,Ventiltion requirements,96,Utilization of fog cannons for visible dust,,,5
+153,MINING,Mining Operations,Ventiltion requirements,96,Dust supression installation systems,,,5
+154,MINING,"Mining Operations,Processing and Metallurgy",Mineral processing,97,Comminution,,,5
+155,MINING,"Mining Operations,Processing and Metallurgy",Mineral processing,97,Ore characterization,,,5
+156,MINING,"Mining Operations,Processing and Metallurgy",Mineral processing,97,Process facilities,,,5
+157,MINING,"Mining Operations,Processing and Metallurgy",Mineral processing,97,Plant operation and mainatainance philosophy,,,5
+158,MINING,"Mining Operations,Processing and Metallurgy",Mineral processing,97,Expandability and expansion options,,,5
+159,MINING,"Mining Operations,Processing and Metallurgy",Mineral processing,97,Classification,,,5
+160,MINING,"Mining Operations,Processing and Metallurgy",Mineral processing,97,Gravity Separation,,,5
+161,MINING,"Mining Operations,Processing and Metallurgy",Mineral processing,97,Flotation,,,5
+162,MINING,"Mining Operations,Processing and Metallurgy",Mineral processing,97,Magnetic Separation,,,5
+163,MINING,"Mining Operations,Processing and Metallurgy",Mineral processing,97,Leaching,,,5
+164,MINING,"Mining Operations,Processing and Metallurgy",Mineral processing,97,Dewatering,,,5
+165,MINING,"Mining Operations,Processing and Metallurgy",Mineral processing,97,Smelting and Refining,,,5
+166,MINING,Mining Operations,Mine access,89,Blind splot,,,5
+167,MINING,Mining Operations,Mine access,89,Intersections,,,5
+168,MINING,Mining Operations,Mine access,89,Safety berms and ditches,,,5
+169,MINING,Mining Operations,Mine access,89,Equipment selection process,,,5
+170,MINING,Mining Operations,Mine access,89,Material handling,,,5
+171,MINING,Mining Operations,Mine access,89,haul road cross-sections,,,5
+172,MINING,Mining Operations,Mine access,89,drainage requirements,,,5
+173,MINING,Mining Operations,Mine access,89,road construction materials,,,5
+174,MINING,"Exploration and Geology,Marketing and sales",Market analysis,78,Product specification,,,5
+175,MINING,"Exploration and Geology,Marketing and sales",Market analysis,78,Demand and supply forecast,,,5
+176,MINING,"Exploration and Geology,Marketing and sales",Market analysis,78,Pricing strategy,,,5
+177,MINING,"Exploration and Geology,Marketing and sales",Market analysis,78,Competitors,,,5
+178,MINING,"Exploration and Geology,Marketing and sales",Market analysis,78,Revenue forecast,,,5
+179,MINING,"Exploration and Geology,Marketing and sales",Market analysis,78,Product shipping storage and distribution,,,5
+180,MINING,Mining Operations,Undeground and surface infrastructure,74,Utilities,,,5
+181,MINING,Mining Operations,Undeground and surface infrastructure,74,Change rooms,,,5
+182,MINING,Mining Operations,Undeground and surface infrastructure,74,Underground waiting areas,,,5
+183,MINING,Mining Operations,Undeground and surface infrastructure,74,Transport infrastructures,,,5
+184,MINING,Mining Operations,Undeground and surface infrastructure,74,Temporary infrastructures,,,5
+185,MINING,Mining Operations,Undeground and surface infrastructure,74,Communication,,,5
+186,MINING,Mining Operations,Undeground and surface infrastructure,74,Building and facilities ,,,5

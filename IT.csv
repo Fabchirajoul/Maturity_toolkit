@@ -1,0 +1,15 @@
+﻿id,BusinessSector,BusinessFunction,MeasuringElt,Rating,SUbCategory,AsIsQuestions,ToBeQuestions,MAXIMUM RATING
+200,IT,"Exploration and Geology, Mining Operations,Health  Safety  and Environment (HSE),Supply Chain and Logistics,Finance and Accounting,Corporate Development and Strategy",Data Utilization and Analytics,90,Data Collection,,,5
+201,IT,"Exploration and Geology,Mining Operations,Health  Safety  and Environment (HSE),Supply Chain and Logistics,Finance and Accounting,Corporate Development and Strategy",Data Utilization and Analytics,90,Data Storage,,,5
+202,IT,"Exploration and Geology,Mining Operations,Health  Safety  and Environment (HSE),Supply Chain and Logistics,Finance and Accounting,Corporate Development and Strategy",Data Utilization and Analytics,90,Data Management,,,5
+203,IT,"Exploration and Geology,Mining Operations,Health  Safety  and Environment (HSE),Supply Chain and Logistics,Finance and Accounting,Corporate Development and Strategy",Data Utilization and Analytics,90,Data Analysis,,,5
+204,IT,"Exploration and Geology,Mining Operations,Health  Safety  and Environment (HSE),Supply Chain and Logistics,Finance and Accounting,Corporate Development and Strategy",Data Utilization and Analytics,90,Use of ML,,,5
+205,IT,Mining Operations,Automation and Robotics,80,Automation of the drilling production process,,,5
+206,IT,Mining Operations,Automation and Robotics,80,"Utilization of advanced production technologies e.g., additive manufacturing",,,5
+207,IT,Mining Operations,Automation and Robotics,80,Automation of the blasting production process,,,5
+208,IT,Mining Operations,Automation and Robotics,80,Automation of the loading production process,,,5
+209,IT,Mining Operations,Automation and Robotics,80,Use of digital device for seismicity measurement for geotechnical analysis,,,5
+210,IT,Mining Operations,Automation and Robotics,80,Use of digital device and technology in ascertaining rock properties for geotechnical analysis,,,5
+211,IT,Mining Operations,Automation and Robotics,80,Use of technology for the loading and hauling and hoisting fuel cost,,,5
+212,IT,Mining Operations,Automation and Robotics,80,Stability risk analysis,,,5
+213,IT,Mining Operations,Automation and Robotics,80,Continuous geotechnical monitoring,,,5

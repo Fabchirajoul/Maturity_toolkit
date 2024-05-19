@@ -9,6 +9,7 @@
     <link rel="icon" type="image/x-icon" href="/static/images/JBS-retina-copy.png.webp">
     <script src="/static/js/code.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script> -->
 </head>
 
 <body x-data="AutomatedDigitalMaturity" x-cloak>
@@ -188,97 +189,71 @@
                                 <div>
                                     <span>
                                         <h1>1. BUSINESS SECTOR:</h1>
-                                    </span> <span><input name="business_sector_name"
-                                            class="input_field_for_admin_create_and_update" type="text"
-                                            placeholder="Type to filter and select an exisiting measuring element from the list">
-
                                     </span>
-                                </div> <br><br>
-
+                                    <span><input name="business_sector_name" class="input_field_for_admin_create_and_update" type="text" placeholder="Type to filter and select an exisiting measuring element from the list"></span>
+                                </div>
+                                <br><br>
+                        
                                 <div>
                                     <span>
                                         <h1>2. BUSINESS FUNCTION:</h1>
-                                    </span> <span><input name="business_function"
-                                            class="input_field_for_admin_create_and_update" type="text"
-                                            placeholder="Type to filter and select an exisiting measuring element from the list">
-
                                     </span>
-                                </div> <br><br>
-
+                                    <span><input name="business_function" class="input_field_for_admin_create_and_update" type="text" placeholder="Type to filter and select an exisiting measuring element from the list"></span>
+                                </div>
+                                <br><br>
+                        
                                 <div>
                                     <span>
                                         <h1>3. MEASURING ELEMENT:</h1>
-                                    </span> <span><input name="Measuring_Element"
-                                            class="input_field_for_admin_create_and_update" type="text"
-                                            placeholder="Type to filter and select an exisiting measuring element from the list">
-
                                     </span>
-                                </div> <br><br>
-
+                                    <span><input name="Measuring_Element" class="input_field_for_admin_create_and_update" type="text" placeholder="Type to filter and select an exisiting measuring element from the list"></span>
+                                </div>
+                                <br><br>
+                        
                                 <div>
                                     <span>
                                         <h1>4. RATING:</h1>
-                                    </span> <span><input name="Rating" class="input_field_for_admin_create_and_update"
-                                            type="number"
-                                            placeholder="Type to filter and select an exisiting measuring element from the list">
-
                                     </span>
-                                </div> <br><br>
-
-
-
+                                    <span><input name="Rating" class="input_field_for_admin_create_and_update" type="number" placeholder="Type to filter and select an exisiting measuring element from the list"></span>
+                                </div>
+                                <br><br>
+                        
                                 <div>
                                     <span>
                                         <h1>5. SUB CATEGORY:</h1>
-                                    </span> <span><input name="subCategory_name"
-                                            class="input_field_for_admin_create_and_update" type="text"
-                                            placeholder="Type to filter and select an exisiting measuring element from the list">
-
                                     </span>
-                                </div> <br><br>
+                                    <span><input name="subCategory_name" class="input_field_for_admin_create_and_update" type="text" placeholder="Type to filter and select an exisiting measuring element from the list"></span>
+                                </div>
+                                <br><br>
+                        
+                                <!-- <div>
+                                    <span>
+                                        <h1>6. As Is QUESTIONS:</h1>
+                                    </span>
+                                    <span><input name="AsIsQuestions" class="input_field_for_admin_create_and_update" type="text" placeholder="Type to filter and select an exisiting measuring element from the list"></span>
+                                </div>
+                                <br><br>
+                        
                                 <div>
                                     <span>
-                                        <h1>6. QUESTIONS:</h1>
-                                    </span> <span><input name="SubCategoryQuestion"
-                                            class="input_field_for_admin_create_and_update" type="text"
-                                            placeholder="Type to filter and select an exisiting measuring element from the list">
-
+                                        <h1>7. To Be QUESTIONS:</h1>
                                     </span>
-                                </div> <br><br>
+                                    <span><input name="ToBeQuestions" class="input_field_for_admin_create_and_update" type="text" placeholder="Type to filter and select an exisiting measuring element from the list"></span>
+                                </div>
+                                <br><br> -->
+                        
                                 <div>
                                     <span>
-                                        <h1>7. ANSWERS:</h1>
-                                    </span> <span><input name="QuestionAnswer"
-                                            class="input_field_for_admin_create_and_update" type="text"
-                                            placeholder="Type to filter and select an exisiting measuring element from the list">
-
+                                        <h1>6. MAXIMUM ANSWER RATING:</h1>
                                     </span>
-                                </div> <br><br>
-                                <div>
-                                    <span>
-                                        <h1>8. ANSWER RATING:</h1>
-                                    </span> <span><input name="AnswerRating"
-                                            class="input_field_for_admin_create_and_update" type="text"
-                                            placeholder="Type to filter and select an exisiting measuring element from the list">
-
-                                    </span>
-                                </div> <br><br>
-
-                                <div>
-                                    <span>
-                                        <h1>9. MAXIMUM ANSWER RATING:</h1>
-                                    </span> <span><input name="MaxRating"
-                                            class="input_field_for_admin_create_and_update" type="text"
-                                            placeholder="Type to filter and select an exisiting measuring element from the list">
-
-                                    </span>
-                                </div> <br><br>
-
-
-
+                                    <span><input name="MaxRating" class="input_field_for_admin_create_and_update" type="text" placeholder="Type to filter and select an exisiting measuring element from the list"></span>
+                                </div>
+                                <br><br>
+                        
                                 <button class="submit-btn">CREATE ENTRY</button>
                             </div>
                         </form>
+                        
 
 
                     </div>
@@ -294,188 +269,103 @@
                                     <div>
                                         <span>
                                             <h1>1. OLD BUSINESS SECTOR:</h1>
-                                        </span> <span><input name="oldbusiness_sector_name"
-                                                class="input_field_for_admin_create_and_update" type="text"
-                                                placeholder="Type to filter and select an exisiting measuring element from the list">
-
                                         </span>
-                                    </div> <br><br>
-
+                                        <span><input name="oldbusiness_sector_name" class="input_field_for_admin_create_and_update" type="text" placeholder="Type to filter and select an existing measuring element from the list"></span>
+                                    </div>
+                                    <br><br>
+                            
                                     <div>
-                                        <div>
-                                            <span>
-                                                <h1>2. OLD BUSINESS FUNCTION:</h1>
-                                            </span> <span><input name="oldbusiness_function"
-                                                    class="input_field_for_admin_create_and_update" type="text"
-                                                    placeholder="Type to filter and select an exisiting measuring element from the list">
-    
-                                            </span>
-                                        </div> <br><br>
-
+                                        <span>
+                                            <h1>2. OLD BUSINESS FUNCTION:</h1>
+                                        </span>
+                                        <span><input name="oldbusiness_function" class="input_field_for_admin_create_and_update" type="text" placeholder="Type to filter and select an existing measuring element from the list"></span>
+                                    </div>
+                                    <br><br>
+                            
                                     <div>
                                         <span>
                                             <h1>3. OLD MEASURING ELEMENT:</h1>
-                                        </span> <span><input name="oldMeasuring_Element"
-                                                class="input_field_for_admin_create_and_update" type="text"
-                                                placeholder="Type to filter and select an exisiting measuring element from the list">
-
                                         </span>
-                                    </div> <br><br>
-
+                                        <span><input name="oldMeasuring_Element" class="input_field_for_admin_create_and_update" type="text" placeholder="Type to filter and select an existing measuring element from the list"></span>
+                                    </div>
+                                    <br><br>
+                            
                                     <div>
                                         <span>
                                             <h1>4. OLD RATING:</h1>
-                                        </span> <span><input name="oldRating"
-                                                class="input_field_for_admin_create_and_update" type="number"
-                                                placeholder="Type to filter and select an exisiting measuring element from the list">
-
                                         </span>
-                                    </div> <br><br>
-
-
-
+                                        <span><input name="oldRating" class="input_field_for_admin_create_and_update" type="number" placeholder="Type to filter and select an existing measuring element from the list"></span>
+                                    </div>
+                                    <br><br>
+                            
                                     <div>
                                         <span>
                                             <h1>5. OLD SUB CATEGORY:</h1>
-                                        </span> <span><input name="oldsubCategory_name"
-                                                class="input_field_for_admin_create_and_update" type="text"
-                                                placeholder="Type to filter and select an exisiting measuring element from the list">
-
                                         </span>
-                                    </div> <br><br>
-                                    <div>
-                                        <span>
-                                            <h1>6. OLD QUESTIONS:</h1>
-                                        </span> <span><input name="oldSubCategoryQuestion"
-                                                class="input_field_for_admin_create_and_update" type="text"
-                                                placeholder="Type to filter and select an exisiting measuring element from the list">
-
-                                        </span>
-                                    </div> <br><br>
-                                    <div>
-                                        <span>
-                                            <h1>7. OLD ANSWERS:</h1>
-                                        </span> <span><input name="oldQuestionAnswer"
-                                                class="input_field_for_admin_create_and_update" type="text"
-                                                placeholder="Type to filter and select an exisiting measuring element from the list">
-
-                                        </span>
-                                    </div> <br><br>
-                                    <div>
-                                        <span>
-                                            <h1>8. OLD ANSWER RATING:</h1>
-                                        </span> <span><input name="oldAnswerRating"
-                                                class="input_field_for_admin_create_and_update" type="text"
-                                                placeholder="Type to filter and select an exisiting measuring element from the list">
-
-                                        </span>
-                                    </div> <br><br>
-
-                                    <div>
-                                        <span>
-                                            <h1>9. OLD MAXIMUM ANSWER RATING:</h1>
-                                        </span> <span><input name="oldMaxRating"
-                                                class="input_field_for_admin_create_and_update" type="text"
-                                                placeholder="Type to filter and select an exisiting measuring element from the list">
-
-                                        </span>
-                                    </div> <br><br>
-
-                                    <div>
-                                        <div>
-                                            <span>
-                                                <h1>1. NEW BUSINESS SECTOR:</h1>
-                                            </span> <span><input name="newbusiness_sector_name"
-                                                    class="input_field_for_admin_create_and_update" type="text"
-                                                    placeholder="Type to filter and select an exisiting measuring element from the list">
-
-                                            </span>
-                                        </div> <br><br>
-                                        <div>
-                                            <div>
-                                                <span>
-                                                    <h1>2. NEW BUSINESS FUNCTION:</h1>
-                                                </span> <span><input name="newbusiness_function"
-                                                        class="input_field_for_admin_create_and_update" type="text"
-                                                        placeholder="Type to filter and select an exisiting measuring element from the list">
-        
-                                                </span>
-                                            </div> <br><br>
-
-                                        <div>
-                                            <span>
-                                                <h1>3. NEW MEASURING ELEMENT:</h1>
-                                            </span> <span><input name="newMeasuring_Element"
-                                                    class="input_field_for_admin_create_and_update" type="text"
-                                                    placeholder="Type to filter and select an exisiting measuring element from the list">
-
-                                            </span>
-                                        </div> <br><br>
-
-                                        <div>
-                                            <span>
-                                                <h1>4. NEW RATING:</h1>
-                                            </span> <span><input name="newRating"
-                                                    class="input_field_for_admin_create_and_update" type="number"
-                                                    placeholder="Type to filter and select an exisiting measuring element from the list">
-
-                                            </span>
-                                        </div> <br><br>
-
-
-
-                                        <div>
-                                            <span>
-                                                <h1>5. NEW SUB CATEGORY:</h1>
-                                            </span> <span><input name="newsubCategory_name"
-                                                    class="input_field_for_admin_create_and_update" type="text"
-                                                    placeholder="Type to filter and select an exisiting measuring element from the list">
-
-                                            </span>
-                                        </div> <br><br>
-                                        <div>
-                                            <span>
-                                                <h1>6. NEW QUESTIONS:</h1>
-                                            </span> <span><input name="newSubCategoryQuestion"
-                                                    class="input_field_for_admin_create_and_update" type="text"
-                                                    placeholder="Type to filter and select an exisiting measuring element from the list">
-
-                                            </span>
-                                        </div> <br><br>
-                                        <div>
-                                            <span>
-                                                <h1>7. NEW ANSWERS:</h1>
-                                            </span> <span><input name="newQuestionAnswer"
-                                                    class="input_field_for_admin_create_and_update" type="text"
-                                                    placeholder="Type to filter and select an exisiting measuring element from the list">
-
-                                            </span>
-                                        </div> <br><br>
-                                        <div>
-                                            <span>
-                                                <h1>8. NEW ANSWER RATING:</h1>
-                                            </span> <span><input name="newAnswerRating"
-                                                    class="input_field_for_admin_create_and_update" type="text"
-                                                    placeholder="Type to filter and select an exisiting measuring element from the list">
-
-                                            </span>
-                                        </div> <br><br>
-
-                                        <div>
-                                            <span>
-                                                <h1>9. NEW MAXIMUM ANSWER RATING:</h1>
-                                            </span> <span><input name="newMaxRating"
-                                                    class="input_field_for_admin_create_and_update" type="text"
-                                                    placeholder="Type to filter and select an exisiting measuring element from the list">
-
-                                            </span>
-                                        </div> <br><br>
-
-
-
-                                        <button class="submit-btn">UPDATE ENTRY</button>
+                                        <span><input name="oldsubCategory_name" class="input_field_for_admin_create_and_update" type="text" placeholder="Type to filter and select an existing measuring element from the list"></span>
                                     </div>
+                                    <br><br>
+                            
+                                    <div>
+                                        <span>
+                                            <h1>6. OLD MAXIMUM ANSWER RATING:</h1>
+                                        </span>
+                                        <span><input name="oldMaxRating" class="input_field_for_admin_create_and_update" type="text" placeholder="Type to filter and select an existing measuring element from the list"></span>
+                                    </div>
+                                    <br><br>
+                            
+                                    <div>
+                                        <span>
+                                            <h1>1. NEW BUSINESS SECTOR:</h1>
+                                        </span>
+                                        <span><input name="newbusiness_sector_name" class="input_field_for_admin_create_and_update" type="text" placeholder="Type to filter and select an existing measuring element from the list"></span>
+                                    </div>
+                                    <br><br>
+                            
+                                    <div>
+                                        <span>
+                                            <h1>2. NEW BUSINESS FUNCTION:</h1>
+                                        </span>
+                                        <span><input name="newbusiness_function" class="input_field_for_admin_create_and_update" type="text" placeholder="Type to filter and select an existing measuring element from the list"></span>
+                                    </div>
+                                    <br><br>
+                            
+                                    <div>
+                                        <span>
+                                            <h1>3. NEW MEASURING ELEMENT:</h1>
+                                        </span>
+                                        <span><input name="newMeasuring_Element" class="input_field_for_admin_create_and_update" type="text" placeholder="Type to filter and select an existing measuring element from the list"></span>
+                                    </div>
+                                    <br><br>
+                            
+                                    <div>
+                                        <span>
+                                            <h1>4. NEW RATING:</h1>
+                                        </span>
+                                        <span><input name="newRating" class="input_field_for_admin_create_and_update" type="number" placeholder="Type to filter and select an existing measuring element from the list"></span>
+                                    </div>
+                                    <br><br>
+                            
+                                    <div>
+                                        <span>
+                                            <h1>5. NEW SUB CATEGORY:</h1>
+                                        </span>
+                                        <span><input name="newsubCategory_name" class="input_field_for_admin_create_and_update" type="text" placeholder="Type to filter and select an existing measuring element from the list"></span>
+                                    </div>
+                                    <br><br>
+                            
+                                    <div>
+                                        <span>
+                                            <h1>6. NEW MAXIMUM ANSWER RATING:</h1>
+                                        </span>
+                                        <span><input name="newMaxRating" class="input_field_for_admin_create_and_update" type="text" placeholder="Type to filter and select an existing measuring element from the list"></span>
+                                    </div>
+                                    <br><br>
+                            
+                                    <button class="submit-btn">UPDATE ENTRY</button>
+                                </div>
                             </form>
+                            
                         </div>
 
                         <div class="item">
@@ -494,7 +384,8 @@
         </section><br><br>
 
         <section>
-            <div class="dashboard_main_admin_record" style="background-color: black;">
+            <div class="dashboard_main_admin_record" style="background-color: black;" >
+               
                 <table >
                     <thead>
                         <tr>
@@ -504,9 +395,8 @@
                             <th>MEASURING ELEMENT</th>
                             <th>RATING</th>
                             <th>SUB CATEGORY</th>
-                            <th>QUESTIONS</th>
-                            <th>AANSWERS</th>
-                            <th>RATE ANSWERS</th>
+                            <th>As-Is QUESTIONS</th>
+                            <th>To-Be Questions</th>
                             <th>MAXIMUM RATING</th>
                             <th>DELETE</th>
                         </tr>
@@ -523,7 +413,6 @@
                             <td>{{ row[6] }}</td>
                             <td>{{ row[7] }}</td>
                             <td>{{ row[8] }}</td>
-                            <td>{{ row[9] }}</td>
                             <td>
                                 <form action="/delete_combined_data" method="post">
                                     <input type="hidden" name="record_id" value="{{ row[0] }}">
@@ -533,8 +422,11 @@
                             </td>
                         </tr>
                         {% endfor %}
+                        
                     </tbody>
+                    
                 </table>
+                
             </div>
             <form action="/view_combined_data" method="post">
                 <button type="submit" class="submit-btn">Reload Data</button>
@@ -542,7 +434,13 @@
         </section>
 
 
+        
+
+
     </main>
+
+
+   
 </body>
 
 </html>

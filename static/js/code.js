@@ -21,41 +21,53 @@ document.addEventListener("alpine:init", () => {
       view_maturity_analysis:false,
 
       // userAccount logics
-      select_your_business_sector: true,
+      select_your_business_sector: false,
+      get_started: true,
       displayed_tiers_per_business_sector: false,
       user_instructions: false,
+      enter_unique_code:false,
+      after_selecting_business_function:false,
       // choose_sub_category: false,
 
       // toolkit computation
       // Maturity_toolkit_feedback: false,
 
       openUserAccount(UserSection) {
-        this.select_your_business_sector = true;
+        this.select_your_business_sector = false;
+        this.get_started = true;
         this.displayed_tiers_per_business_sector = false;
         this.user_instructions=false;
-        // this.choose_sub_category = false;
-        // this.Maturity_toolkit_feedback = false;
-        
+        this.enter_unique_code =false;
+        this.after_selecting_business_function=false;
 
-        if (UserSection === "displayed_tiers_per_business_sector") {
-          this.select_your_business_sector = false;
-          this.displayed_tiers_per_business_sector = true;
-          this.user_instructions=false;
-          
- 
-          
-        } else if (UserSection === "user_instructions") {
-          this.select_your_business_sector = false;
+
+      
+        if (UserSection === "select_your_business_sector") {
+          this.select_your_business_sector = true;
+          this.get_started = false;
           this.displayed_tiers_per_business_sector = false;
-          this.user_instructions=true;
-  
-          
-        } else if (UserSection === "Maturity_toolkit_feedback") {
-          // this.select_your_business_sector = false;
-          // this.choose_measuring_element = false;
-          // this.choose_sub_category = false;
-          // this.Maturity_toolkit_feedback = true;
-          // this.admininstrator_user_creating = false;
+          this.user_instructions=false;
+          this.enter_unique_code =false;
+          this.after_selecting_business_function=false;
+            
+        }else if(UserSection === "enter_unique_code"){
+
+          this.select_your_business_sector = false;
+          this.get_started = false;
+          this.displayed_tiers_per_business_sector = false;
+          this.user_instructions=false;
+          this.enter_unique_code =true;
+          this.after_selecting_business_function=false;
+
+
+        }else if(UserSection === "after_selecting_business_function"){
+          this.select_your_business_sector = false;
+          this.get_started = false;
+          this.displayed_tiers_per_business_sector = false;
+          this.user_instructions=false;
+          this.enter_unique_code =false;
+          this.after_selecting_business_function=true;
+
         }
       },
 
