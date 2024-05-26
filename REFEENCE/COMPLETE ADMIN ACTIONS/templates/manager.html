@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Survey</title>
+    <link rel="stylesheet" href="/static/css/user/userstyle.css">
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <div class="logo"></div>
+            <div class="menu">
+                <a href="/logout" class="menu-item active"><i class="fas fa-lock">logout</i></a>
+                <a href="#" class="menu-item"><i class="fas fa-chart-bar"></i></a>
+                <a href="#" class="menu-item"><i class="fas fa-users"></i></a>
+                <a href="#" class="menu-item"><i class="fas fa-shopping-cart"></i></a>
+            </div>
+        </div>
+        <div class="main-content">
+            <div class="cards">
+                <div class="card"></div>
+                <div class="card"></div>
+                <div class="card"></div>
+                <div class="card"></div>
+            </div>
+            <div class="survey-container">
+                <h1>Session title feedback</h1>
+                <p>Thank you for taking part <span class="emoji">😊</span></p>
+                <p>Please complete this document to help us improve future sessions.</p>
+                <form>
+                    <div class="question">
+                        <label for="q1">1. Question text goes here.</label>
+                        <textarea id="q1" rows="3"></textarea>
+                    </div>
+                    <div class="question">
+                        <label for="q2">2. Question text goes here.</label>
+                        <textarea id="q2" rows="3"></textarea>
+                    </div>
+                    <div class="question">
+                        <label for="q3">3. Question text goes here. <small>1= Strongly Agree, 5 = Strongly Disagree.</small></label>
+                        <div class="rating">
+                            <input type="radio" id="q3_1" name="q3" value="1"><label for="q3_1">1</label>
+                            <input type="radio" id="q3_2" name="q3" value="2"><label for="q3_2">2</label>
+                            <input type="radio" id="q3_3" name="q3" value="3"><label for="q3_3">3</label>
+                            <input type="radio" id="q3_4" name="q3" value="4"><label for="q3_4">4</label>
+                            <input type="radio" id="q3_5" name="q3" value="5"><label for="q3_5">5</label>
+                        </div>
+                    </div>
+                    <div class="question">
+                        <label for="q4">4. Question text goes here. <small>Select one option.</small></label>
+                        <select id="q4" name="q4">
+                            <option value="">Select</option>
+                            <option value="option1">Option 1</option>
+                            <option value="option2">Option 2</option>
+                            <option value="option3">Option 3</option>
+                            <option value="option4">Option 4</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="sidebar-right">
+            <div class="functions">Survey Functions</div>
+            <div class="otif">OTIF<br>On Time In Full</div>
+        </div>
+    </div>
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+</body>
+</html>

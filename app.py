@@ -595,14 +595,14 @@ def add_random_characters(word, num_chars=12):
 
 @app.route('/add_random_characters', methods=['GET', 'POST'])
 def add_random_characters_route():
+    business_functions_data = {}  # Ensure this is a dictionary
     modified_word = None
     if request.method == 'POST':
         word = request.form['word']
         modified_word = add_random_characters(word)
-    
+    return render_template('manager.html', modified_word=modified_word, business_data=business_functions_data)
 
 
-    return render_template('manager.html', modified_word=modified_word)
 
 def get_unique_business_sectors():
     connection = sqlite3.connect('DigitalMaturityDatabase.db')
@@ -885,7 +885,6 @@ def submitting_unique_code():
     plot_images = []
     bar_plot_images = []
     growth_rate_images = []
-    user =[]
 
     if request.method == 'POST':
         unique_code = request.form['unique_code_user']
@@ -921,11 +920,10 @@ def submitting_unique_code():
                 growth_rates = [item[8] for item in data]
                 durations = [item[9] for item in data]
 
-                angles = np.linspace(
-                    0, 2 * np.pi, len(labels), endpoint=False).tolist()
+                angles = np.linspace(0, 2 * np.pi, len(labels), endpoint=False).tolist()
                 angles += angles[:1]
 
-                plt.figure(figsize=(3, 3))
+                plt.figure(figsize=(10, 10))  # Increase the size of the polar plots
                 ax = plt.subplot(111, polar=True)
                 ax.plot(angles, as_is_sums + [as_is_sums[0]],
                         'o-', linewidth=2, label='AS IS', color='red')
@@ -987,8 +985,7 @@ def submitting_unique_code():
                     x_values = np.linspace(0, durations[idx], 100)
                     growth_rate = growth_rates[idx]
                     y_values = to_be_sums[idx] * np.exp(growth_rate * x_values)
-                    plt.plot(x_values, y_values, label=f'{
-                             labels[idx]} Growth Curve')
+                    plt.plot(x_values, y_values, label=f'{labels[idx]} Growth Curve')
 
                 plt.xlabel('Time (Years)')
                 plt.ylabel('Value')
@@ -1007,11 +1004,10 @@ def submitting_unique_code():
             if not business_functions_data:
                 error_message = "No records found for the provided unique code."
 
-
-
-    return render_template('manager.html', error_message=error_message, 
+    return render_template('manager.html', error_message=error_message,
                            plot_images=plot_images, business_data=business_functions_data,
-                           bar_plot_images=bar_plot_images,growth_rate_images=growth_rate_images)
+                           bar_plot_images=bar_plot_images, growth_rate_images=growth_rate_images)
+
 
 
 

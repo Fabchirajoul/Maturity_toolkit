@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DM | Administrator</title>
+    <link href="/static/css/admin/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="/static/js/code.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link href="/static/css/admin/style.css" rel="stylesheet">
+</head>
+
+<body x-data="AutomatedDigitalMaturity" x-cloak>
+    <div class="container">
+        <div class="sidebar">
+            <div class="logo">Logo</div>
+            <div class="menu">
+                <a href="#" class="menu-item active" x-on:click="openHome('Admin_Home_Page')"><i
+                        class="fas fa-home"></i></a>
+                <a href="#" class="menu-item" x-on:click="openHome('manage_business_sector')">Manage Business Sector</a>
+                <a href="#" class="menu-item" x-on:click="openHome('manage_user_account')">Manage User Account</a>
+                <a href="#" class="menu-item" x-on:click="openHome('manage_csv_file_upload')">Manage Upload CSV</a>
+            </div>
+        </div>
+        <div class="main-content">
+
+            <div class="cards">
+                <div class="card">
+                    <a href="#" x-on:click="openHome('manage_csv_file_upload')"><i class="fas fa-file-alt"></i></a>
+                </div>
+                <div class="card">
+                    <i class="fas fa-users"></i>
+                </div>
+
+                <div class="card">
+                    <form action="/logout">
+                        <button type="submit"><a href="#"><i class="fas fa-lock"></i></a></button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Displaying surveys  -->
+            <div x-show="Admin_Home_Page" x-cloak>
+                <div class="table-container">
+                    <h1>DATABASE RECORDS</h1>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>BUSINESS SECTOR</th>
+                                <th>BUSINESS FUNCTION</th>
+                                <th>MEASURING ELEMENT</th>
+                                <th>RATING</th>
+                                <th>SUB CATEGORY</th>
+                                <th>As-Is QUESTIONS</th>
+                                <th>To-Be Questions</th>
+                                <th>MAXIMUM RATING</th>
+                                <th>DELETE</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for row in combined_data %}
+                            <tr>
+                                <td>{{ row[0] }}</td>
+                                <td>{{ row[1] }}</td>
+                                <td>{{ row[2] }}</td>
+                                <td>{{ row[3] }}</td>
+                                <td>{{ row[4] }}</td>
+                                <td>{{ row[5] }}</td>
+                                <td>{{ row[6] }}</td>
+                                <td>{{ row[7] }}</td>
+                                <td>{{ row[8] }}</td>
+                                <td>
+                                    <form action="/delete_combined_data" method="post">
+                                        <input type="hidden" name="record_id" value="{{ row[0] }}">
+                                        <button type="submit" class="submit-btn">Delete</button>
+                                    </form>
+
+                                </td>
+                            </tr>
+                            {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                    <form action="/view_combined_data" method="post">
+                        <button type="submit" class="submit-btn">Reload Data</button>
+                    </form>
+
+                </div>
+
+            </div>
+
+            <div x-show="manage_business_sector" x-cloak>
+
+                <div class="main-content">
+                    <div class="cards">
+                        <div class="card">
+                            <h2>ADD NEW BUSINESS SECTOR</h2>
+                            <p>Adding business sector individually here</p>
+                            <button class="btn"
+                                x-on:click="openHome('computational_interface_new_business_sector')">ADD</button>
+
+                        </div>
+                        <div class="card">
+                            <h2>UPDATE BUSINESS SECTOR</h2>
+                            <p>Updating business sector individually here</p>
+                            <button class="btn"
+                                x-on:click="openHome('computational_interface_update_business_sector')">UPDATE</button>
+
+                        </div>
+
+                        <div class="card">
+                            <h2>PROCESS ANSWER RATINGS</h2>
+                            <p>Processing answer ratings for the different business functions</p>
+                            
+                                <button type="submit" class="btn"
+                                    x-on:click="openHome('assign_answer_rating_for_business_functions')">VIEW BUSINESS
+                                    FUNCTIONS</button>
+                          
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+            <div x-show="manage_user_account">
+
+
+                <div class="main-content">
+                    <div class="cards">
+                        <div class="card">
+                            <h2>ADD NEW USER</h2>
+                            <p>You can add all three types of accounts here </p>
+                            <button class="btn">ADD USER</button>
+
+                        </div>
+                        <div class="card">
+                            <h2>VIEW ALL USER ACCOUNTS</h2>
+                            <p>Click to view UsERS</p>
+                            <button class="btn">VIEW USER</button>
+
+
+                        </div>
+
+                        <div class="card">
+                            <h2>ACTIVATE USER ACCOUNT</h2>
+                            <p>Will do this at a leisure time don't worry</p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+
+            </div>
+
+
+            <div x-show="manage_csv_file_upload">
+                <div class="main-content">
+                    <div class="cards">
+                        <div class="card">
+                            <h2>UPLOAD A CSV DATA FILE</h2><br><br>
+
+                            <form action="/" method="post" enctype="multipart/form-data">
+                                <i class="fas fa-file-alt fas-2x"></i>
+                                <input type="file" name="file" accept=".csv">
+                                <button type="submit" class="upload-btn">Upload</button>
+                            </form>
+
+                        </div>
+
+
+
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="userAccountParent">
+                <div x-show="computational_interface_new_business_sector" class="dashboard_computation" x-cloak>
+
+                    <div>
+                        <form action="/CombinedTiersForAll" method="POST">
+                            <div class="card" style="background-color: grey;">
+                                <h1>ADDING NEW BUSINESS SECTOR</h1>
+                                <div class="form-group">
+
+
+                                    <label>
+                                        <h3>Business Sector</h3>
+                                    </label>
+                                    <input name="business_sector_name" class="input" type="text"
+                                        placeholder="Enter buisness sector name">
+
+
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label>
+                                        <h3>Business Function</h3>
+                                    </label>
+                                    <input name="business_function" class="input" type="text"
+                                        placeholder="Type to filter and select an exisiting measuring element from the list">
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label>
+                                        <h3>Measuring Element</h3>
+                                    </label>
+                                    <input name="Measuring_Element" class="input" type="text"
+                                        placeholder="Type to filter and select an exisiting measuring element from the list">
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label>
+                                        <h3>Measuring ELement Rating</h3>
+                                    </label>
+                                    <input name="Rating" class="input" type="number"
+                                        placeholder="Type to filter and select an exisiting measuring element from the list">
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label>
+                                        <h3>Sub Category</h3>
+                                    </label>
+                                    <input name="subCategory_name" class="input" type="text"
+                                        placeholder="Type to filter and select an exisiting measuring element from the list">
+                                </div>
+
+
+
+
+                                <div class="form-group">
+                                    <label>
+                                        <h3>Maximum Rating</h3>
+                                    </label>
+                                    <input name="MaxRating" class="input" type="text"
+                                        placeholder="Type to filter and select an exisiting measuring element from the list">
+                                </div>
+
+
+                                <button class="submit-btn">CREATE ENTRY</button>
+                            </div>
+                        </form>
+                    </div>
+
+
+                </div>
+
+
+                <div x-show="computational_interface_update_business_sector" class="dashboard_computation" x-cloak>
+
+                    <div>
+                        <form action="/UpdateCombinedTiersForAll" method="POST">
+                            <div class="card" style="background-color: grey;">
+                                <h1>UPDATING AN EXISTING BUSINESS SECTOR</h1>
+                                <div class="form-group">
+
+                                    <label>
+                                        <h2>Old Business Sector</h2>
+                                    </label>
+                                    <input name="oldbusiness_sector_name" class="input" type="text"
+                                        placeholder="Enter buisness sector name">
+
+
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label>
+                                        <h2>Old Business Function</h2>
+                                    </label>
+                                    <input name="oldbusiness_function" class="input" type="text"
+                                        placeholder="Type to filter and select an exisiting measuring element from the list">
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label>
+                                        <h2>old Measuring Element</h2>
+                                    </label>
+                                    <input name="oldMeasuring_Element" class="input" type="text"
+                                        placeholder="Type to filter and select an exisiting measuring element from the list">
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label>
+                                        <h2>Old Measuring ELement Rating</h2>
+                                    </label>
+                                    <input name="oldRating" class="input" type="number"
+                                        placeholder="Type to filter and select an exisiting measuring element from the list">
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label>
+                                        <h2>Old Sub Category</h2>
+                                    </label>
+                                    <input name="oldsubCategory_name" class="input" type="text"
+                                        placeholder="Type to filter and select an exisiting measuring element from the list">
+                                </div>
+
+
+
+
+                                <div class="form-group">
+                                    <label>
+                                        <h3>Old Maximum Rating</h3>
+                                    </label>
+                                    <input name="oldMaxRating" class="input" type="number"
+                                        placeholder="Type to filter and select an exisiting measuring element from the list">
+                                </div>
+
+
+
+                                <div class="form-group">
+
+                                    <label>
+                                        <h2>New Business Sector</h2>
+                                    </label>
+                                    <input name="newbusiness_sector_name" class="input" type="text"
+                                        placeholder="Enter buisness sector name">
+
+
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label>
+                                        <h2>New Business Function</h2>
+                                    </label>
+                                    <input name="newbusiness_function" class="input" type="text"
+                                        placeholder="Type to filter and select an exisiting measuring element from the list">
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label>
+                                        <h2>New Measuring Element</h2>
+                                    </label>
+                                    <input name="newMeasuring_Element" class="input" type="text"
+                                        placeholder="Type to filter and select an exisiting measuring element from the list">
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label>
+                                        <h2>New Measuring ELement Rating</h2>
+                                    </label>
+                                    <input name="newRating" class="input" type="number"
+                                        placeholder="Type to filter and select an exisiting measuring element from the list">
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label>
+                                        <h2>New Sub Category</h2>
+                                    </label>
+                                    <input name="newsubCategory_name" class="input" type="text"
+                                        placeholder="Type to filter and select an exisiting measuring element from the list">
+                                </div>
+
+
+
+
+                                <div class="form-group">
+                                    <label>
+                                        <h3>New Maximum Rating</h3>
+                                    </label>
+                                    <input name="newMaxRating" class="input" type="number"
+                                        placeholder="Type to filter and select an exisiting measuring element from the list">
+                                </div>
+
+
+
+                                <button class="submit-btn">UPDATE ENTRY</button>
+
+                            </div>
+
+
+
+                        </form>
+                    </div>
+
+
+                </div>
+
+                <div x-show="assign_answer_rating_for_business_functions">
+              
+                    <form action="/answerRatingForTheBusinessFunctions" method="POST">
+                        <div class="card" style="background-color: grey;">
+                            <h3>ASSIGN RATINGS FOR BUSINESS FUNCTIONS</h3>
+                            <div class="userAccountParent">
+                                <div class="dashboard_computation">
+                                    <table style="background-color: grey;">
+                                        <thead>
+                                            <tr>
+                                                <td><h1>Business Functions</h1></td>
+                                                <td><h1>BASIC</h1></td>
+                                                <td><h1>REACTIVE</h1></td>
+                                                <td><h1>PLANNED</h1></td>
+                                                <td><h1>PROACTIVE</h1></td>
+                                                <td><h1>RESILIENT</h1></td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for function in unique_business_functions %}
+                                            <tr>
+                                                <td>
+                                                    <h3>{{ function[0] }}</h3>
+                                                    <input type="hidden" name="business_function[]" value="{{ function[0] }}">
+                                                </td>
+                                                <td>
+                                                    <select name="rating[]" class="input" required>
+                                                        <option value="disabled">Rate</option>
+                                                        {% for i in range(0, 12) %}
+                                                        <option value="{{ i }}">{{ i }}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <select name="rating[]" class="input" required>
+                                                        <option value="disabled">Rate</option>
+                                                        {% for i in range(0, 12) %}
+                                                        <option value="{{ i }}">{{ i }}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <select name="rating[]" class="input" required>
+                                                        <option value="disabled">Rate</option>
+                                                        {% for i in range(0, 12) %}
+                                                        <option value="{{ i }}">{{ i }}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <select name="rating[]" class="input" required>
+                                                        <option value="disabled">Rate</option>
+                                                        {% for i in range(0, 12) %}
+                                                        <option value="{{ i }}">{{ i }}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <select name="rating[]" class="input" required>
+                                                        <option value="disabled">Rate</option>
+                                                        {% for i in range(0, 12) %}
+                                                        <option value="{{ i }}">{{ i }}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <button class="submit-btn">RATE BUSINESS FUNCTION</button>
+                        </div>
+                    </form>
+
+                </div>
+
+
+
+
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+
+    </div>
+</body>
+
+</html>

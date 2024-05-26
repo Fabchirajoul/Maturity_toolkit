@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DM | Registration Page</title>
+    <link href="/static/css/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+
+<body>
+    <div class="login-container">
+        <div class="register-box">
+            <h2>DIGITAL MATURITY REGISTRATION</h2>
+            <form action="/register" method="POST" enctype="multipart/form-data">
+                <div>
+                    <i class="fas fa-user fa-2x"></i>
+                    <input class="input" type="text" placeholder="Create your username" name="name" required
+                        id="name">
+                </div>
+                <br><br>
+               
+                <div>
+                    <i class="fas fa-envelope fa-2x"></i>
+                    <input type="email" class="input" id="email" placeholder="Enter email" name="email" required>
+                </div>
+                <br><br>
+
+                <div>
+                    <i class="fas fa-user-plus fa-2x"></i>
+                    <select name="users" id="cars" class="input" required>
+                        <option value="disabled">Select a user type</option>
+                        <option value="Business Analyst">Business Analyst</option>
+                        <option value="Business Manager">Manager</option>
+                        <option value="Administrator">Administrator</option>
+                    </select>
+
+                </div><br><br>
+                <div>
+                    <i class="fas fa-lock fa-2x"></i>
+                    <input type="password" class="input" id="password" placeholder="Enter password" name="password"
+                        required>
+                </div>
+                <br><br>
+                <div>
+                    <i class="fas fa-lock fa-2x"></i>
+                    <input type="password" class="input" id="confirm_password" placeholder="Confirm password"
+                        name="confirm_password" required>
+                </div>
+                <br><br>
+
+                <div>
+                    <i class="fas fa-image fa-2x"></i>
+                    <input type="file" name="User_photo" class="upload-btn" name="password" accept="image/*"  id="User_photo">
+                </div>
+                
+                <button type="submit" class="submit-btn">Submit</button>
+                <h4 class="item">Already have an account ? <a href="/login">Click to login</a></h4>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>
