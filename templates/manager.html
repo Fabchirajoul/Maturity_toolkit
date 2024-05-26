@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DM | Manager</title>
+    <link href="/static/css/admin/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="/static/js/code.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link href="/static/css/admin/style.css" rel="stylesheet">
+</head>
+
+<body x-data="AutomatedDigitalMaturity" x-cloak>
+    <div class="container">
+        <div class="sidebar">
+            <div class="logo">Logo</div>
+            <div class="menu">
+                <a href="#" class="menu-item active" x-on:click="openHome('Admin_Home_Page')"><i
+                        class="fas fa-home"></i></a>
+                <a href="#" class="menu-item" x-on:click="openHome('manage_business_sector')">Generate Code</a>
+                <a href="#" class="menu-item" x-on:click="openHome('manage_user_account')">View Generated Code</a>
+
+
+            </div>
+        </div>
+        <div class="main-content">
+
+            <div class="cards">
+                <div class="card">
+                    <a href="#" ><i class="fas fa-file-alt"></i></a>
+                </div>
+                <div class="card">
+                    <i class="fas fa-users"></i>
+                </div>
+
+                <div class="card">
+                    <form action="/logout">
+                        <button type="submit"><a href="#"><i class="fas fa-lock"></i></a></button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Displaying surveys  -->
+            <div x-show="Admin_Home_Page" x-cloak>
+
+                <form action="/submit_unique_code" method="POST">
+                    <h1>UNIQUE CODE:</h1>
+                    <input type="text" class="input" name="unique_code_user"
+                        placeholder="Please enter your unique maturity code" value="">
+                    <button type="submit" class="submit-btn">SUBMIT CODE</button>
+                </form>
+                <div class="table-container">
+                    <h1>DIGITAL MATRITY LEVELS</h1>
+                    <section>
+                        <div class="">
+                            {% for bf, data in business_data.items() %}
+                            <h3 style="color: white;">{{ bf }}</h3>
+                            <table style="background-color: black;">
+                                <thead>
+                                    <tr>
+                                        <th>Measuring Element</th>
+                                        <th>Percentage As Is</th>
+                                        <th>Percentage To Be</th>
+                                        <th>Feedback As Is</th>
+                                        <th>Feedback To Be</th>
+                                        <th>Growth Rate</th>
+                                        <th>Duration</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for measuring_elt_user, exped_sum, as_is_sum, to_be_sum, percent_maturity_as_is,
+                                    percent_maturity_to_be, feedback_as_is, feedback_to_be, growth_rate, time_to_grow in data %}
+                                    <tr>
+                                        <td>{{ measuring_elt_user }}</td>
+                                        <td>{{ percent_maturity_as_is }}%</td>
+                                        <td>{{ percent_maturity_to_be }}%</td>
+                                        <td>{{ feedback_as_is }}</td>
+                                        <td>{{ feedback_to_be }}</td>
+                                        <td>{{ growth_rate }}</td>
+                                        <td>{{ time_to_grow }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                            {% endfor %}
+                        </div>
+                    </section><br><br>
+            
+                    <!-- Section for the bar plots  -->
+            
+                    <section>
+                        <div class="">
+                            
+                            <h2>Bar Plots</h2>
+                            {% for bar_plot_image in bar_plot_images %}
+                            
+                                <img src="data:image/png;base64,{{ bar_plot_image }}" alt="Bar Plot" class="img-large">
+                            
+                            {% endfor %}
+                          
+                        </div>
+                    </section><br><br>
+            
+            
+                    <section>
+                        <!-- This section displays the plots -->
+                        <div style="background-color: black;">
+                           
+                                <!-- <h1>Business Function Analysis</h1> -->
+                                {% for image in plot_images %}
+                                <img src="data:image/png;base64,{{ image }}" alt="Business Function Plot" class="img-large">
+                                {% endfor %}
+                            
+                        </div>
+                    </section><br><br>
+            
+                    <section>
+                        <div class="">
+                           
+            
+                            <h2>Growth Rate Curves</h2>
+                            {% for growth_rate_image in growth_rate_images %}
+                           
+                                <img src="data:image/png;base64,{{ growth_rate_image }}" alt="Growth Rate Curve" class="img-large">
+                            
+                            {% endfor %}
+            
+                          
+                        </div>
+                    </section>
+
+                  
+
+                </div>
+
+            </div>
+
+            <div x-show="manage_business_sector" x-cloak>
+
+                <div class="main-content">
+                    <div class="cards">
+                        <div class="card">
+                            <!-- {% if modified_word %}
+
+                            <div class="card">
+                                <h2>Generated Code</h2>
+                                <p>{{ modified_word }}</p>
+                            </div>
+
+                            {% endif %} -->
+
+
+                        </div>
+                        <div class="card">
+                            <h2>GENERATING CODE</h2>
+                            <p>Enter any word to generate a unique character code which should be kept private at all
+                                times.
+                            </p>
+
+
+                            <form action="/add_random_characters" method="post">
+                                <div class="form-group">
+                                    <label>
+                                        <h3>Word</h3>
+                                    </label>
+                                    <input name="word" class="input" type="text" placeholder="Enter any word" required>
+                                </div>
+                                <button class="btn">CLICK TO GENERATE CODE</button>
+                            </form>
+
+                        </div>
+
+                        <div class="card">
+                            <!-- <h2>PROCESS ANSWER RATINGS</h2>
+                            <p>Processing answer ratings for the different business functions</p>
+                            
+                                <button type="submit" class="btn"
+                                    x-on:click="openHome('assign_answer_rating_for_business_functions')">VIEW BUSINESS
+                                    FUNCTIONS</button> -->
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+            <div x-show="manage_user_account" x-cloak>
+
+                <div class="main-content">
+                    <div class="cards">
+                        <div class="card">
+                            {% if modified_word %}
+
+                            <div class="card">
+                                <h2>Generated Code</h2>
+                                <p>{{ modified_word }}</p>
+                            </div>
+
+                            {% endif %}
+
+
+                        </div>
+                        <div class="card">
+                            <!-- <h2>GENERATING CODE</h2>
+                            <p>Enter any word to generate a unique character code which should be kept private at all
+                                times.
+                            </p>
+
+
+                            <form action="/add_random_characters" method="post">
+                                <div class="form-group">
+                                    <label>
+                                        <h3>Word</h3>
+                                    </label>
+                                    <input name="word" class="input" type="text" placeholder="Enter any word" required>
+                                </div>
+                                <button class="btn">CLICK TO GENERATE CODE</button>
+                            </form> -->
+
+                        </div>
+
+                        <div class="card">
+                            <!-- <h2>PROCESS ANSWER RATINGS</h2>
+                            <p>Processing answer ratings for the different business functions</p>
+                            
+                                <button type="submit" class="btn"
+                                    x-on:click="openHome('assign_answer_rating_for_business_functions')">VIEW BUSINESS
+                                    FUNCTIONS</button> -->
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+    </div>
+</body>
+
+</html>

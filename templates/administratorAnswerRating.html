@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DM | Administrator</title>
+    <link href="/static/css/admin/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="/static/js/code.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link href="/static/css/admin/style.css" rel="stylesheet">
+</head>
+
+<body x-data="AutomatedDigitalMaturity" x-cloak>
+    <div class="container">
+        <div class="sidebar">
+            <div class="logo">Logo</div>
+            <div class="menu">
+                <a href="#" class="menu-item active" x-on:click="openHome('Admin_Home_Page')"><i
+                        class="fas fa-home"></i></a>
+                <a href="{{ url_for('dashboardAdministrator') }}" class="menu-item">Manage Business Sector</a>
+                <a href="#" class="menu-item" x-on:click="openHome('manage_user_account')">Manage User Account</a>
+                <a href="#" class="menu-item" x-on:click="openHome('manage_csv_file_upload')">Manage Upload CSV</a>
+            </div>
+        </div>
+        <div class="main-content">
+
+            <div class="cards">
+                <div class="card">
+                    <a href="#" x-on:click="openHome('manage_csv_file_upload')"><i class="fas fa-file-alt"></i></a>
+                </div>
+                <div class="card">
+                    <i class="fas fa-users"></i>
+                </div>
+
+                <div class="card">
+                    <form action="/logout">
+                        <button type="submit"><a href="#"><i class="fas fa-lock"></i></a></button>
+                    </form>
+                </div>
+            </div>
+
+            <section>
+                <div class="table-container">
+                    <h1>RATING THE DIFFERENT BUSINESS FUNCTIONS OF A SECTOR</h1>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>BUSINESS SECTOR</th>
+                                <th>RATING STAGE</th>
+                                <th>RATING VALUE</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for function in unique_business_functions %}
+                            <tr>
+                                <td>{{ function[0] }}</td>
+                                <td>
+                                    <select name="rating_stage">
+                                        <option value="INITIAL">INITIAL</option>
+                                        <option value="BASIC">BASIC</option>
+                                        <option value="REACTIVE">REACTIVE</option>
+                                        <option value="MANAGED">MANAGED</option>
+                                        <option value="DEFINED">DEFINED</option>
+                                        <option value="PLANNED">PLANNED</option>
+                                        <option value="PROACTIVE">PROACTIVE</option>
+                                        <option value="OPTIMIZED">OPTIMIZED</option>
+                                        <option value="RESILIENT">RESILIENT</option>
+                                        <option value="ADAPTIVE">ADAPTIVE</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <input type="number" name="rating_value" min="0" max="9">
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+
+    </div>
+</body>
+
+</html>

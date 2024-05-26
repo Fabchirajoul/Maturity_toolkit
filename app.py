@@ -1,17 +1,21 @@
-import numpy as np
-import io
-import csv
-import base64
-from flask import Flask, request, render_template, redirect, session, url_for
 import sqlite3
 import bcrypt
+from flask import Flask, request, render_template, redirect, session, url_for, jsonify
+import csv
+import numpy as np
+import io
+import base64
 import random
 import string
+import numpy as np
+import base64
 import math
-from flask import jsonify
 import matplotlib.pyplot as plt
 import matplotlib
 matplotlib.use('Agg')  # Use a non-GUI backend
+
+
+
 
 app = Flask(__name__)
 app.secret_key = 'secret_key'
@@ -30,57 +34,103 @@ class User:
 
 
 def create_user_table():
-    connection = sqlite3.connect('database.db')
-    cursor = connection.cursor()
-    cursor.execute('''
-        CREATE TABLE IF NOT EXISTS User (
-            id INTEGER PRIMARY KEY,
-            name TEXT NOT NULL,
-            email TEXT UNIQUE NOT NULL,
-            account_type TEXT,
-            password TEXT NOT NULL
-        )
-    ''')
-    connection.commit()
-    connection.close()
+    try:
+        connection = sqlite3.connect('DigitalMaturityDatabase.db')
+        cursor = connection.cursor()
+        cursor.execute('''
+            CREATE TABLE IF NOT EXISTS User (
+                id INTEGER PRIMARY KEY,
+                name TEXT NOT NULL,
+                email TEXT UNIQUE NOT NULL,
+                account_type TEXT,
+                password TEXT NOT NULL,
+                userPhoto BLOB
+            )
+        ''')
+        connection.commit()
+    except sqlite3.Error as e:
+        print(f"An error occurred while creating the User table: {e}")
+    finally:
+        connection.close()
 
 
-# combined table
 def create_combined_table():
-    connection = sqlite3.connect('database.db')
-    cursor = connection.cursor()
-    cursor.execute('''
-        CREATE TABLE IF NOT EXISTS CombinedTable (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            BusinessSector TEXT,
-            BusinessFunction TEXT,
-            MeasuringElt TEXT,
-            Rating INTEGER,
-            SUbCategory TEXT,
-            AsIsQuestions TEXT,
-            ToBeQuestions TEXT,
-            MaxRating INTEGER
-        )
-    ''')
-    connection.commit()
-    connection.close()
+    try:
+        connection = sqlite3.connect('DigitalMaturityDatabase.db')
+        cursor = connection.cursor()
+        cursor.execute('''
+            CREATE TABLE IF NOT EXISTS CombinedTable (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                BusinessSector TEXT,
+                BusinessFunction TEXT,
+                MeasuringElt TEXT,
+                Rating INTEGER,
+                SUbCategory TEXT,
+                AsIsQuestions TEXT,
+                ToBeQuestions TEXT,
+                MaxRating INTEGER
 
+            )
+        ''')
+        connection.commit()
+    except sqlite3.Error as e:
+        print(f"An error occurred while creating the CombinedTable: {e}")
+    finally:
+        connection.close()
+
+
+def create_trimmed_table():
+        connection = sqlite3.connect('DigitalMaturityDatabase.db')
+        cursor = connection.cursor()
+        cursor.execute('''
+            CREATE TABLE IF NOT EXISTS ArrangingTheDataInProperOrder (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                BusinessSector TEXT,
+                BusinessFunction TEXT,
+                MeasuringElt TEXT,
+                Rating INTEGER,
+                SUbCategory TEXT,
+                AsIsQuestions TEXT,
+                ToBeQuestions TEXT,
+                MaxRating INTEGER,
+                AnswerRating TEXT,
+                AnswerRatingValue INTEGER
+            )
+        ''')
+        connection.commit()
+        connection.close()
+
+
+def create_answer_rating_table():
+        connection = sqlite3.connect('DigitalMaturityDatabase.db')
+        cursor = connection.cursor()
+        cursor.execute('''
+            CREATE TABLE IF NOT EXISTS AnswerRatings (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                BusinessFunction TEXT,
+                RatingName TEXT,
+                RatingDescription,
+                AnswerRatingValue INTEGER
+            )
+        ''')
+        connection.commit()
+        connection.close()
 
 def create_user_submission_record_table():
-    connection = sqlite3.connect('database.db')
+    connection = sqlite3.connect('DigitalMaturityDatabase.db')
     cursor = connection.cursor()
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS UserSubmissionRecord (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             UniqueCodeUser TEXT,
-            BusinessFunction TEXT,  
+            BusinessFunction TEXT,
             MeasuringEltUser TEXT,
             RatingUser INTEGER,
             SUbCategoryUser TEXT,
             AsIsQuestionsUser TEXT,
             AnswersUserAsIs TEXT,
             ToBeQuestionsUser TEXT,
-            AnswersUserToBe TEXT,   
+            AnswersUserToBe TEXT,
             MaxRatingUser INTEGER DEFAULT 5,
             ExpectedCumSum INTEGER,
             UserCumSumAsIs INTEGER,
@@ -89,41 +139,9 @@ def create_user_submission_record_table():
     ''')
     connection.commit()
     connection.close()
-
-
-# Recreate the table to ensure the schema is correct
-create_user_submission_record_table()
-
-# TO hold trimmed records
-
-
-def create_user_submission_trimmed_record_table():
-    connection = sqlite3.connect('database.db')
-    cursor = connection.cursor()
-    cursor.execute('''
-        CREATE TABLE IF NOT EXISTS UserSubmissionRecordTrimmed (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            UniqueCodeUser TEXT,
-            BusinessFunction TEXT,  
-            MeasuringEltUser TEXT,
-            RatingUser INTEGER,
-            SUbCategoryUser TEXT,
-            AsIsQuestionsUser TEXT,
-            AnswersUserAsIs TEXT,
-            ToBeQuestionsUser TEXT,
-            AnswersUserToBe TEXT,   
-            MaxRatingUser INTEGER DEFAULT 5,
-            ExpectedCumSum INTEGER,
-            UserCumSumAsIs INTEGER,
-            UserCumSumToBe INTEGER
-        )
-    ''')
-    connection.commit()
-    connection.close()
-
 
 def create_final_feedback_data():
-    connection = sqlite3.connect('database.db')
+    connection = sqlite3.connect('DigitalMaturityDatabase.db')
     cursor = connection.cursor()
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS UserSubmittedFeedback (
@@ -150,16 +168,23 @@ def create_final_feedback_data():
     connection.commit()
     connection.close()
 
-
+# Create tables
 create_user_table()
 create_combined_table()
+create_trimmed_table()
+create_answer_rating_table()
 create_user_submission_record_table()
 create_final_feedback_data()
-create_user_submission_trimmed_record_table()
 
 
 @app.route('/')
 def index():
+    return render_template('index.html')
+
+
+@app.route('/logout')
+def logout():
+    session.pop('email', None)
     return render_template('index.html')
 
 
@@ -171,11 +196,12 @@ def register():
         password = request.form['password']
         confirm_password = request.form['confirm_password']
         account_type = request.form['users']
+        user_photo = request.files['User_photo']
 
         if password != confirm_password:
             return render_template('register.html', error='Passwords do not match')
 
-        connection = sqlite3.connect('database.db')
+        connection = sqlite3.connect('DigitalMaturityDatabase.db')
         cursor = connection.cursor()
         cursor.execute('SELECT * FROM User WHERE email=?', (email,))
         existing_user = cursor.fetchone()
@@ -185,47 +211,18 @@ def register():
 
         hashed_password = bcrypt.hashpw(password.encode(
             'utf-8'), bcrypt.gensalt()).decode('utf-8')
-        cursor.execute('INSERT INTO User (name, email, password, account_type) VALUES (?, ?, ?, ?)',
-                       (name, email, hashed_password, account_type))
+
+        # Read the photo data and convert it to binary
+        user_photo_data = user_photo.read()
+
+        cursor.execute('INSERT INTO User (name, email, password, account_type, userPhoto) VALUES (?, ?, ?, ?, ?)',
+                       (name, email, hashed_password, account_type, user_photo_data))
         connection.commit()
         connection.close()
 
         return redirect('/login')
 
     return render_template('register.html')
-
-
-# Admin register
-@app.route('/Adminregister', methods=['GET', 'POST'])
-def adminregister():
-    if request.method == 'POST':
-        name = request.form['name']
-        email = request.form['email']
-        password = request.form['password']
-        confirm_password = request.form['confirm_password']
-        account_type = request.form['users']
-
-        if password != confirm_password:
-            return render_template('administrator.html', error='Passwords do not match')
-
-        connection = sqlite3.connect('database.db')
-        cursor = connection.cursor()
-        cursor.execute('SELECT * FROM User WHERE email=?', (email,))
-        existing_user = cursor.fetchone()
-        if existing_user:
-            connection.close()
-            return render_template('administrator.html', error='User with this email already exists')
-
-        hashed_password = bcrypt.hashpw(password.encode(
-            'utf-8'), bcrypt.gensalt()).decode('utf-8')
-        cursor.execute('INSERT INTO User (name, email, password, account_type) VALUES (?, ?, ?, ?)',
-                       (name, email, hashed_password, account_type))
-        connection.commit()
-        connection.close()
-
-        return redirect('/administrator')
-
-    return render_template('administrator.html')
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -235,7 +232,7 @@ def login():
         password = request.form['password']
         account_type = request.form['users']
 
-        connection = sqlite3.connect('database.db')
+        connection = sqlite3.connect('DigitalMaturityDatabase.db')
         cursor = connection.cursor()
         cursor.execute('SELECT * FROM User WHERE email=?', (email,))
         user = cursor.fetchone()
@@ -244,6 +241,8 @@ def login():
             session['email'] = user[2]
             if account_type == "Administrator":
                 return redirect('/administrator')
+            elif account_type == "Business Manager":
+                return redirect('/BusinessManager')
             elif account_type == "Business Analyst":
                 return redirect('/userAccount')
         else:
@@ -253,29 +252,11 @@ def login():
     return render_template('login.html')
 
 
-@app.route('/logout')
-def logout():
-    session.pop('email', None)
-    return render_template('index.html')
-
-
-@app.route('/userAccount')
-def dashboardBusinessAnalyst():
-    if session.get('email'):
-        connection = sqlite3.connect('database.db')
-        cursor = connection.cursor()
-        cursor.execute('SELECT * FROM User WHERE email=?', (session['email'],))
-        user = cursor.fetchone()
-
-        connection.close()
-        return render_template('userAccount.html', user=user)
-    return redirect('/login')
-
-
+# Administrator
 @app.route('/administrator')
 def dashboardAdministrator():
     if session.get('email'):
-        connection = sqlite3.connect('database.db')
+        connection = sqlite3.connect('DigitalMaturityDatabase.db')
         cursor = connection.cursor()
         cursor.execute('SELECT * FROM User WHERE email=?', (session['email'],))
         user = cursor.fetchone()
@@ -284,9 +265,195 @@ def dashboardAdministrator():
 
     return redirect('/login')
 
-# Creating the combined all tiers
+# BusinessManager
+@app.route('/BusinessManager')
+def dashboardBusinessManager():
+    business_functions_data={}
+    if session.get('email'):
+        connection = sqlite3.connect('DigitalMaturityDatabase.db')
+        cursor = connection.cursor()
+        cursor.execute('SELECT * FROM User WHERE email=?', (session['email'],))
+        user = cursor.fetchone()
+        connection.close()
+        return render_template('manager.html', user=user, business_data=business_functions_data)
+
+    return redirect('/login')
+
+# Business analysts 
+@app.route('/userAccount')
+def dashboardBusinessbusinessAnalysts():
+    if session.get('email'):
+        connection = sqlite3.connect('DigitalMaturityDatabase.db')
+        cursor = connection.cursor()
+        cursor.execute('SELECT * FROM User WHERE email=?', (session['email'],))
+        user = cursor.fetchone()
+        connection.close()
+        return render_template('userAccount.html', user=user)
+
+    return redirect('/login')
+
+# Displaying the elements in the database on the admin side of the panel
+@app.route('/view_combined_data', methods=['GET', 'POST'])
+def view_combined_data():
+    connection = sqlite3.connect('DigitalMaturityDatabase.db')
+    cursor = connection.cursor()
+    cursor.execute('''
+        SELECT id, BusinessSector, BusinessFunction, MeasuringElt, Rating, SUbCategory, AsIsQuestions, ToBeQuestions, MaxRating
+        FROM CombinedTable
+    ''')
+    combined_data = cursor.fetchall()
+
+    # Normalize the BusinessFunction column
+    normalize_business_function()
+
+    cursor.execute('SELECT DISTINCT BusinessFunction FROM ArrangingTheDataInProperOrder')
+    unique_business_functions = cursor.fetchall()
+
+    connection.close()
+
+    return render_template('administrator.html', combined_data=combined_data, unique_business_functions=unique_business_functions)
 
 
+# Uploading CSV file to database
+def normalize_business_function():
+    connection = sqlite3.connect('DigitalMaturityDatabase.db')
+    cursor = connection.cursor()
+
+    # Clear existing data in ArrangingTheDataInProperOrder table to prevent duplication
+    cursor.execute('DELETE FROM ArrangingTheDataInProperOrder')
+
+    cursor.execute('''
+        WITH RECURSIVE split(id, BusinessSector, BusinessFunction, MeasuringElt, Rating, SUbCategory, AsIsQuestions, ToBeQuestions, MaxRating, value, rest) AS (
+            SELECT
+                id,
+                BusinessSector,
+                BusinessFunction,
+                MeasuringElt,
+                Rating,
+                SUbCategory,
+                AsIsQuestions,
+                ToBeQuestions,
+                MaxRating,
+                TRIM(SUBSTR(BusinessFunction || ',', 1, INSTR(BusinessFunction || ',', ',') - 1)),
+                TRIM(SUBSTR(BusinessFunction || ',', INSTR(BusinessFunction || ',', ',') + 1))
+            FROM CombinedTable
+            UNION ALL
+            SELECT
+                id,
+                BusinessSector,
+                BusinessFunction,
+                MeasuringElt,
+                Rating,
+                SUbCategory,
+                AsIsQuestions,
+                ToBeQuestions,
+                MaxRating,
+                TRIM(SUBSTR(rest, 1, INSTR(rest, ',') - 1)),
+                TRIM(SUBSTR(rest, INSTR(rest, ',') + 1))
+            FROM split
+            WHERE rest != ''
+        )
+        INSERT INTO ArrangingTheDataInProperOrder (
+            BusinessSector, BusinessFunction, MeasuringElt, Rating, SUbCategory, 
+            AsIsQuestions, ToBeQuestions, MaxRating
+        )
+        SELECT
+            BusinessSector, value, MeasuringElt, Rating, SUbCategory, 
+            AsIsQuestions, ToBeQuestions, MaxRating
+        FROM split
+        WHERE value IS NOT NULL AND value != ''
+    ''')
+
+    connection.commit()
+    connection.close()
+
+
+@app.route('/', methods=['GET', 'POST'])
+def upload_file():
+    unique_business_functions = []
+    if request.method == 'POST':
+        file = request.files['file']
+        if file and file.filename.endswith('.csv'):
+            # Process CSV file and insert into database
+            process_csv(file)
+
+            # Normalize the BusinessFunction column
+            normalize_business_function()
+
+            # Fetch unique business functions
+            connection = sqlite3.connect('DigitalMaturityDatabase.db')
+            cursor = connection.cursor()
+            cursor.execute('SELECT DISTINCT BusinessFunction FROM ArrangingTheDataInProperOrder')
+            unique_business_functions = cursor.fetchall()
+            connection.close()
+
+            # Redirect to view data
+            return redirect(url_for('view_combined_data'))
+
+    # Fetch unique business functions for GET request
+    connection = sqlite3.connect('DigitalMaturityDatabase.db')
+    cursor = connection.cursor()
+    cursor.execute('SELECT DISTINCT BusinessFunction FROM ArrangingTheDataInProperOrder')
+    unique_business_functions = cursor.fetchall()
+    connection.close()
+
+    return render_template('administrator.html', unique_business_functions=unique_business_functions)
+
+
+
+def process_csv(csv_file):
+    connection = sqlite3.connect('DigitalMaturityDatabase.db')
+    cursor = connection.cursor()
+
+    # Convert file object to text mode
+    csv_text = csv_file.stream.read().decode("utf-8")
+    csv_data = csv.reader(csv_text.splitlines())
+
+    next(csv_data)  # Skip header row if present
+    for row in csv_data:
+        if len(row) != 9:
+            raise ValueError("CSV file must have exactly 9 columns")
+
+        id, business_sector, business_function, measuring_elt, rating, sub_category, AsIsQuestions, ToBeQuestions, max_rating = row
+
+        # Dynamically generate the as_is_question and to_be_question
+        as_is_question = f"Wrt to the 10 best companies incorporating industry 4.0 key enablers making them digitally mature and transformed, how will you best describe your {sub_category}?"
+        to_be_question = f"Wrt to the 10 best companies incorporating industry 4.0 key enablers making them digitally mature and transformed, where would you want to find {sub_category} in the future?"
+
+        cursor.execute('''
+            INSERT INTO CombinedTable (id, BusinessSector, BusinessFunction, MeasuringElt, Rating, SUbCategory, AsIsQuestions, ToBeQuestions, MaxRating)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ''', (id, business_sector, business_function, measuring_elt, rating, sub_category, as_is_question, to_be_question, max_rating))
+
+    connection.commit()
+    connection.close()
+
+
+@app.route('/delete_combined_data', methods=['POST'])
+def delete_combined_data():
+    if request.method == 'POST':
+        # Get the ID of the record to delete from the form
+        delete_record_id = request.form['record_id']
+        try:
+            # Delete the record from the database
+            connection = sqlite3.connect('DigitalMaturityDatabase.db')
+            cursor = connection.cursor()
+            cursor.execute('''
+                DELETE FROM CombinedTable
+                WHERE id = ?
+            ''', (delete_record_id,))
+            connection.commit()
+            connection.close()
+
+            # Redirect back to the page displaying combined data
+            return redirect('/view_combined_data')
+        except Exception as e:
+            return "Error occurred during deletion: " + str(e)
+    else:
+        return "Method Not Allowed"
+
+
+# Adding individual data into database
 @app.route('/CombinedTiersForAll', methods=['GET', 'POST'])
 def CombinedTiers():
     if request.method == 'POST':
@@ -297,14 +464,12 @@ def CombinedTiers():
         subCategory_name = request.form['subCategory_name']
 
         # Dynamically generate the as_is_question and to_be_question
-        as_is_question = f"Wrt to the 10 best companies incorporating industry 4.0 key enablers making them digitally mature and transformed, how will you best describe your {
-            subCategory_name}?"
-        to_be_question = f"Wrt to the 10 best companies incorporating industry 4.0 key enablers making them digitally mature and transformed, where would you want to find {
-            subCategory_name} in the future?"
+        as_is_question = f"Wrt to the 10 best companies incorporating industry 4.0 key enablers making them digitally mature and transformed, how will you best describe your {subCategory_name}?"
+        to_be_question = f"Wrt to the 10 best companies incorporating industry 4.0 key enablers making them digitally mature and transformed, where would you want to find {subCategory_name} in the future?"
 
         MaxRating = request.form['MaxRating']
 
-        connection = sqlite3.connect('database.db')
+        connection = sqlite3.connect('DigitalMaturityDatabase.db')
         cursor = connection.cursor()
         cursor.execute('''
             INSERT INTO CombinedTable (BusinessSector, BusinessFunction, MeasuringElt, Rating, SUbCategory, AsIsQuestions, ToBeQuestions, MaxRating)
@@ -312,6 +477,9 @@ def CombinedTiers():
         ''', (business_sector_name, business_function_name, measuring_element_name, rating, subCategory_name, as_is_question, to_be_question, MaxRating))
         connection.commit()
         connection.close()
+
+        # Normalize the BusinessFunction column
+        normalize_business_function()
 
         return redirect('/CombinedTiersForAll')
 
@@ -339,7 +507,7 @@ def UpdateCombinedTiers():
         newMaxRating = request.form['newMaxRating']
 
         # Connect to the database
-        connection = sqlite3.connect('database.db')
+        connection = sqlite3.connect('DigitalMaturityDatabase.db')
         cursor = connection.cursor()
 
         # Execute the SQL update query
@@ -360,311 +528,278 @@ def UpdateCombinedTiers():
     return render_template('administrator.html')
 
 
-# Route to delete a record from CombinedTable
 
-
-@app.route('/delete_combined_data', methods=['POST'])
-def delete_combined_data():
+@app.route('/ratingAnswersBusinessFunctions', methods=['GET', 'POST'])
+def answerratingforbusinesssector():
     if request.method == 'POST':
-        # Get the ID of the record to delete from the form
-        delete_record_id = request.form['record_id']
-        try:
-            # Delete the record from the database
-            connection = sqlite3.connect('database.db')
-            cursor = connection.cursor()
-            cursor.execute('''
-                DELETE FROM CombinedTable
-                WHERE id = ?
-            ''', (delete_record_id,))
-            connection.commit()
-            connection.close()
+        business_sector_name = request.form['rating_business_sector_name']
+        business_name_business_sector = request.form['rating_name_business_sector']
+        description_name_business_sector = request.form['rating_description_business_sector']
+        rating_value_business_sector = request.form['rating_value_business_sector']
 
-            # Redirect back to the page displaying combined data
-            return redirect('/view_combined_data')
-        except Exception as e:
+        connection = sqlite3.connect('DigitalMaturityDatabase.db')
+        cursor = connection.cursor()
+        cursor.execute('''
+            INSERT INTO AnswerRatings (BusinessFunction, RatingName, RatingDescription, AnswerRatingValue)
+            VALUES (?, ?, ?, ?)
+        ''', (business_sector_name, business_name_business_sector, description_name_business_sector, rating_value_business_sector))
+        connection.commit()
+        connection.close()
 
-            return "Error occurred during deletion: " + str(e)
-    else:
-        return "Method Not Allowed"
-# delete user record
+        # Normalize the BusinessFunction column
+        normalize_business_function()
 
+        return redirect('/CombinedTiersForAll')
 
-@app.route('/delete_user_data', methods=['POST'])
-def delete_user_record_data():
+    return render_template('administrator.html')
+
+# Updating the combined tiers
+@app.route('/updateratingAnswersBusinessFunctions', methods=['GET', 'POST'])
+def Updateanswerrating():
     if request.method == 'POST':
-        # Get the ID of the record to delete from the form
-        delete_record_user_id = request.form['user_record_id']
-        try:
-            # Delete the record from the database
-            connection = sqlite3.connect('database.db')
-            cursor = connection.cursor()
-            cursor.execute('''
-                DELETE FROM User
-                WHERE name = ?
-            ''', (delete_record_user_id,))
-            connection.commit()
-            connection.close()
+        # Extract values from the form
+        business_sector_name = request.form['rating_business_sector_name']
+        business_name_business_sector = request.form['rating_name_business_sector']
+        description_name_business_sector = request.form['newrating_description_business_sector']
+        rating_value_business_sector = request.form['newrating_value_business_sector']
 
-            # Redirect back to the page displaying combined data
-            return redirect('/view_combined_data')
-        except Exception as e:
+        # Connect to the database
+        connection = sqlite3.connect('DigitalMaturityDatabase.db')
+        cursor = connection.cursor()
 
-            return "Error occurred during deletion: " + str(e)
-    else:
-        return "Method Not Allowed"
+        # Execute the SQL update query
+        cursor.execute('''
+            UPDATE AnswerRatings 
+            SET RatingDescription=?, AnswerRatingValue=?
+            WHERE BusinessFunction=? AND RatingName=?
+        ''', (description_name_business_sector, rating_value_business_sector, business_sector_name, business_name_business_sector))
 
+        # Commit changes and close connection
+        connection.commit()
+        connection.close()
 
-# Displaying the elements in the databse on the admin side of the panel
-@app.route('/view_combined_data', methods=['GET', 'POST'])
-def view_combined_data():
-    connection = sqlite3.connect('database.db')
-    cursor = connection.cursor()
-    cursor.execute('''
-        SELECT id, BusinessSector, BusinessFunction, MeasuringElt, Rating, SUbCategory, AsIsQuestions, ToBeQuestions, MaxRating
-        FROM CombinedTable
-    ''')
-    combined_data = cursor.fetchall()
-    connection.close()
+        # Redirect back to administrator page
+        return redirect('/administrator')
 
-    return render_template('administrator.html', combined_data=combined_data)
-
-# Route to display all user account
-
-
-@app.route('/view_all_user', methods=['GET', 'POST'])
-def view_user_account():
-    connection = sqlite3.connect('database.db')
-    cursor = connection.cursor()
-    cursor.execute('''
-        SELECT name, email, account_type
-        FROM User
-    ''')
-    all_data = cursor.fetchall()
-    connection.close()
-
-    return render_template('administrator.html', all_data=all_data)
-
-
-# uploading csv file to database
-@app.route('/', methods=['GET', 'POST'])
-def upload_file():
-    if request.method == 'POST':
-        file = request.files['file']
-        if file and file.filename.endswith('.csv'):
-            # Process CSV file and insert into database
-            process_csv(file)
-            # Redirect to view data
-            return redirect(url_for('view_combined_data'))
     return render_template('administrator.html')
 
 
-def process_csv(csv_file):
-    connection = sqlite3.connect('database.db')
+# Business_Manager_account 
+
+def add_random_characters(word, num_chars=12):
+    def generate_random_string(length):
+        letters = string.ascii_letters
+        return ''.join(random.choice(letters) for i in range(length))
+    
+    return word + generate_random_string(num_chars)
+
+@app.route('/add_random_characters', methods=['GET', 'POST'])
+def add_random_characters_route():
+    modified_word = None
+    if request.method == 'POST':
+        word = request.form['word']
+        modified_word = add_random_characters(word)
+    
+
+
+    return render_template('manager.html', modified_word=modified_word)
+
+def get_unique_business_sectors():
+    connection = sqlite3.connect('DigitalMaturityDatabase.db')
     cursor = connection.cursor()
-
-    # Convert file object to text mode
-    csv_text = csv_file.stream.read().decode("utf-8")
-    csv_data = csv.reader(csv_text.splitlines())
-
-    next(csv_data)  # Skip header row if present
-    for row in csv_data:
-        if len(row) != 9:
-            raise ValueError("CSV file must have exactly 9 columns")
-
-        id, business_sector, business_function, measuring_elt, rating, sub_category, AsIsQuestions, ToBeQuestions, max_rating = row
-
-        # Dynamically generate the as_is_question and to_be_question
-        as_is_question = f"Wrt to the 10 best companies incorporating industry 4.0 key enablers making them digitally mature and transformed, how will you best describe your {sub_category}?"
-        to_be_question = f"Wrt to the 10 best companies incorporating industry 4.0 key enablers making them digitally mature and transformed, where would you want to find {sub_category} in the future?"
-
-        cursor.execute('''
-            INSERT INTO CombinedTable (id, BusinessSector, BusinessFunction, MeasuringElt, Rating, SUbCategory, AsIsQuestions, ToBeQuestions, MaxRating)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-        ''', (id, business_sector, business_function, measuring_elt, rating, sub_category, as_is_question, to_be_question, max_rating))
-
-    connection.commit()
+    cursor.execute('SELECT DISTINCT BusinessSector FROM ArrangingTheDataInProperOrder')
+    business_sectors = cursor.fetchall()
     connection.close()
+    return business_sectors
+
+def get_the_different_answer_rating_for_sector(selected_sector):
+    connection = sqlite3.connect('DigitalMaturityDatabase.db')
+    cursor = connection.cursor()
+    cursor.execute('SELECT RatingName, RatingDescription, AnswerRatingValue FROM AnswerRatings WHERE BusinessFunction=?', (selected_sector,))
+    business_sectors_rating = cursor.fetchall()
+    connection.close()
+    return business_sectors_rating
 
 
-def generate_random_text():
-    letters = string.ascii_lowercase
-    return ''.join(random.choice(letters) for _ in range(12))
+def get_answer_rating_column_names():
+    connection = sqlite3.connect('DigitalMaturityDatabase.db')
+    cursor = connection.cursor()
+    cursor.execute('PRAGMA table_info(AnswerRatings)')
+    columns = cursor.fetchall()
+    connection.close()
+    return [col[1] for col in columns]
 
 
-# Function to get unique records of the business sector when they are selected
+
+
+
 @app.route('/select_business_sector_user', methods=['GET', 'POST'])
 def select_business_sector():
-    business_functions_data = {}  # Initialize business_functions_data
-    error_message_user_business_sector = None
+    business_sectors = get_unique_business_sectors()
     sector_data = []
-    random_text = None  # Initialize random_text to None
+    user_photo_base64 = None
+    user = None
+    error_message_user_business_sector = ""
+    business_sector_rating = []
 
     if request.method == 'POST':
         selected_sector = request.form.get('business_sector_user', None)
 
         if selected_sector:
-            connection = sqlite3.connect('database.db')
+            connection = sqlite3.connect('DigitalMaturityDatabase.db')
             cursor = connection.cursor()
             cursor.execute('''
-                SELECT BusinessFunction, MeasuringElt, Rating, SUbCategory, AsIsQuestions, ToBeQuestions, MaxRating
-                FROM CombinedTable
+                SELECT DISTINCT BusinessFunction
+                FROM ArrangingTheDataInProperOrder
                 WHERE BusinessSector=?
             ''', (selected_sector,))
             sector_data = cursor.fetchall()
             connection.close()
 
-            # Generate random text
-            random_text = generate_random_text()
+            business_sector_rating = get_the_different_answer_rating_for_sector(selected_sector)
+            session['business_sector_rating'] = business_sector_rating  # Store in session
+            # print("These are the answer ratings: ", business_sector_rating)
+
+            return render_template('BusinessFunction.html', user=user, user_photo_base64=user_photo_base64,
+                                   sector_data=sector_data, business_sectors=business_sectors,
+                                   BusinessError=error_message_user_business_sector, business_sector_rating=business_sector_rating)
+
         else:
             error_message_user_business_sector = "Please select a business sector"
 
-    return render_template('userAccount.html', sector_data=sector_data, business_sectors=get_unique_business_sectors(), BusinessError=error_message_user_business_sector, random_text=random_text, business_data=business_functions_data)
+    return render_template('userAccount.html', user=user, user_photo_base64=user_photo_base64,
+                           sector_data=sector_data, business_sectors=business_sectors,
+                           BusinessError=error_message_user_business_sector, business_sector_rating=business_sector_rating)
 
 
-def get_unique_business_sectors():
-    connection = sqlite3.connect('database.db')
-    cursor = connection.cursor()
-    cursor.execute('SELECT DISTINCT BusinessSector FROM CombinedTable')
-    business_sectors = cursor.fetchall()
-    connection.close()
-    return business_sectors
 
 
-# Submitting answers into the database
+
+
+
+@app.route('/select_business_function_in_business_function_html_page', methods=['GET', 'POST'])
+def select_business_function():
+    business_function_selected_data = []
+    business_sector_rating = []
+    answer_rating_columns = []
+    user_photo_base64 = None
+    user = None
+    SectorError = ""
+
+    if request.method == 'POST':
+        selected_business_function = request.form.get('business_function_user', None)
+
+        if selected_business_function:
+            connection = sqlite3.connect('DigitalMaturityDatabase.db')
+            cursor = connection.cursor()
+            cursor.execute('''
+                SELECT MeasuringElt, Rating, SUbCategory, AsIsQuestions, ToBeQuestions, MaxRating
+                FROM ArrangingTheDataInProperOrder
+                WHERE BusinessFunction=?
+            ''', (selected_business_function,))
+            business_function_selected_data = cursor.fetchall()
+            connection.close()
+
+            answer_rating_columns = get_answer_rating_column_names()
+            business_sector_rating = session.get('business_sector_rating', [])
+            session['selected_business_function'] = selected_business_function  # Store selected business function in session
+
+            print("These are the answer ratings: ", business_sector_rating)
+            print("These are the column names: ", answer_rating_columns)
+
+            return render_template('AsIsandToBeQuestionandAnswer.html', user=user, user_photo_base64=user_photo_base64,
+                                   business_function_selected_data=business_function_selected_data,
+                                   SectorError=SectorError, business_sector_rating=business_sector_rating,
+                                   answer_rating_columns=answer_rating_columns)
+        else:
+            SectorError = "You did not select a business function. Now you have to start all over again"
+
+    return render_template('BusinessFunction.html', user=user, user_photo_base64=user_photo_base64,
+                           SectorError=SectorError, business_function_selected_data=business_function_selected_data,
+                           business_sector_rating=business_sector_rating, answer_rating_columns=answer_rating_columns)
+
+
+
 @app.route('/userSubmissionDataIntoTable', methods=['GET', 'POST'])
 def CombinedTiersForUser():
     error_display_asistobe = None  # Initialize error_display_asistobe
 
     if request.method == 'POST':
         UserSubmittedUniqueCode = request.form['Unique_code_from_User']
-        business_function_name_user = request.form.getlist(
-            'business_function_user[]')
-        measuring_element_name_user = request.form.getlist(
-            'Measuring_element_user[]')
+        measuring_element_name_user = request.form.getlist('Measuring_element_user[]')
         rating_user = request.form.getlist('Rting_User[]')
-        sub_category_name_user = request.form.getlist(
-            'sub_category_for_user[]')
-        as_is_questions_user = request.form.getlist('questions_user[]')
+        sub_category_name_user = request.form.getlist('sub_category_for_user[]')
+        as_is_questions_user = request.form.getlist('as_is_questions_user[]')
         answers_user_as_is = request.form.getlist('UserAnswerRatingAsIs[]')
-        to_be_questions_user = request.form.getlist('UserAnswerRatingToBe[]')
+        to_be_questions_user = request.form.getlist('to_be_questions_user[]')
+        answers_user_to_be = request.form.getlist('UserAnswerRatingToBe[]')
 
-        if not answers_user_as_is or not to_be_questions_user:
+        selected_business_function = session.get('selected_business_function', None)  # Get selected business function from session
+
+        if not answers_user_as_is or not answers_user_to_be:
             error_display_asistobe = "An error occurred. Please make sure to select an answer for every question before submitting your answers."
             print("Error message:", error_display_asistobe)
         else:
-            connection = sqlite3.connect('database.db')
+            connection = sqlite3.connect('DigitalMaturityDatabase.db')
             cursor = connection.cursor()
+
+            # Get max rating value from AnswerRatings table
+            cursor.execute('SELECT MAX(AnswerRatingValue) FROM AnswerRatings')
+            max_rating_user = cursor.fetchone()[0]
 
             for i in range(len(measuring_element_name_user)):
                 rating_user_val = float(rating_user[i])
                 user_answer_rating_as_is = float(answers_user_as_is[i])
-                user_answer_rating_to_be = float(to_be_questions_user[i])
-                max_rating_user = 5
+                user_answer_rating_to_be = float(answers_user_to_be[i])
 
                 expected_cum_sum = rating_user_val * max_rating_user
                 user_cum_sum_as_is = rating_user_val * user_answer_rating_as_is
                 user_cum_sum_to_be = rating_user_val * user_answer_rating_to_be
 
                 cursor.execute('''
-                        INSERT INTO UserSubmissionRecord (
-                            UniqueCodeUser, BusinessFunction, MeasuringEltUser, RatingUser, SUbCategoryUser, 
-                            AsIsQuestionsUser, AnswersUserAsIs, ToBeQuestionsUser, AnswersUserToBe, 
-                            MaxRatingUser, ExpectedCumSum, UserCumSumAsIs, UserCumSumToBe)
-                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-                    ''', (UserSubmittedUniqueCode, business_function_name_user[i], measuring_element_name_user[i], rating_user_val,
-                          sub_category_name_user[i], as_is_questions_user[i], user_answer_rating_as_is,
-                          to_be_questions_user[i], user_answer_rating_to_be, max_rating_user,
-                          expected_cum_sum, user_cum_sum_as_is, user_cum_sum_to_be))
+                    INSERT INTO UserSubmissionRecord (
+                        UniqueCodeUser, BusinessFunction, MeasuringEltUser, RatingUser, SUbCategoryUser, 
+                        AsIsQuestionsUser, AnswersUserAsIs, ToBeQuestionsUser, AnswersUserToBe, 
+                        MaxRatingUser, ExpectedCumSum, UserCumSumAsIs, UserCumSumToBe)
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                ''', (UserSubmittedUniqueCode, selected_business_function, measuring_element_name_user[i], rating_user_val,
+                      sub_category_name_user[i], as_is_questions_user[i], user_answer_rating_as_is,
+                      to_be_questions_user[i], user_answer_rating_to_be, max_rating_user,
+                      expected_cum_sum, user_cum_sum_as_is, user_cum_sum_to_be))
 
             connection.commit()
             connection.close()
 
-            # Normalize the BusinessFunction column
-            normalize_business_function()
             feedback_function()
 
             # Redirect to the user account page
             return redirect('/select_business_sector_user')
 
-    return render_template('userAccount.html', error_display_asistobe=error_display_asistobe)
+    return render_template('BusinessFunction.html', error_display_asistobe=error_display_asistobe)
 
 
-def normalize_business_function():
-    connection = sqlite3.connect('database.db')
-    cursor = connection.cursor()
 
-    cursor.execute('''
-        WITH RECURSIVE split(id, UniqueCodeUser, BusinessFunction, MeasuringEltUser, RatingUser, SUbCategoryUser, AsIsQuestionsUser, AnswersUserAsIs, ToBeQuestionsUser, AnswersUserToBe, MaxRatingUser, ExpectedCumSum, UserCumSumAsIs, UserCumSumToBe, value, rest) AS (
-            SELECT
-                id,
-                UniqueCodeUser,
-                BusinessFunction,
-                MeasuringEltUser,
-                RatingUser,
-                SUbCategoryUser,
-                AsIsQuestionsUser,
-                AnswersUserAsIs,
-                ToBeQuestionsUser,
-                AnswersUserToBe,
-                MaxRatingUser,
-                ExpectedCumSum,
-                UserCumSumAsIs,
-                UserCumSumToBe,
-                TRIM(SUBSTR(BusinessFunction || ',', 1, INSTR(BusinessFunction || ',', ',') - 1)),
-                TRIM(SUBSTR(BusinessFunction || ',', INSTR(BusinessFunction || ',', ',') + 1))
-            FROM UserSubmissionRecord
-            UNION ALL
-            SELECT
-                id,
-                UniqueCodeUser,
-                BusinessFunction,
-                MeasuringEltUser,
-                RatingUser,
-                SUbCategoryUser,
-                AsIsQuestionsUser,
-                AnswersUserAsIs,
-                ToBeQuestionsUser,
-                AnswersUserToBe,
-                MaxRatingUser,
-                ExpectedCumSum,
-                UserCumSumAsIs,
-                UserCumSumToBe,
-                TRIM(SUBSTR(rest, 1, INSTR(rest, ',') - 1)),
-                TRIM(SUBSTR(rest, INSTR(rest, ',') + 1))
-            FROM split
-            WHERE rest != ''
-        )
-        INSERT INTO UserSubmissionRecordTrimmed (
-            UniqueCodeUser, BusinessFunction, MeasuringEltUser, RatingUser, SUbCategoryUser, 
-            AsIsQuestionsUser, AnswersUserAsIs, ToBeQuestionsUser, AnswersUserToBe, 
-            MaxRatingUser, ExpectedCumSum, UserCumSumAsIs, UserCumSumToBe
-        )
-        SELECT 
-            UniqueCodeUser,
-            value AS BusinessFunction,
-            MeasuringEltUser,
-            RatingUser,
-            SUbCategoryUser,
-            AsIsQuestionsUser,
-            AnswersUserAsIs,
-            ToBeQuestionsUser,
-            AnswersUserToBe,
-            MaxRatingUser,
-            ExpectedCumSum,
-            UserCumSumAsIs,
-            UserCumSumToBe
-        FROM split
-        WHERE value != '';
-    ''')
 
-    connection.commit()
-    connection.close()
 
-# I am here now
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 def feedback_function():
-    connection = sqlite3.connect('database.db')
+    connection = sqlite3.connect('DigitalMaturityDatabase.db')
     cursor = connection.cursor()
 
     # Select distinct UniqueCodeUser and BusinessFunction from UserSubmissionRecordTrimmed
@@ -672,7 +807,7 @@ def feedback_function():
         SELECT DISTINCT UniqueCodeUser, BusinessFunction, MeasuringEltUser, RatingUser, SUbCategoryUser, 
                         AnswersUserAsIs, AnswersUserToBe, MaxRatingUser, ExpectedCumSum, 
                         UserCumSumAsIs, UserCumSumToBe
-        FROM UserSubmissionRecordTrimmed
+        FROM UserSubmissionRecord
     ''')
     trimmed_records = cursor.fetchall()
 
@@ -734,37 +869,29 @@ def generate_feedback(percentage):
     elif 85 <= percentage <= 100:
         return "Stage 5: Level: Optimizing, End-to-end integration.Continuous improvement.Smart and autonomous optimisation."
 
-# Route to view feedback data
 
 
-@app.route('/view_feedback', methods=['GET'])
-def view_feedback():
-    connection = sqlite3.connect('database.db')
-    cursor = connection.cursor()
-    cursor.execute('''
-        SELECT UniqueCodeUser, BusinessFunction, MeasuringEltUser, RatingUser, SUbCategoryUser, 
-               AnswersUserAsIs, AnswersUserToBe, MaxRatingUser, ExpectedCumSum, 
-               UserCumSumAsIs, UserCumSumToBe, PercentageAsIs, PercentageToBe, 
-               FeedbackAsIs, FeedbackToBe, GrowthRate, Duration
-        FROM UserSubmittedFeedback
-    ''')
-    feedback_data = cursor.fetchall()
-    connection.close()
 
-    return render_template('userAccount.html', feedback_data=feedback_data)
+
+
+
+
 
 
 @app.route('/submit_unique_code', methods=['GET', 'POST'])
 def submitting_unique_code():
     error_message = None
-    business_functions_data = {}  # Initialize business_functions_data
+    business_functions_data = {}
     plot_images = []
+    bar_plot_images = []
+    growth_rate_images = []
+    user =[]
 
     if request.method == 'POST':
         unique_code = request.form['unique_code_user']
 
         if unique_code:
-            connection = sqlite3.connect('database.db')
+            connection = sqlite3.connect('DigitalMaturityDatabase.db')
             cursor = connection.cursor()
 
             cursor.execute('''
@@ -778,30 +905,41 @@ def submitting_unique_code():
             connection.close()
 
             for row in rows:
-                business_function, measuring_elt_user, percent_maturity_as_is, percent_maturity_to_be, feedback_as_is, feedback_to_be, growth_rate, time_to_grow = row
+                business_function, measuring_elt_user, exped_sum, as_is_sum, to_be_sum, percent_maturity_as_is, percent_maturity_to_be, feedback_as_is, feedback_to_be, growth_rate, time_to_grow = row
                 if business_function not in business_functions_data:
                     business_functions_data[business_function] = []
                 business_functions_data[business_function].append(
-                    (measuring_elt_user, percent_maturity_as_is, percent_maturity_to_be, feedback_as_is, feedback_to_be, growth_rate, time_to_grow)
+                    (measuring_elt_user, exped_sum, as_is_sum, to_be_sum, percent_maturity_as_is,
+                     percent_maturity_to_be, feedback_as_is, feedback_to_be, growth_rate, time_to_grow)
                 )
 
             for business_function, data in business_functions_data.items():
                 labels = [item[0] for item in data]
-                as_is = [item[1] for item in data]
-                to_be = [item[2] for item in data]
-                angles = np.linspace(0, 2 * np.pi, len(labels), endpoint=False).tolist()
+                exped_sums = [item[1] for item in data]
+                as_is_sums = [item[2] for item in data]
+                to_be_sums = [item[3] for item in data]
+                growth_rates = [item[8] for item in data]
+                durations = [item[9] for item in data]
+
+                angles = np.linspace(
+                    0, 2 * np.pi, len(labels), endpoint=False).tolist()
                 angles += angles[:1]
 
-                plt.figure(figsize=(4, 4))
+                plt.figure(figsize=(3, 3))
                 ax = plt.subplot(111, polar=True)
-                ax.plot(angles, as_is + [as_is[0]], 'o-', linewidth=2, label='AS IS', color='red')
-                ax.fill(angles, as_is + [as_is[0]], alpha=0.4, color='red')
-                ax.plot(angles, to_be + [to_be[0]], 'o-', linewidth=2, label='TO BE', color='blue')
-                ax.fill(angles, to_be + [to_be[0]], alpha=0.4, color='blue')
+                ax.plot(angles, as_is_sums + [as_is_sums[0]],
+                        'o-', linewidth=2, label='AS IS', color='red')
+                ax.fill(angles, as_is_sums +
+                        [as_is_sums[0]], alpha=0.4, color='red')
+                ax.plot(angles, to_be_sums + [to_be_sums[0]],
+                        'o-', linewidth=2, label='TO BE', color='blue')
+                ax.fill(angles, to_be_sums +
+                        [to_be_sums[0]], alpha=0.4, color='blue')
                 ax.set_xticks(angles[:-1])
                 ax.set_xticklabels(labels, color='grey', size=8)
 
-                ax.set_title(business_function, size=10, color='black', weight='bold')
+                ax.set_title(business_function, size=10,
+                             color='black', weight='bold')
                 ax.legend(loc='upper right', bbox_to_anchor=(0.1, 0.1))
 
                 buf = io.BytesIO()
@@ -811,10 +949,87 @@ def submitting_unique_code():
                 plot_images.append(plot_image)
                 plt.close()
 
-        if not business_functions_data:
-            error_message = "No records found for the provided unique code."
+                # Create bar plot for each business function
+                plt.figure(figsize=(10, 6))
+                bar_width = 0.25
+                index = np.arange(len(labels))
 
-    return render_template('userAccount.html', error_message=error_message, plot_images=plot_images, business_data=business_functions_data)
+                plt.bar(index, exped_sums, bar_width,
+                        label='Position of 10 best performing organization')
+                plt.bar(index + bar_width, as_is_sums,
+                        bar_width, label='Current position of your organization')
+                plt.bar(index + 2 * bar_width, to_be_sums,
+                        bar_width, label='Expected position of your organization')
+
+                plt.xlabel('Measuring Element')
+                plt.ylabel('Values')
+                plt.title(f'{business_function}')
+                plt.xticks(index + bar_width, labels, rotation=45)
+                plt.legend()
+
+                for i in range(len(labels)):
+                    plt.text(i, exped_sums[i], exped_sums[i], ha='center')
+                    plt.text(i + bar_width,
+                             as_is_sums[i], as_is_sums[i], ha='center')
+                    plt.text(i + 2 * bar_width,
+                             to_be_sums[i], to_be_sums[i], ha='center')
+
+                buf = io.BytesIO()
+                plt.savefig(buf, format='png')
+                buf.seek(0)
+                bar_plot_image = base64.b64encode(
+                    buf.getvalue()).decode('utf-8')
+                bar_plot_images.append(bar_plot_image)
+                plt.close()
+
+                # Create growth rate curve for each business function
+                for idx in range(len(labels)):
+                    x_values = np.linspace(0, durations[idx], 100)
+                    growth_rate = growth_rates[idx]
+                    y_values = to_be_sums[idx] * np.exp(growth_rate * x_values)
+                    plt.plot(x_values, y_values, label=f'{
+                             labels[idx]} Growth Curve')
+
+                plt.xlabel('Time (Years)')
+                plt.ylabel('Value')
+                plt.title(f'Exponential growth curve for :{business_function}')
+                plt.legend()
+                plt.tight_layout()  # Adjust layout for better spacing
+
+                # Convert plot to base64
+                img_buffer = io.BytesIO()
+                plt.savefig(img_buffer, format='png')
+                img_buffer.seek(0)
+                img_str = base64.b64encode(img_buffer.getvalue()).decode()
+                growth_rate_images.append(img_str)
+                plt.close()
+
+            if not business_functions_data:
+                error_message = "No records found for the provided unique code."
+
+
+
+    return render_template('manager.html', error_message=error_message, 
+                           plot_images=plot_images, business_data=business_functions_data,
+                           bar_plot_images=bar_plot_images,growth_rate_images=growth_rate_images)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -822,5 +1037,4 @@ def submitting_unique_code():
 
 
 if __name__ == '__main__':
-    feedback_function()  # Run the feedback function
     app.run(debug=True)

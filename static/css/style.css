@@ -1,72 +1,21 @@
 body {
-  background-image: url("/static/images/maturity.jpg");
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
   background-size: cover;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  color: white;
 }
 
-[x-cloak] {
-  display: none !important;
-}
-
-/* class for the main container which is called inside main of the html  */
-.container {
-  width: auto;
-  height: auto;
-  border: 10px solid black;
-  margin: px auto 0;
-  border-radius: 10px;
-  padding: 10px;
-  border-color: rgba(0, 213, 255, 0.488);
-}
-
-/* class to control the login container called in login.html login section, register section in register.html  */
-
-.container-login {
-  width: 500px;
-  height: auto;
-  margin: 10px auto;
-  border: 1px solid black;
-  background-color: rgba(255, 255, 255, 0.408);
-  margin-top: 20px;
-  border-radius: 10px;
-  padding: 10px;
-}
-
-.item {
-  /* margin-top: 0%; */
+.item_home {
+  font-size: larger;
+  color: black;
   text-align: center;
-  color: white;
-  margin: 0px auto;
-  justify-content: center;
-  align-items: center;
-  text-decoration: none;
 }
-
-.create_user {
-  width: auto;
-  cursor: pointer;
-  transition: all 0.3s;
-  border: 1px solid black;
-  border-radius: 10px;
-  background: white;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  /* Vertically center the button */
-}
-
-.create_user:hover:not([disabled]) {
-  background: blue;
-  color: orange;
-}
-
-.images {
+.homeImage {
   width: 100%;
-  height: 100%;
+  height: auto;
+  border: 2px;
+  border-radius: 50px;
 }
-
 .input {
   width: 500px;
   height: 50px;
@@ -74,7 +23,6 @@ body {
   font-size: large;
   background-color: aqua;
 }
-
 
 .submit-btn {
   width: auto;
@@ -105,339 +53,207 @@ body {
   border-radius: 10px;
 }
 
-.upload-btn:hover:not([disabled]) {
-  background: blue;
-  color: orange;
-}
-
-/* First dashboard for the admininstrator.html  */
-.dashboard_main_admin {
-  width: 1200px;
-  height: auto;
-  margin: 0px auto;
+.login-container {
   display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-image: url("/static/images/istockphoto-638671566-2048x2048.jpg");
+  background-position: center;
+  width: 90%; 
+  height: auto; 
+  max-width: 1600px; /* Limit the maximum width */
+  max-height: 1200px; /* Limit the maximum height */
 }
 
-.dashboard_main_admin_record {
-  width: 100%;
-  height: auto;
-  margin: 0px auto;
-  display: flex;
-}
 
-/* This section controls the alignment of the tabs where there are the create and update buttons  */
-.dashboard_tabs {
-  width: 400px;
-  height: auto;
-  float: left;
+.login-box {
+  background: rgba(255, 255, 255, 0.8);
+  /* background-image: url("/static/images/tbmtn.jpg"); */
+  background-color: grey;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
   text-align: center;
-  font-size: 15px;
-  border: 1px solid black;
+  width: 100%; 
+  height: 90%; 
+  margin-top: 10%;
+}
+.register-box {
+  background: rgba(255, 255, 255, 0.8);
+  /* background-image: url("/static/images/tbmtn.jpg"); */
+  background-color: grey;
+  padding: 20px;
   border-radius: 10px;
-  margin-top: 5px;
-  background-color: rgba(255, 0, 183, 0.284);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  text-align: center;
+  width: 100%; 
+  height: 90%; 
+  margin-top: 10%;
 }
 
-/* This section controls the computational interface of the administrator.html where the admin will be creating and updating the different elements  */
-.dashboard_computation {
-  width: 800px;
-  height: auto;
-  border: 1px solid black;
-  float: right;
-  font-size: 10px;
-  margin-top: 5px;
-  background-color: black;
-  border: 1px solid black;
-  border-radius: 10px;
+
+
+.login-box h2, .register-box h2  {
+  margin: 0 0 20px;
+  padding: 0;
+  color: #333;
+}
+.register-box h2  {
+  margin: 0 0 20px;
+  padding: 0;
+  color: #333;
 }
 
-/* This style ensures that the create and update button in administrator.html are aligned in a horizontal manner  */
-.create_delete_update_buttons {
+.textbox {
+  position: relative;
+  margin-bottom: 20px;
+  width: 100%; /* Full width for mobile devices */
+}
+
+.textbox i {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #333;
+}
+
+.textbox input {
+  width: 100%;
+  padding: 10px 10px 10px 40px;
+  border: none;
+  outline: none;
+  background: #f0f0f0;
+  border-radius: 50px; /* Make the border-radius large enough to be semi-circular */
+  font-size: 16px;
+}
+
+.remember-me {
   display: flex;
-  justify-content: center;
   align-items: center;
+  margin-bottom: 20px;
 }
 
-/* This section is for the boxes in the adminstrator.html found on the left inside the dashboard  */
-.box_for_the_dashboard_tabs {
-  border: 2px solid black;
-  padding: 12px;
-  border-radius: 10px;
+.remember-me input[type="checkbox"] {
+  width: 20px; /* Increase the width */
+  height: 20px; /* Increase the height */
+  margin-right: 10px; /* Adjust spacing */
 }
 
-/* This section is for the input fied in the adminstrator.html computational interface  */
-.input_field_for_admin_create_and_update {
-  width: 300px;
-  height: 30px;
-  border-radius: 10px;
-  font-size: large;
-  background-color: aqua;
-  margin-top: 20px;
-  justify-content: right;
-  align-items: right;
-  /* padding: 10px; */
+.remember-me label {
+  font-size: 14px;
 }
 
-
-
-
-/* Stylings for the user account  */
-
-.userAccountParent{
-  display: flex;
-  justify-content: center;
-}
-
-.userAccount_left{
-  width: 150px;
-  height: 500px;
-  align-items: center;
+.btn {
+  width: 100px;
   padding: 10px;
- margin-left: 0px;
+  border: none;
+  border-radius: 5px;
+  background: #333;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 10px; /* Make the border-radius large enough to be semi-circular */
 }
 
-.userAccount_middle{
+.btn_change_pws {
   width: auto;
-  
-  height: 500px;
-  border-radius: 10px;
-  border: 1px solid black;
-  background-color: black;
-  align-items: center;
   padding: 10px;
-  margin-left: 0px;
+  border: none;
+  border-radius: 5px;
+  background: #333;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 10px; /* Make the border-radius large enough to be semi-circular */
 }
 
-.get_started{
-  width: 50%;
-  height: 500px;
-  height: 500px;
-  border-radius: 10px;
-  border: 1px solid black;
-  background-color: black;
-  align-items: center;
-  padding: 10px;
-  margin-left: 0px;
-
-
+.btn, .btn_change_pws:hover {
+  background: #555;
 }
 
-.get_started_image{
-  max-width: 100%;
-  max-height: 100%;
-  border: 1px solid black;
-  border-radius: 10px;
-
-
-}
-.userAccount_right{
-  width: 350px;
-  height: 500px;
-  align-items: center;
-  padding: 10px;
-  margin-left: 0px;
+.links {
+  margin-top: 20px;
 }
 
-.images{
-  max-width: 100%;
-  max-height: 30%;
-  border: 1px solid black;
-  border-radius: 10px;
-}
-
-
-
-.home_page_parent{
-  width: 1800px;
-  display: flex;
-  justify-content: center;
-  margin-top: 50px;
-}
-
-
-.home_page_left{
-  width: 600px;
-  height: 500px;
-  
-  
-}
-
-.home_page_middle{
-  width: 600px;
-  height: 500px;
-
-}
-
-.home_page_right{
-  width: 600px;
-  height: 500px;
- 
-}
-
-.error{
-  text-align: center;
-  color: red;
-  margin: 10px auto;
-  justify-content: center;
-  align-items: center;
+.links a {
+  color: white; /* Change the color to white */
   text-decoration: none;
+  font-size: 25px;
 }
 
-.table_style_datase {
-  /* border-collapse: collapse; */
-  border-spacing: 10px;
-  width: 100%;
-  height: auto;
-  text-align: center;
-  background-color: black;
-  /* font-family: Arial, Helvetica, sans-serif; */
-
-  font-size: larger;
+.links a:hover {
+  text-decoration: underline;
 }
-.table_style_user {
-  border-collapse: collapse;
-  border-spacing: 10px;
-  width: 1200px;
-  height: auto;
-  text-align: center;
-  vertical-align: middle;
-  background-color: black;
-  font-family: Arial, Helvetica, sans-serif;
-  padding: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  justify-content: center;
-  font-size: larger;
+/* New CSS for the paragraph in links */
+.links p {
+  color: white; /* Change the text color to white */
+  font-size: 25px; /* Increase the font size */
 }
 
+/* Media queries for responsiveness */
 
-.table_style_datase,.table_style_user, td,
-.table_style th {
-  border: 1px solid white; /* Add border for table cells */
-  padding: 8px 12px; /* Add padding to all sides of the cell content */
-}
-
-.input_user {
-  width: 200px;
-  height: 50px;
-  border-radius: 10px;
-  font-size: large;
-  background-color: aqua;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* Media Queries for Responsive Design */
-
-/* Small screen */
-@media (min-width: 500px) {
-  .container {
-    width: auto;
-    background-color: orange;
-  }
-  .container-login {
-    width: 500px;
-  }
-  .dashboard_main_admin {
-    width: 500px;
-  }
-  .dashboard_tabs {
-    width: 200px;
-  }
-  .dashboard_computation {
-    width: 350px;
-  }
-  .input_field_for_admin_create_and_update {
-    width: 300px;
-  }
-  .table_style{
-    width: auto;
-  }
-}
-
-/* Medium screen */
-@media (min-width: 768px) {
-  .container {
-    width: auto;
-
-    background-color: green;
+/* Large screens */
+@media (min-width: 1200px) {
+  .login-container {
+    width: 1600px;
+    height: 1000px;
   }
 
-  .container-login {
-    width: 500px;
-  }
-  .dashboard_main_admin {
-    width: 768px;
-  }
-  .dashboard_tabs {
-    width: 300px;
-  }
-  .dashboard_computation {
-    width: 468px;
-  }
-  .input_field_for_admin_create_and_update {
-    width: 400px;
-  }
-  .table_style{
-    width: auto;
-  }
-}
-
-/* Large screen  and above*/
-@media (min-width: 950px) {
-  .container {
-    width: auto;
-
-    background-color: rgba(17, 255, 0, 0.359);
-  }
-
-  .container-login {
-    width: 500px;
-  }
-  .dashboard_main_admin {
-    width: 1000px;
-  }
-  .dashboard_tabs {
-    width: 300px;
-  }
-  .dashboard_computation {
+ .register-box {
     width: 800px;
+    height: 650px;
+    margin-top: 50px; /* Adjust the margin-top for large screens */
   }
-  .input_field_for_admin_create_and_update {
-    width: 600px;
-  }
-  .table_style_datase{
+  .login-box {
     width: 800px;
+    height: 400px;
+    margin-top: 50px; /* Adjust the margin-top for large screens */
   }
-  .table_style_user{
+
+  .textbox {
     width: 600px;
   }
 }
 
+/* Medium screens */
+@media (min-width: 768px) and (max-width: 1199px) {
+  .login-container {
+    width: 1200px;
+    height: 800px;
+  }
+
+  .login-box {
+    width: auto;
+    height: 900px;
+    margin-top: 50px; /* Adjust the margin-top for medium screens */
+  }
+
+  .textbox {
+    width: 500px;
+  }
+}
+
+/* Small screens */
+@media (max-width: 767px) {
+  .login-container {
+    width: 50%;
+    height: auto;
+  }
+
+  .login-box {
+    width: 40%;
+    height: auto;
+    margin-top: 20px; /* Adjust the margin-top for small screens */
+  }
+
+  .textbox {
+    width: 60%;
+  }
+}

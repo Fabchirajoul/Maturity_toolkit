@@ -1,289 +1,147 @@
 document.addEventListener("alpine:init", () => {
   Alpine.data("AutomatedDigitalMaturity", () => {
-    return {
-      Admin_Home_Page: false,
+      return {
+          Admin_Home_Page: true,
+          manage_business_sector: false,
+          manage_user_account: false,
+          manage_csv_file_upload: false,
+          activate_deactivate_user: false,
+          computational_interface_new_business_sector: false,
+          computational_interface_update_business_sector: false,
+          assign_answer_rating_for_business_functions: false,
+          select_business_sector: true,
+          select_business_function: false,
+          add_new_answer_rating:false,
+          update_old_answer_rating:false,
 
-      // Creating the sections
-      Create_Business_Sector: true,
-      Create_Measuring_Element: false,
-      Create_Rating: false,
-      Create_Sub_Category: false,
-      Create_Questions: false,
-      admininstrator_user_creating: false,
+          openHomeBusinessAnalysts(BusinessAnalysts) {
+              this.select_business_sector = true;
+              this.select_business_function = false;
 
-      // Updating the sections
-      Update_Business_Sector: false,
-      Update_Measuring_Element: false,
-      Update_Rating: false,
-      Update_Sub_Category: false,
-      Update_Questions: false,
-      choose_a_question_to_answer: false,
-      view_maturity_analysis:false,
+              if (BusinessAnalysts == "select_business_function") {
+                  this.select_business_sector = false;
+                  this.select_business_function = true;
+              }
+          },
 
-      // userAccount logics
-      select_your_business_sector: false,
-      get_started: true,
-      displayed_tiers_per_business_sector: false,
-      user_instructions: false,
-      enter_unique_code:false,
-      after_selecting_business_function:false,
-      // choose_sub_category: false,
+          openHome(currentSection) {
+              this.Admin_Home_Page = true;
+              this.manage_business_sector = false;
+              this.manage_user_account = false;
+              this.manage_csv_file_upload = false;
+              this.activate_deactivate_user = false;
+              this.computational_interface_new_business_sector = false;
+              this.computational_interface_update_business_sector = false;
+              this.assign_answer_rating_for_business_functions = false;
+              this.add_new_answer_rating=false;
+              this.update_old_answer_rating=false;
 
-      // toolkit computation
-      // Maturity_toolkit_feedback: false,
+              if (currentSection == "manage_business_sector") {
+                  this.Admin_Home_Page = false;
+                  this.manage_business_sector = true;
+              } else if (currentSection == "manage_user_account") {
+                  this.Admin_Home_Page = false;
+                  this.manage_user_account = true;
+              } else if (currentSection == "add_new_answer_rating") {
+                this.Admin_Home_Page = false;
+                this.add_new_answer_rating = true;
+            } else if (currentSection == "update_old_answer_rating") {
+                this.Admin_Home_Page = false;
+                this.update_old_answer_rating = true;
+            } else if (currentSection == "manage_csv_file_upload") {
+                  this.Admin_Home_Page = false;
+                  this.manage_csv_file_upload = true;
+              } else if (currentSection == "activate_deactivate_user") {
+                  this.Admin_Home_Page = false;
+                  this.activate_deactivate_user = true;
+              } else if (currentSection == "computational_interface_new_business_sector") {
+                  this.Admin_Home_Page = false;
+                  this.computational_interface_new_business_sector = true;
+              } else if (currentSection == "computational_interface_update_business_sector") {
+                  this.Admin_Home_Page = false;
+                  this.computational_interface_update_business_sector = true;
+              } else if (currentSection == "assign_answer_rating_for_business_functions") {
+                  this.Admin_Home_Page = false;
+                  this.assign_answer_rating_for_business_functions = true;
+              }
+          },
 
-      openUserAccount(UserSection) {
-        this.select_your_business_sector = false;
-        this.get_started = true;
-        this.displayed_tiers_per_business_sector = false;
-        this.user_instructions=false;
-        this.enter_unique_code =false;
-        this.after_selecting_business_function=false;
+          submitBusinessSector() {
+              // Submit the form programmatically
+              document.getElementById('business-sector-form').submit();
 
+              // Change the state to show the business function section
+              this.$nextTick(() => {
+                  this.select_business_sector = false;
+                  this.select_business_function = true;
+              });
+          },
 
-      
-        if (UserSection === "select_your_business_sector") {
-          this.select_your_business_sector = true;
-          this.get_started = false;
-          this.displayed_tiers_per_business_sector = false;
-          this.user_instructions=false;
-          this.enter_unique_code =false;
-          this.after_selecting_business_function=false;
-            
-        }else if(UserSection === "enter_unique_code"){
+          init() {
+              this.startTimerWhyUs();
+              this.activeImage = this.images.length > 0 ? this.images[0] : null;
+          },
 
-          this.select_your_business_sector = false;
-          this.get_started = false;
-          this.displayed_tiers_per_business_sector = false;
-          this.user_instructions=false;
-          this.enter_unique_code =true;
-          this.after_selecting_business_function=false;
+          images: [
+              "/static/images/Looping/1.png",
+              "/static/images/Looping/2.png",
+              "/static/images/Looping/3.jpg",
+              "/static/images/Looping/4.png",
+          ],
+          activeImage: null,
 
+          prev() {
+              let index = this.images.indexOf(this.activeImage);
+              if (index === 0) index = this.images.length;
+              this.activeImage = this.images[index - 1];
+          },
 
-        }else if(UserSection === "after_selecting_business_function"){
-          this.select_your_business_sector = false;
-          this.get_started = false;
-          this.displayed_tiers_per_business_sector = false;
-          this.user_instructions=false;
-          this.enter_unique_code =false;
-          this.after_selecting_business_function=true;
+          next() {
+              let index = this.images.indexOf(this.activeImage);
+              if (index === this.images.length - 1) index = -1;
+              this.activeImage = this.images[index + 1];
+          },
 
-        }
-      },
+          imageWhyUs: [
+              {
+                  image: "/static/images/Looping/1.png",
+                  text1: "1",
+                  text2: "Some few text description will come here. Image will equally be changed for 1 ",
+              },
+              {
+                  image: "/static/images/Looping/2.png",
+                  text1: "2",
+                  text2: "Some few text description will come here. Image will equally be changed for 2",
+              },
+              {
+                  image: "/static/images/Looping/3.jpg",
+                  text1: "3",
+                  text2: "Some few text description will come here. Image will equally be changed for 3",
+              },
+              {
+                  image: "/static/images/Looping/4.png",
+                  text1: "4",
+                  text2: "Some few text description will come here. Image will equally be changed for 4",
+              },
+              {
+                  image: "/static/images/Looping/5.jpg",
+                  text1: "5",
+                  text2: "Some few text description will come here. Image will equally be changed 5",
+              },
+              {
+                  image: "/static/images/Looping/6.jpg",
+                  text1: "6",
+                  text2: "Some few text description will come here for. Image will equally be changed 6",
+              },
+          ],
+          currentIndex: 0,
 
-      openHome(currentSection) {
-        this.Admin_Home_Page = false;
-        this.Create_Business_Sector = true;
-        this.Create_Measuring_Element = false;
-        this.Create_Rating = false;
-        this.Create_Sub_Category = false;
-        this.Create_Questions = false;
-        this.Update_Business_Sector = false;
-        this.Update_Measuring_Element = false;
-        this.Update_Rating = false;
-        this.Update_Sub_Category = false;
-        this.Update_Questions = false;
-        this.admininstrator_user_creating = false;
-
-        if (currentSection == "Update_Questions") {
-          this.Admin_Home_Page = false;
-          this.Create_Business_Sector = false;
-          this.Create_Measuring_Element = false;
-          this.Create_Rating = false;
-          this.Create_Sub_Category = false;
-          this.Create_Questions = false;
-          this.Update_Business_Sector = false;
-          this.Update_Measuring_Element = false;
-          this.Update_Rating = false;
-          this.Update_Sub_Category = false;
-          this.Update_Questions = true;
-          this.admininstrator_user_creating = false;
-        } else if (currentSection == "Create_Measuring_Element") {
-          this.Admin_Home_Page = false;
-          this.Create_Business_Sector = false;
-          this.Create_Measuring_Element = true;
-          this.Create_Rating = false;
-          this.Create_Sub_Category = false;
-          this.Create_Questions = false;
-          this.Update_Business_Sector = false;
-          this.Update_Measuring_Element = false;
-          this.Update_Rating = false;
-          this.Update_Sub_Category = false;
-          this.Update_Questions = false;
-          this.admininstrator_user_creating = false;
-        } else if (currentSection == "Create_Rating") {
-          this.Admin_Home_Page = false;
-          this.Create_Business_Sector = false;
-          this.Create_Measuring_Element = false;
-          this.Create_Rating = true;
-          this.Create_Sub_Category = false;
-          this.Create_Questions = false;
-          this.Update_Business_Sector = false;
-          this.Update_Measuring_Element = false;
-          this.Update_Rating = false;
-          this.Update_Sub_Category = false;
-          this.Update_Questions = false;
-          this.admininstrator_user_creating = false;
-        } else if (currentSection == "Create_Sub_Category") {
-          this.Admin_Home_Page = false;
-          this.Create_Business_Sector = false;
-          this.Create_Measuring_Element = false;
-          this.Create_Rating = false;
-          this.Create_Sub_Category = true;
-          this.Create_Questions = false;
-          this.Update_Business_Sector = false;
-          this.Update_Measuring_Element = false;
-          this.Update_Rating = false;
-          this.Update_Sub_Category = false;
-          this.Update_Questions = false;
-          this.admininstrator_user_creating = false;
-        } else if (currentSection == "Create_Questions") {
-          this.Admin_Home_Page = false;
-          this.Create_Business_Sector = false;
-          this.Create_Measuring_Element = false;
-          this.Create_Rating = false;
-          this.Create_Sub_Category = false;
-          this.Create_Questions = true;
-          this.Update_Business_Sector = false;
-          this.Update_Measuring_Element = false;
-          this.Update_Rating = false;
-          this.Update_Sub_Category = false;
-          this.Update_Questions = false;
-          this.admininstrator_user_creating = false;
-        } else if (currentSection == "Update_Business_Sector") {
-          this.Admin_Home_Page = false;
-          this.Create_Business_Sector = false;
-          this.Create_Measuring_Element = false;
-          this.Create_Rating = false;
-          this.Create_Sub_Category = false;
-          this.Create_Questions = false;
-          this.Update_Business_Sector = true;
-          this.Update_Measuring_Element = false;
-          this.Update_Rating = false;
-          this.Update_Sub_Category = false;
-          this.Update_Questions = false;
-          this.admininstrator_user_creating = false;
-        } else if (currentSection == "Update_Measuring_Element") {
-          this.Admin_Home_Page = false;
-          this.Create_Business_Sector = false;
-          this.Create_Measuring_Element = false;
-          this.Create_Rating = false;
-          this.Create_Sub_Category = false;
-          this.Create_Questions = false;
-          this.Update_Business_Sector = false;
-          this.Update_Measuring_Element = true;
-          this.Update_Rating = false;
-          this.Update_Sub_Category = false;
-          this.Update_Questions = false;
-          this.admininstrator_user_creating = false;
-        } else if (currentSection == "Update_Rating") {
-          this.Admin_Home_Page = false;
-          this.Create_Business_Sector = false;
-          this.Create_Measuring_Element = false;
-          this.Create_Rating = false;
-          this.Create_Sub_Category = false;
-          this.Create_Questions = false;
-          this.Update_Business_Sector = false;
-          this.Update_Measuring_Element = false;
-          this.Update_Rating = true;
-          this.Update_Sub_Category = false;
-          this.Update_Questions = false;
-          this.admininstrator_user_creating = false;
-        } else if (currentSection == "Update_Sub_Category") {
-          this.Admin_Home_Page = false;
-          this.Create_Business_Sector = false;
-          this.Create_Measuring_Element = false;
-          this.Create_Rating = false;
-          this.Create_Sub_Category = false;
-          this.Create_Questions = false;
-          this.Update_Business_Sector = false;
-          this.Update_Measuring_Element = false;
-          this.Update_Rating = false;
-          this.Update_Sub_Category = true;
-          this.Update_Questions = false;
-          this.admininstrator_user_creating = false;
-        }else if (currentSection == "Admin_Home_Page") {
-          this.Admin_Home_Page = true;
-          this.Create_Business_Sector = false;
-          this.Create_Measuring_Element = false;
-          this.Create_Rating = false;
-          this.Create_Sub_Category = false;
-          this.Create_Questions = false;
-          this.Update_Business_Sector = false;
-          this.Update_Measuring_Element = false;
-          this.Update_Rating = false;
-          this.Update_Sub_Category = false;
-          this.Update_Questions = false;
-          // this.admininstrator_user_creating = true;
-        }
-      },
-
-      init() {
-        this.startTimerWhyUs();
-        this.activeImage = this.images.length > 0 ? this.images[0] : null;
-      },
-
-
-      images: [
-        "/static/images/Looping/1.png",
-        "/static/images/Looping/2.png",
-        "/static/images/Looping/3.jpg",
-        "/static/images/Looping/4.png",
-      ],
-      activeImage: null,
-
-      prev() {
-        let index = this.images.indexOf(this.activeImage);
-        if (index === 0) index = this.images.length;
-        this.activeImage = this.images[index - 1];
-      },
-
-      next() {
-        let index = this.images.indexOf(this.activeImage);
-        if (index === this.images.length - 1) index = -1;
-        this.activeImage = this.images[index + 1];
-      },
-
-      imageWhyUs: [
-        {
-          image: "/static/images/Looping/1.png",
-          text1: "1",
-          text2: "Some few text description will come here. Image will equally be changed for 1 ",
-        },
-        {
-          image: "/static/images/Looping/2.png",
-          text1: "2",
-          text2: "Some few text description will come here. Image will equally be changed for 2",
-        },
-        {
-          image: "/static/images/Looping/3.jpg",
-          text1: "3",
-          text2: "Some few text description will come here. Image will equally be changed for 3",
-        },
-        {
-          image: "/static/images/Looping/4.png",
-          text1: "4",
-          text2: "Some few text description will come here. Image will equally be changed for 4",
-        },
-        {
-          image: "/static/images/Looping/5.jpg",
-          text1: "5",
-          text2: "Some few text description will come here. Image will equally be changed 5",
-        },
-        {
-          image: "/static/images/Looping/6.jpg",
-          text1: "6",
-          text2: "Some few text description will come here for. Image will equally be changed 6",
-        },
-      ],
-      currentIndex: 0,
-
-      startTimerWhyUs() {
-        setInterval(() => {
-          this.currentIndex = (this.currentIndex + 1) % this.imageWhyUs.length;
-          this.text1 = "";
-        }, 5000);
-      },
-    };
+          startTimerWhyUs() {
+              setInterval(() => {
+                  this.currentIndex = (this.currentIndex + 1) % this.imageWhyUs.length;
+                  this.text1 = "";
+              }, 5000);
+          },
+      };
   });
 });

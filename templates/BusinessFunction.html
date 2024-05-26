@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DM | Sector</title>
+    <title>DM | Function</title>
     <link href="/static/css/admin/style.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
@@ -46,10 +46,11 @@
         <div class="sidebar">
             <div class="logo">Logo</div>
             <div class="menu">
-                <a href="#" class="menu-item active" x-on:click="openHome('Admin_Home_Page')"><i class="fas fa-home"></i></a>
-                <a href="#" class="menu-item" x-on:click="openHome('manage_business_sector')">Select Business Sector</a>
+                <a href="#" class="menu-item active" ><i class="fas fa-home"></i></a>
                 
-           
+                <a href="{{ url_for('select_business_sector') }}" class="menu-item">Select Business Sector</a>
+               
+            
             </div>
         </div>
         <div class="main-content">
@@ -66,31 +67,31 @@
                     </form>
                 </div>
             </div>
-            <!-- section to select a business sector  -->
+            <!-- section to display business functions  -->
             <section>
-                <div x-show="select_business_sector" x-cloak>
+                <div >
                     <div class="main-content">
                         <div class="cards">
                             <div class="card">1</div>
                             <div class="card">
                                 <div style="display: inline;">
-                                    <form id="business-sector-form" action="/select_business_sector_user" method="post" class="form-container" x-on:submit.prevent="submitBusinessSector">
+                                    <form action="{{ url_for('select_business_function') }}" method="post" class="form-container">
                                         <div class="form-inline">
                                             <label>
-                                                <h3>Business Sector</h3>
+                                                <h3>Business Functions</h3>
                                             </label>
-                                            <select class="input" name="business_sector_user">
-                                                <option value="" disabled selected>Select a business sector</option>
-                                                {% for sector in business_sectors %}
-                                                <option value="{{ sector[0] }}">{{ sector[0] }}</option>
+                                            <select class="input" name="business_function_user" required>
+                                                <option value="" disabled selected>Select a business function</option>
+                                                {% for functions in sector_data %}
+                                                <option value="{{ functions[0] }}">{{ functions[0] }}</option>
                                                 {% endfor %}
                                             </select>
                                         </div>
-                                        <button type="submit" class="submit-btn">SUBMIT BUSINESS SECTOR</button>
+                                        <button type="submit" class="submit-btn">SUBMIT BUSINESS FUNCTION</button>
                                     </form>
                                     <div>
-                                        {% if BusinessError %}
-                                        <p class="error">{{ BusinessError }}</p>
+                                        {% if SectorError %}
+                                        <p class="error">{{ SectorError }}</p>
                                         {% endif %}
                                     </div>
                                 </div>
@@ -101,7 +102,8 @@
                 </div>
             </section>
 
-    
+            <!-- displays the As-Is and To-Be data  -->
+
         </div>
     </div>
 

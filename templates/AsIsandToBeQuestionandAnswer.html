@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DM | Questions and Answers</title>
+    <link href="/static/css/admin/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="/static/js/code.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link href="/static/css/admin/style.css" rel="stylesheet">
+    <style>
+        .form-inline {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .form-inline label {
+            margin-right: 10px;
+        }
+
+        .form-inline select {
+            flex: 1;
+        }
+
+        .form-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .submit-btn {
+            margin-top: 10px;
+        }
+
+        .error {
+            color: red;
+        }
+        .hide-content {
+            visibility: hidden;
+        }
+    </style>
+</head>
+
+<body x-data="AutomatedDigitalMaturity" x-cloak>
+    <div class="container">
+        <div class="sidebar">
+            <div class="logo">Logo</div>
+            <div class="menu">
+                <a href="#" class="menu-item active" ><i class="fas fa-home"></i></a>
+                
+                <a href="{{ url_for('select_business_sector') }}" class="menu-item">Select Business Sector</a>
+               
+            </div>
+        </div>
+        <div class="main-content">
+            <div class="cards">
+                <div class="card">
+                    <a href="#"><i class="fas fa-file-alt"></i></a>
+                </div>
+                <div class="card">
+                    <i class="fas fa-users"></i>
+                </div>
+                <div class="card">
+                    <form action="/logout">
+                        <button type="submit"><a href="#"><i class="fas fa-lock"></i></a></button>
+                    </form>
+                </div>
+            </div>
+        
+            <section>
+                <form action="/userSubmissionDataIntoTable" method="POST">
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    {% for column in ['DIGITAL STAGE', 'DESCRIPTION', 'Answer Rating Value'] %}
+                                    <th>{{ column }}</th>
+                                    {% endfor %}
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for rating in business_sector_rating %}
+                                <tr>
+                                    {% for value in rating %}
+                                    <td >{{value}}</td> <!-- or <td></td> for completely empty cells -->
+                                    {% endfor %}
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table> <br><br>
+
+
+                        <div style="display: flex;">
+                            <label>
+                                <h3>ENTER UNIQUE CODE PROVIDED TO YOU:&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </h3>
+                            </label>
+                            <input name="Unique_code_from_User" class="input" style="height: auto; width: 500px;" type="text" placeholder="Enter the unique code provided by your manager here" required>
+                        </div><br><br>
+
+                        <h1>THE AS-IS and TO-BE QUESTIONS FOR THE SELECTED BUSINESS DEPARTMENT</h1>
+
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>SUB CATEGORY</th>
+                                    <th>As-Is QUESTIONS</th>
+                                    <th>AS-IS ANSWERS</th>
+                                    <th>TO-BE QUESTIONS</th>
+                                    <th>To-Be ANSWERS</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for data in business_function_selected_data %}
+                                <tr>
+
+                                    
+                                  
+                                <!-- Measuring element -->
+                                <input type="hidden" name="Measuring_element_user[]" value="{{ data [0] }}">
+                                <!-- Rating -->
+                                <input type="hidden" name="Rting_User[]" value="{{ data[1] }}" class="input_user">
+                                <!-- Sub-Category -->
+                                <input type="hidden" name="sub_category_for_user[]" value="{{ data[2] }}">
+                               <!-- As-Is question -->
+                               <input type="hidden" name="as_is_questions_user[]" value="{{ data[3] }}">
+                               <!-- To-Be question -->
+                               <input type="hidden" name="to_be_questions_user[]" value="{{ data[4] }}">
+
+                                    <td>{{ data[2] }}</td>
+
+                                    <td>{{ data[3] }}</td>
+                                    <td>
+                                        <select name="UserAnswerRatingAsIs[]" class="input" required>
+                                            <option class="input_user" value="SelectanswerAsIs" disabled selected >Select
+                                                answer "As-Is"</option>
+                                            {% for rating in business_sector_rating %}
+                                            <option class="input_user" value="{{ rating[2] }}">{{ rating[0] }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </td>
+                                    <td>{{ data[4] }}</td>
+                                    <td>
+                                        <select name="UserAnswerRatingToBe[]" class="input" required>
+                                            <option class="input_user" value="SelectanswerToBe" disabled selected>Select
+                                                answer "To-Be"</option>
+                                            {% for rating in business_sector_rating %}
+                                            <option class="input_user" value="{{ rating[2] }}" >{{ rating[0] }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <button class="submit-btn">SUBMIT ANSWERS</button>
+                </form>
+            </section>
+        </div>
+    </div>
+
+</body>
+
+</html>
