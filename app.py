@@ -824,8 +824,8 @@ def feedback_function():
             (UserCumSumToBe / ExpectedCumSum) * 100, 2) if ExpectedCumSum != 0 else 0
 
         # Growth rate calculation
-        growth_rate = round(((UserCumSumToBe - ExpectedCumSum) /
-                            ExpectedCumSum) * 100, 2) if ExpectedCumSum != 0 else 0
+        growth_rate = round(((UserCumSumToBe - UserCumSumAsIs) /
+                            UserCumSumAsIs) * 100, 2) if UserCumSumAsIs != 0 else 0
 
         # Calculate the duration in years
         duration = round(math.log(UserCumSumToBe / UserCumSumAsIs) /
@@ -1003,6 +1003,8 @@ def submitting_unique_code():
 
             if not business_functions_data:
                 error_message = "No records found for the provided unique code."
+
+
 
     return render_template('manager.html', error_message=error_message,
                            plot_images=plot_images, business_data=business_functions_data,

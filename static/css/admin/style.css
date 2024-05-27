@@ -22,6 +22,17 @@ body {
   align-items: center;
 }
 
+.feedback-btn {
+  cursor: pointer;
+  transition: all 0.3s;
+  margin: 50px auto 0;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+ 
+}
+
 .logo {
   margin-bottom: 20px;
   color: #fff;
@@ -168,11 +179,11 @@ body {
   align-items: center;
 }
 
-.special-card img {
+/* .special-card img {
   width: 100px;
   height: auto;
   margin-top: 10px;
-}
+} */
 
 .table-container {
   background-color: #1f1f1f;
@@ -216,13 +227,13 @@ td {
   color: #f44336;
 }
 
-img {
+/* img {
   width: 30px;
   height: 30px;
   border-radius: 50%;
   vertical-align: middle;
   margin-right: 10px;
-}
+} */
 
 .img-large {
   width: 300px;

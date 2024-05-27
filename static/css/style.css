@@ -39,6 +39,8 @@ body {
   /* Vertically center the button */
 }
 
+
+
 /* class for submit buttons which is used on all the submit buttons in the html codes  */
 .submit-btn:hover:not([disabled]) {
   background: blue;

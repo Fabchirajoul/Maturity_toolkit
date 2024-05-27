@@ -23,7 +23,7 @@
                 <a href="#" class="menu-item" x-on:click="openHome('manage_business_sector')">Generate Code</a>
                 <a href="#" class="menu-item" x-on:click="openHome('manage_user_account')">View Generated Code</a>
 
-
+                
             </div>
         </div>
         <div class="main-content">
@@ -33,7 +33,7 @@
                     <a href="#" ><i class="fas fa-file-alt"></i></a>
                 </div>
                 <div class="card">
-                    <i class="fas fa-users"></i>
+                    <i x-on:click="openHome('get_maturity_feedback')" class="feedback-btn">GET FEEDBACK</i>
                 </div>
 
                 <div class="card">
@@ -46,12 +46,47 @@
             <!-- Displaying surveys  -->
             <div x-show="Admin_Home_Page" x-cloak>
 
+                <div class="main-content">
+                    <div class="cards">
+                        <div class="card">
+                          <img src="/static/images/dm.jpeg" class="img-large"/>
+
+                        </div>
+                        <div class="card">
+                            <h2>APP GUIDELINES</h2>
+                            <p>Click to view UsERS</p>
+                            <button class="btn">VIEW USER</button>
+
+
+                        </div>
+
+                        <div class="card">
+                            <h2>ACTIVATE USER ACCOUNT</h2>
+                            <p>Will do this at a leisure time don't worry</p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+            <div x-show="get_maturity_feedback">
                 <form action="/submit_unique_code" method="POST">
-                    <h1>UNIQUE CODE:</h1>
-                    <input type="text" class="input" name="unique_code_user"
-                        placeholder="Please enter your unique maturity code" value="">
+               
+                    <div style="display: flex;">
+                        <label>
+                            <h3>RE-ENTER UNIQUE CODE PROVIDED TO YOU:&nbsp; &nbsp; &nbsp;</h3>
+                        </label>
+                        <input name="unique_code_user" class="input" style="height: auto; width: 500px;" type="text" placeholder="Re-enter the unique generated code." required>
+                        
+                    
+                    </div>
                     <button type="submit" class="submit-btn">SUBMIT CODE</button>
-                </form>
+
+                    
+
+                </form><br><br>
                 <div class="table-container">
                     <h1>DIGITAL MATRITY LEVELS</h1>
                     <section>
@@ -107,9 +142,9 @@
             
                     <section>
                         <!-- This section displays the plots -->
-                        <div style="background-color: black;">
+                        <div >
                            
-                                <!-- <h1>Business Function Analysis</h1> -->
+                                <h2>Diamond Analysis</h2>
                                 {% for image in plot_images %}
                                 <img src="data:image/png;base64,{{ image }}" alt="Business Function Plot" class="img-large">
                                 {% endfor %}
@@ -143,14 +178,7 @@
                 <div class="main-content">
                     <div class="cards">
                         <div class="card">
-                            <!-- {% if modified_word %}
-
-                            <div class="card">
-                                <h2>Generated Code</h2>
-                                <p>{{ modified_word }}</p>
-                            </div>
-
-                            {% endif %} -->
+                          
 
 
                         </div>
@@ -174,12 +202,7 @@
                         </div>
 
                         <div class="card">
-                            <!-- <h2>PROCESS ANSWER RATINGS</h2>
-                            <p>Processing answer ratings for the different business functions</p>
-                            
-                                <button type="submit" class="btn"
-                                    x-on:click="openHome('assign_answer_rating_for_business_functions')">VIEW BUSINESS
-                                    FUNCTIONS</button> -->
+                           
 
                         </div>
 
@@ -207,31 +230,12 @@
 
                         </div>
                         <div class="card">
-                            <!-- <h2>GENERATING CODE</h2>
-                            <p>Enter any word to generate a unique character code which should be kept private at all
-                                times.
-                            </p>
-
-
-                            <form action="/add_random_characters" method="post">
-                                <div class="form-group">
-                                    <label>
-                                        <h3>Word</h3>
-                                    </label>
-                                    <input name="word" class="input" type="text" placeholder="Enter any word" required>
-                                </div>
-                                <button class="btn">CLICK TO GENERATE CODE</button>
-                            </form> -->
+                            
 
                         </div>
 
                         <div class="card">
-                            <!-- <h2>PROCESS ANSWER RATINGS</h2>
-                            <p>Processing answer ratings for the different business functions</p>
-                            
-                                <button type="submit" class="btn"
-                                    x-on:click="openHome('assign_answer_rating_for_business_functions')">VIEW BUSINESS
-                                    FUNCTIONS</button> -->
+                          
 
                         </div>
 
