@@ -227,13 +227,14 @@ td {
   color: #f44336;
 }
 
-/* img {
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  vertical-align: middle;
-  margin-right: 10px;
-} */
+.input_password{
+  width: 320px;
+  height: 50px;
+  border-radius: 10px;
+  font-size: small;
+  background-color: aqua;
+  
+}
 
 .img-large {
   width: 300px;

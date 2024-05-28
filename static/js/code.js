@@ -14,6 +14,8 @@ document.addEventListener("alpine:init", () => {
           add_new_answer_rating:false,
           update_old_answer_rating:false,
           get_maturity_feedback:false,
+          change_password:false,
+          add_new_user:false,
 
           openHomeBusinessAnalysts(BusinessAnalysts) {
               this.select_business_sector = true;
@@ -37,6 +39,8 @@ document.addEventListener("alpine:init", () => {
               this.add_new_answer_rating=false;
               this.update_old_answer_rating=false;
               this.get_maturity_feedback=false;
+              this.change_password = false;
+              this.add_new_user=false;
 
               if (currentSection == "manage_business_sector") {
                   this.Admin_Home_Page = false;
@@ -68,6 +72,12 @@ document.addEventListener("alpine:init", () => {
               }else if (currentSection == "get_maturity_feedback") {
                 this.Admin_Home_Page = false;
                 this.get_maturity_feedback = true;
+            }else if (currentSection == "change_password") {
+                this.Admin_Home_Page = false;
+                this.change_password = true;
+            }else if (currentSection == "add_new_user") {
+                this.Admin_Home_Page = false;
+                this.add_new_user = true;
             }
           },
 

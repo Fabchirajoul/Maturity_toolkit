@@ -13,6 +13,7 @@ import math
 import matplotlib.pyplot as plt
 import matplotlib
 matplotlib.use('Agg')  # Use a non-GUI backend
+import time
 
 
 
@@ -34,7 +35,6 @@ class User:
 
 
 def create_user_table():
-    try:
         connection = sqlite3.connect('DigitalMaturityDatabase.db')
         cursor = connection.cursor()
         cursor.execute('''
@@ -48,14 +48,10 @@ def create_user_table():
             )
         ''')
         connection.commit()
-    except sqlite3.Error as e:
-        print(f"An error occurred while creating the User table: {e}")
-    finally:
         connection.close()
 
 
 def create_combined_table():
-    try:
         connection = sqlite3.connect('DigitalMaturityDatabase.db')
         cursor = connection.cursor()
         cursor.execute('''
@@ -73,9 +69,18 @@ def create_combined_table():
             )
         ''')
         connection.commit()
-    except sqlite3.Error as e:
-        print(f"An error occurred while creating the CombinedTable: {e}")
-    finally:
+        connection.close()
+
+def create_forgot_password_table():
+        connection = sqlite3.connect('DigitalMaturityDatabase.db')
+        cursor = connection.cursor()
+        cursor.execute('''
+            CREATE TABLE IF NOT EXISTS ForgotPassword (
+                email TEXT UNIQUE NOT NULL
+
+            )
+        ''')
+        connection.commit()
         connection.close()
 
 
@@ -175,6 +180,7 @@ create_trimmed_table()
 create_answer_rating_table()
 create_user_submission_record_table()
 create_final_feedback_data()
+create_forgot_password_table()
 
 
 @app.route('/')
@@ -264,6 +270,119 @@ def dashboardAdministrator():
         return render_template('administrator.html', user=user)
 
     return redirect('/login')
+
+
+
+
+@app.route('/change_password', methods=['GET', 'POST'])
+def change_password():
+    Password_error = None  # Initialize Password_error
+
+    if request.method == 'POST':
+        email = request.form['email']
+        new_password = request.form['newpassword']
+        confirm_new_password = request.form['confnewpassword']
+
+        if new_password != confirm_new_password:
+            Password_error = 'Passwords do not match'
+            return render_template('administrator.html', Password_error=Password_error)
+
+        connection = sqlite3.connect('DigitalMaturityDatabase.db')
+        cursor = connection.cursor()
+
+        # Check if the email exists in the database
+        cursor.execute('SELECT * FROM User WHERE email=?', (email,))
+        user = cursor.fetchone()
+
+        if user:
+            hashed_password = bcrypt.hashpw(new_password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
+            cursor.execute('UPDATE User SET password=? WHERE email=?', (hashed_password, email))
+            connection.commit()
+            connection.close()
+            Password_error = "Password updated successfully"
+            time.sleep(5)
+        else:
+            Password_error = "Email does not exist"
+            time.sleep(5)
+            connection.close()
+
+    return render_template('administrator.html', Password_error=Password_error)
+
+
+@app.route('/requestPasswordChange', methods=['GET', 'POST'])
+def PasswordChange():
+    if request.method == 'POST':
+        emailReset = request.form['password_reset']  
+
+        connection = sqlite3.connect('DigitalMaturityDatabase.db')
+        cursor = connection.cursor()
+
+        # Check if the email exists in the database
+        cursor.execute('SELECT * FROM User WHERE email=?', (emailReset,))
+        user = cursor.fetchone()
+
+        if user:
+            cursor.execute('''
+                INSERT INTO ForgotPassword (email)
+                VALUES (?)
+            ''', (emailReset,))
+            connection.commit()
+            connection.close()
+            requestMessage = "Your request has been received. Wait for an administrator to email your new password credentials."
+        else:
+            requestMessage = "Email does not exist"
+            connection.close()
+
+        # Adding a delay
+        import time
+        time.sleep(5)
+
+        return redirect(url_for('PasswordChange', requestMessage=requestMessage))
+
+    requestMessage = request.args.get('requestMessage')
+    return render_template('ForgotPassword.html', requestMessage=requestMessage)
+
+
+
+
+
+
+
+
+
+
+
+   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 # BusinessManager
 @app.route('/BusinessManager')
@@ -582,6 +701,11 @@ def Updateanswerrating():
         return redirect('/administrator')
 
     return render_template('administrator.html')
+
+
+
+
+
 
 
 # Business_Manager_account 

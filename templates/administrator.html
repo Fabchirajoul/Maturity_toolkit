@@ -44,6 +44,15 @@
 
             <!-- Displaying surveys  -->
             <div x-show="Admin_Home_Page" x-cloak>
+
+                {% if Password_error %}
+                <div class="error-message">
+                    <p>{{ Password_error }}</p>
+                </div>
+                {% endif %}
+
+
+
                 <div class="table-container">
                     <h1>DATABASE RECORDS</h1>
                     <table>
@@ -114,9 +123,9 @@
 
                         </div>
 
-                    
 
-                       
+
+
 
                         <div class="card">
                             <h2>ANSWER RATINGS</h2>
@@ -131,8 +140,8 @@
                             <h2>UPDATE ANSWER RATINGS</h2>
                             <p>Updating an existing answer rating</p>
 
-                            <button type="submit" class="btn"
-                                x-on:click="openHome('update_old_answer_rating')">UPDATE RATE</button>
+                            <button type="submit" class="btn" x-on:click="openHome('update_old_answer_rating')">UPDATE
+                                RATE</button>
 
                         </div>
 
@@ -151,7 +160,7 @@
                         <div class="card">
                             <h2>ADD NEW USER</h2>
                             <p>You can add all three types of accounts here </p>
-                            <button class="btn">ADD USER</button>
+                            <button class="btn" x-on:click="openHome('add_new_user')">ADD USER</button>
 
                         </div>
                         <div class="card">
@@ -163,9 +172,10 @@
                         </div>
 
                         <div class="card">
-                            <h2>ACTIVATE USER ACCOUNT</h2>
-                            <p>Will do this at a leisure time don't worry</p>
-
+                            <h2>CHANGE PASSWORD</h2>
+                            <p>You can chnage the password of a manager, business analysts or other administrator here
+                            </p>
+                            <button class="btn" x-on:click="openHome('change_password')">CHANGE PASSWORD</button>
                         </div>
 
                     </div>
@@ -429,15 +439,166 @@
 
 
 
+                <!-- FOr changing password  -->
+
+                <div x-show="change_password" x-cloak>
+
+                    <div class="main-content">
+                        <div class="cards">
+                            <div class="card">
+
+
+
+                            </div>
+                            <div class="card">
+                                <h2>CHANGE PASSWORD OF A USER</h2>
+
+
+
+                                <form method="POST" action="/change_password">
+                                    <div class="textbox">
+                                        <i class="fas fa-envelope"></i>
+                                        <input class="input_password" type="text" placeholder="Your Email" name="email"
+                                            required>
+                                    </div><br><br>
+                                    <div class="textbox">
+                                        <i class="fas fa-lock"></i>
+                                        <input class="input_password" type="password" placeholder="New Password"
+                                            name="newpassword" required>
+                                    </div><br><br>
+
+                                    <div class="textbox">
+                                        <i class="fas fa-lock"></i>
+                                        <input class="input_password" type="password" placeholder="Confirm new Password"
+                                            name="confnewpassword" required>
+                                    </div><br><br>
+                                    <button type="submit" class="submit-btn">Change Password</button>
+
+
+                                </form>
+
+                              
+
+                               
+                            </div>
+
+                            <div class="card">
+
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+
+
+
+
+                <div x-show="add_new_user" x-cloak>
+
+                    <div class="main-content">
+                        <div class="cards">
+                            <div class="card">
+
+
+
+                            </div>
+                            <div class="card">
+                                <h2>ADDING NEW USERS</h2>
+
+
+
+                                <form action="/register" method="POST" enctype="multipart/form-data">
+
+                                    <div class="textbox">
+                                        <i class="fas fa-user fa-2x"></i>
+                                        <input class="input_password" type="text" placeholder="Your Username" name="name"
+                                            required>
+                                    </div><br><br>
+
+
+
+                                    <div class="textbox">
+                                        <i class="fas fa-envelope"></i>
+                                        <input class="input_password" type="text" placeholder="Your Email" name="email"
+                                            required>
+                                    </div><br><br>
+
+                                    <div>
+                                        <i class="fas fa-user-plus fa-2x"></i>
+                                        <select name="users" id="cars" class="input_password" required>
+                                            <option value="disabled">Select a user type</option>
+                                            <option value="Business Analyst">Business Analyst</option>
+                                            <option value="Business Manager">Manager</option>
+                                            <option value="Administrator">Administrator</option>
+                                        </select>
+                    
+                                    </div><br><br>
+
+
+                                    <div class="textbox">
+                                        <i class="fas fa-lock"></i>
+                                        <input class="input_password" type="password" placeholder="New Password"
+                                        name="password" required>
+                                    </div><br><br>
+
+                                    <div class="textbox">
+                                        <i class="fas fa-lock"></i>
+                                        <input class="input_password" type="password" placeholder="Confirm new Password"
+                                        name="confirm_password" required>
+                                    </div><br><br>
+
+
+                                    <div>
+                                        <i class="fas fa-image fa-2x"></i>
+                                        <input type="file" name="User_photo" class="upload-btn" name="password" accept="image/*"  id="User_photo">
+                                    </div>
+
+
+                                    
+                                    <button type="submit" class="submit-btn">ADD USER</button>
+
+
+                                </form>
+
+                              
+
+                               
+                            </div>
+
+                            <div class="card">
+
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+
+
+
+
+
+
 
                 <div x-show="assign_answer_rating_for_business_functions">
 
                     <form action="/ratingAnswersBusinessFunctions" method="POST">
-                        
-                   
 
 
-                    
+
+
+
                         <div class="card" style="background-color: grey;">
                             <h3>ASSIGN RATINGS FOR BUSINESS SECTOR</h3>
                             <div class="form-group">
@@ -465,14 +626,14 @@
                                 <label>
                                     <h3>DESCRIPTION</h3>
                                 </label>
-                               
-                               <textarea class="textarea-large" name="rating_description_business_sector" required>
+
+                                <textarea class="textarea-large" name="rating_description_business_sector" required>
 
                                </textarea>
-                           
-                           
-                           
-                                </div>
+
+
+
+                            </div>
 
 
                             <div class="form-group">
@@ -480,14 +641,15 @@
                                     <h3>RATING VALUE</h3>
                                 </label>
                                 <input name="rating_value_business_sector" class="input" type="number"
-                                    placeholder="Type to filter and select an exisiting measuring element from the list" required>
+                                    placeholder="Type to filter and select an exisiting measuring element from the list"
+                                    required>
                             </div>
 
 
-                          
 
 
-                        
+
+
 
                             <button class="submit-btn">RATE SECTOR</button>
                         </div>
@@ -519,11 +681,11 @@
                 <div x-show="update_old_answer_rating">
 
                     <form action="/updateratingAnswersBusinessFunctions" method="POST">
-                        
-                   
 
 
-                    
+
+
+
                         <div class="card" style="background-color: grey;">
                             <h3>ASSIGN RATINGS FOR BUSINESS SECTOR</h3>
                             <div class="form-group">
@@ -551,14 +713,14 @@
                                 <label>
                                     <h3>DESCRIPTION</h3>
                                 </label>
-                               
-                               <textarea class="textarea-large" name="newrating_description_business_sector" required>
+
+                                <textarea class="textarea-large" name="newrating_description_business_sector" required>
 
                                </textarea>
-                           
-                           
-                           
-                                </div>
+
+
+
+                            </div>
 
 
                             <div class="form-group">
@@ -566,14 +728,15 @@
                                     <h3>RATING VALUE</h3>
                                 </label>
                                 <input name="newrating_value_business_sector" class="input" type="number"
-                                    placeholder="Type to filter and select an exisiting measuring element from the list" required>
+                                    placeholder="Type to filter and select an exisiting measuring element from the list"
+                                    required>
                             </div>
 
 
-                          
 
 
-                        
+
+
 
                             <button class="submit-btn">RATE SECTOR</button>
                         </div>
