@@ -51,6 +51,12 @@
                         <div class="card">
                           <img src="/static/images/dm.jpeg" class="img-large"/>
 
+                          <div>
+                            {% if error_message %}
+                            <p class="error">{{ error_message }}</p>
+                            {% endif %}
+                        </div>
+
                         </div>
                         <div class="card">
                             <h2>APP GUIDELINES</h2>

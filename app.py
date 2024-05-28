@@ -1028,7 +1028,7 @@ def submitting_unique_code():
 
             if not rows:
                 error_message = "No records found for the provided unique code."
-                return render_template('manager.html', error_message=error_message)
+                return render_template('manager.html', error_message=error_message, business_data=business_functions_data)
 
             for row in rows:
                 business_function, measuring_elt_user, exped_sum, as_is_sum, to_be_sum, percent_maturity_as_is, percent_maturity_to_be, feedback_as_is, feedback_to_be, growth_rate, time_to_grow = row
