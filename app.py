@@ -947,8 +947,8 @@ def feedback_function():
             (UserCumSumToBe / ExpectedCumSum) * 100, 2) if ExpectedCumSum != 0 else 0
 
         # Growth rate calculation
-        growth_rate = round(((UserCumSumToBe - UserCumSumAsIs) /
-                            UserCumSumAsIs) * 100, 2) if UserCumSumAsIs != 0 else 0
+        growth_rate = round(((percentage_to_be- percentage_as_is) /
+                            percentage_as_is) * 100, 2) if percentage_as_is != 0 else 0
 
         # Calculate the duration in years
         duration = round(math.log(UserCumSumToBe / UserCumSumAsIs) /

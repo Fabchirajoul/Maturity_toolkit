@@ -134,17 +134,17 @@
                                     <td>{{ data[3] }}</td>
                                     <td>
                                         <select name="UserAnswerRatingAsIs[]" class="input" required>
-                                            <option class="input_user" value="SelectanswerAsIs" disabled selected >Select
+                                            <option class="input_user" value="" disabled selected >Select
                                                 answer "As-Is"</option>
                                             {% for rating in business_sector_rating %}
-                                            <option class="input_user" value="{{ rating[2] }}">{{ rating[0] }}</option>
+                                            <option class="input_user" value="{{ rating[2] }}" >{{ rating[0] }}</option>
                                             {% endfor %}
                                         </select>
                                     </td>
                                     <td>{{ data[4] }}</td>
                                     <td>
                                         <select name="UserAnswerRatingToBe[]" class="input" required>
-                                            <option class="input_user" value="SelectanswerToBe" disabled selected>Select
+                                            <option class="input_user" value="" disabled selected>Select
                                                 answer "To-Be"</option>
                                             {% for rating in business_sector_rating %}
                                             <option class="input_user" value="{{ rating[2] }}" >{{ rating[0] }}</option>
