@@ -73,22 +73,22 @@
             <section>
                 <form action="/userSubmissionDataIntoTable" method="POST">
                     <div class="table-container">
+                       
+
+
                         <table>
-                            <thead>
-                                <tr>
-                                    {% for column in ['DIGITAL STAGE', 'DESCRIPTION', 'Answer Rating Value'] %}
-                                    <th>{{ column }}</th>
-                                    {% endfor %}
-                                </tr>
-                            </thead>
+                           
                             <tbody>
-                                {% for rating in business_sector_rating %}
                                 <tr>
-                                    {% for value in rating %}
-                                    <td >{{value}}</td> <!-- or <td></td> for completely empty cells -->
+                                    {% for rating in business_sector_rating %}
+                                    <td>{{ rating[0] }}</td>
                                     {% endfor %}
                                 </tr>
-                                {% endfor %}
+                                <tr>
+                                    {% for rating in business_sector_rating %}
+                                    <td>{{ rating[1] }}</td>
+                                    {% endfor %}
+                                </tr>
                             </tbody>
                         </table> <br><br>
 

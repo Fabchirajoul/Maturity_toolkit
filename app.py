@@ -828,8 +828,7 @@ def select_business_function():
             business_sector_rating = session.get('business_sector_rating', [])
             session['selected_business_function'] = selected_business_function  # Store selected business function in session
 
-            print("These are the answer ratings: ", business_sector_rating)
-            print("These are the column names: ", answer_rating_columns)
+            
 
             return render_template('AsIsandToBeQuestionandAnswer.html', user=user, user_photo_base64=user_photo_base64,
                                    business_function_selected_data=business_function_selected_data,
@@ -1027,6 +1026,10 @@ def submitting_unique_code():
             rows = cursor.fetchall()
             connection.close()
 
+            if not rows:
+                error_message = "No records found for the provided unique code."
+                return render_template('manager.html', error_message=error_message)
+
             for row in rows:
                 business_function, measuring_elt_user, exped_sum, as_is_sum, to_be_sum, percent_maturity_as_is, percent_maturity_to_be, feedback_as_is, feedback_to_be, growth_rate, time_to_grow = row
                 if business_function not in business_functions_data:
@@ -1037,12 +1040,17 @@ def submitting_unique_code():
                 )
 
             for business_function, data in business_functions_data.items():
+                if not data:
+                    continue
                 labels = [item[0] for item in data]
                 exped_sums = [item[1] for item in data]
                 as_is_sums = [item[2] for item in data]
                 to_be_sums = [item[3] for item in data]
                 growth_rates = [item[8] for item in data]
                 durations = [item[9] for item in data]
+
+                if not labels or not exped_sums or not as_is_sums or not to_be_sums:
+                    continue
 
                 angles = np.linspace(0, 2 * np.pi, len(labels), endpoint=False).tolist()
                 angles += angles[:1]
@@ -1125,11 +1133,6 @@ def submitting_unique_code():
                 growth_rate_images.append(img_str)
                 plt.close()
 
-            if not business_functions_data:
-                error_message = "No records found for the provided unique code."
-
-
-
     return render_template('manager.html', error_message=error_message,
                            plot_images=plot_images, business_data=business_functions_data,
                            bar_plot_images=bar_plot_images, growth_rate_images=growth_rate_images)
@@ -1158,5 +1161,10 @@ def submitting_unique_code():
 
 
 
+
 if __name__ == '__main__':
     app.run(debug=True)
+
+
+
+
