@@ -185,3 +185,176 @@
 184,MINING,Mining Operations,Undeground and surface infrastructure,74,Temporary infrastructures,,,5
 185,MINING,Mining Operations,Undeground and surface infrastructure,74,Communication,,,5
 186,MINING,Mining Operations,Undeground and surface infrastructure,74,Building and facilities ,,,5
+187,Energy,"operations,Health  Safety  and Environment (HSE,Logistics,Finance,Corporate Development and Strategy, IT, Research and Development",Data Utilization and Analytics,90,Data Collection,,,5
+188,Energy,"operations,Health  Safety  and Environment (HSE,Logistics,Finance,Corporate Development and Strategy, IT, Research and Development",Data Utilization and Analytics,90,Data Storage,,,5
+189,Energy,"operations,Health  Safety  and Environment (HSE,Logistics,Finance,Corporate Development and Strategy, IT, Research and Development",Data Utilization and Analytics,90,Data Management,,,5
+190,Energy,"IT, Research and Development,HR, Finance, Logistics, operations",Data Utilization and Analytics,90,Data Visualization,,,5
+191,Energy,"IT, Research and Development,HR, Finance, Logistics, operations",Automation and Robotics,80,Alerts,,,5
+192,Energy,"operations, IT, Research and Development,HR, Finance, ",Automation and Robotics,80,Alarms,,,5
+193,Energy,"operations,Power Generation",Automation and Robotics,80,Maintenance,,,5
+194,Energy,"operations,Power Generation",Automation and Robotics,80,Inspection,,,5
+195,Energy,"operations,Power Generation",Automation and Robotics,80,SCADA systems,,,5
+196,Energy,"operations,Power Generation",Automation and Robotics,80,Drilling ,,,5
+197,Energy,"operations,Power Generation",Automation and Robotics,80,Remotely Operated Vehicles,,,5
+198,Energy,"operations,Power Generation",Automation and Robotics,80,Stability risk analysis,,,5
+199,Energy,"operations,Power Generation",Automation and Robotics,80,Solar Panel Cleaning:,,,5
+200,Energy,"operations,Power Generation",Automation and Robotics,80,Fault Detection,,,5
+201,Energy,"operations,Power Generation",Automation and Robotics,80,Digital device in slope geometry,,,5
+202,Energy,"operations,Power Generation",Automation and Robotics,80,Load Balancing,,,5
+203,Energy,"operations,Power Generation",Automation and Robotics,80,Leak Detection,,,5
+204,Energy,"operations,Power Generation",Automation and Robotics,80,Value Chain Visualisation,,,5
+205,Energy,"operations,Power Generation",Automation and Robotics,80,Robotic Inspection,,,5
+206,Energy,"operations,Power Generation",Automation and Robotics,80,Energy Storage,,,5
+207,Energy,Customer Service,Chatbots,70,customer inquiries,,,5
+208,Energy,Customer Service,Billing,70,billing and payment processing,,,5
+209,Energy,Customer Service,Virtual Assistants,70,customer interactions,,,5
+210,Energy,Customer Service,Sentiment Analysis,70,customer feedback,,,5
+211,Energy,Customer Service,Knowledge Base Management,70,manage and update customer,,,5
+212,Energy,Customer Service, Feedback Analysis,70, customer feedback,,,5
+213,Energy,Customer Service,Predictive Support,70,historical data,,,5
+214,Energy,Customer Service,Service Ticketing,70,Decision making,,,5
+215,Energy,Customer Service,Live Chat Support,70,real-time customer interaction,,,5
+216,Energy,"operations,Safety, Health, Environment and Quality(SHEQ),Power Generation,Supply Chain and Logistics",Digital Twin Technologies,60,Predictive Maintenance,,,5
+217,Energy,"operations,Safety, Health, Environment and Quality(SHEQ),Power Generation,Supply Chain and Logistics",Digital Twin Technologies,60,Asset Optimization,,,5
+218,Energy,"operations,Safety, Health, Environment and Quality(SHEQ),Power Generation,Supply Chain and Logistics",Digital Twin Technologies,60,Power Plant Simulation,,,5
+219,Energy,"operations,Safety, Health, Environment and Quality(SHEQ),Power Generation,Supply Chain and Logistics",Digital Twin Technologies,60,Grid Simulation,,,5
+220,Energy,"operations,Safety, Health, Environment and Quality(SHEQ),Power Generation,Supply Chain and Logistics",Digital Twin Technologies,60,Building Energy Management,,,5
+221,Energy,"operations,Safety, Health, Environment and Quality(SHEQ),Power Generation,Supply Chain and Logistics",Digital Twin Technologies,60,Demand Response Optimization,,,5
+222,Energy,"operations,Safety, Health, Environment and Quality(SHEQ),Power Generation,Supply Chain and Logistics",Digital Twin Technologies,60,Wind and Solar Farm Modeling,,,5
+223,Energy,"operations,Safety, Health, Environment and Quality(SHEQ),Power Generation,Supply Chain and Logistics",Digital Twin Technologies,60,Energy Storage Optimization,,,5
+224,Energy,"operations,Safety, Health, Environment and Quality(SHEQ),Power Generation,Supply Chain and Logistics",Digital Twin Technologies,60,Fault Detection and Isolation,,,5
+225,Energy,"operations,Safety, Health, Environment and Quality(SHEQ),Power Generation,Supply Chain and Logistics",Digital Twin Technologies,60,Emissions Monitoring and Mitigation,,,5
+226,Energy,"operations,Safety, Health, Environment and Quality(SHEQ),Power Generation,Supply Chain and Logistics",Digital Twin Technologies,60,Disaster Response Planning,,,5
+227,Energy,"operations,Safety, Health, Environment and Quality(SHEQ),Power Generation,Supply Chain and Logistics",Digital Twin Technologies,60,Compliance Modeling,,,5
+228,Energy,"Supply Chain and Logistics,Safety, Health, Environment and Quality(SHEQ),Corporate Development and Strategy,Human Resources (HR),operations",Advanced Communication and Connectivity,50,Wireless network,,,5
+229,Energy,"Supply Chain and Logistics,Safety, Health, Environment and Quality(SHEQ),Corporate Development and Strategy,Human Resources (HR),operations",Advanced Communication and Connectivity,50,Satelite communication,,,5
+230,Energy,"Supply Chain and Logistics,Safety, Health, Environment and Quality(SHEQ),Corporate Development and Strategy,Human Resources (HR),operations",Advanced Communication and Connectivity,50,Fibre optics,,,5
+231,Energy,"Supply Chain and Logistics,Safety, Health, Environment and Quality(SHEQ),Corporate Development and Strategy,Human Resources (HR),operations",Advanced Communication and Connectivity,50,Sensitive data,,,5
+232,Energy,Safety and Compliance,Cybersecurity and Data Privacy,40,Infrastructure,,,5
+233,Energy,Safety and Compliance,Cybersecurity and Data Privacy,40,Operational systems,,,5
+234,Energy,Safety and Compliance,Cybersecurity and Data Privacy,40,Data privacy,,,5
+235,Energy,Safety and Compliance,Cybersecurity and Data Privacy,40,Intrusion Detection and Prevention,,,5
+236,Energy,Safety and Compliance,Cybersecurity and Data Privacy,40,Data Encryption and Secure Communication,,,5
+237,Energy,Safety and Compliance,Cybersecurity and Data Privacy,40,Access Control and Authentication,,,5
+238,Energy,Safety and Compliance,Cybersecurity and Data Privacy,40,Incident Response and Recovery,,,5
+239,Energy,Safety and Compliance,Cybersecurity and Data Privacy,40,Compliance with Regulatory Requirements,,,5
+240,Energy,Safety and Compliance,Cybersecurity and Data Privacy,40,Continuous Monitoring and Auditing,,,5
+241,Energy,Supply Chain and Logistics,Supply Chain Digitization,30,Procurement,,,5
+242,Energy,Supply Chain and Logistics,Supply Chain Digitization,30,Logistics,,,5
+243,Energy,Supply Chain and Logistics,Supply Chain Digitization,30,Inventory management,,,5
+244,Energy,Supply Chain and Logistics,Supply Chain Digitization,30,Real time tracking,,,5
+245,Energy,Human Resources (HR),Workforce Skills and Training,50,Training programs,,,5
+246,Energy,Human Resources (HR),Recruitment,50,Hiring Process,,,5
+247,Energy,Human Resources (HR),Boarding,50,Orientation,,,5
+248,Energy,Human Resources (HR),Discplinary,50,Hearing,,,5
+249,Energy,"Safety, Health, Environment and Quality(SHEQ),Community and Stakeholder Relations",Environmental and Sustainability Solutions,60,Environmental impact,,,5
+250,Energy,"Safety, Health, Environment and Quality(SHEQ),Community and Stakeholder Relations",Environmental and Sustainability Solutions,60,Energy consumption,,,5
+251,Energy,"Safety, Health, Environment and Quality(SHEQ),Community and Stakeholder Relations",Environmental and Sustainability Solutions,60,Sustainable Energy practice,,,5
+252,Energy,"Safety, Health, Environment and Quality(SHEQ),Community and Stakeholder Relations",Environmental and Sustainability Solutions,60,smart energy management,,,5
+253,Energy,"Safety, Health, Environment and Quality(SHEQ),Community and Stakeholder Relations",Environmental and Sustainability Solutions,60,waste reduction,,,5
+254,Energy,"Safety, Health, Environment and Quality(SHEQ),Community and Stakeholder Relations",Environmental and Sustainability Solutions,60,Rehabilitation,,,5
+255,Energy,"Safety, Health, Environment and Quality(SHEQ),Community and Stakeholder Relations",Environmental and Sustainability Solutions,60,Digital authority involvement in environmental issues,,,5
+256,Energy,"Safety, Health, Environment and Quality(SHEQ),Community and Stakeholder Relations",Environmental and Sustainability Solutions,60,"Digital plan, monitoring and tracking of environmental issues",,,5
+257,Energy,"Finance,Corporate Development and Strategy",Strategic Vision and Leadership,65,Strategic vision,,,5
+258,Energy,"Finance,Corporate Development and Strategy",Strategic Vision and Leadership,65,Leadership commitment,,,5
+259,Energy,"Finance,Corporate Development and Strategy",Strategic Vision and Leadership,65,Organizational structure,,,5
+260,Energy,"Safety, Health, Environment and Quality(SHEQ)",Remote Monitoring and Diagnostics,75,Enabling Real-Time Visibility,,,5
+261,Energy,"Safety, Health, Environment and Quality(SHEQ)",Remote Monitoring and Diagnostics,75,Alarms,,,5
+262,Energy,"Safety, Health, Environment and Quality(SHEQ)",Remote Monitoring and Diagnostics,75,Alerts,,,5
+263,Energy,"Safety, Health, Environment and Quality(SHEQ)",Remote Monitoring and Diagnostics,75,Remote Troubleshooting Capabilities,,,5
+264,Energy,operations,Power Generation ,66,Transmission Infrastructure,,,5
+265,Energy,operations,Power Generation ,66,Distribution Networks,,,5
+266,Energy,operations,Power Generation ,66,Grid Stability and Reliability,,,5
+267,Energy,operations,Power Generation ,66,Renewable Integration,,,5
+268,Energy,operations,Power Generation ,66,Environmental Impact,,,5
+269,Energy,operations,Power Generation ,66,Generation Capacity,,,5
+270,Energy,operations,Power Generation ,66,Electricity Generation,,,5
+271,Energy,operations,generation technology,69,Heat Rate,,,5
+272,Energy,operations,generation technology,69,Forced Outage Rate,,,5
+273,Energy,operations,generation technology,69,Conversion Efficiency,,,5
+274,Energy,operations,generation technology,69,Emissions Intensity,,,5
+275,Energy,operations,generation technology,69,Fuel Cost,,,5
+276,Energy,operations,generation technology,69,Interconnection Capacity,,,5
+277,Energy,operations,generation technology,69,Nuclear Capacity Factor,,,5
+278,Energy,operations,generation technology,69,Electricity Generation,,,5
+279,Energy,Finance,Digital Capability,68,IT Infrastructure,,,5
+280,Energy,Finance,Digital Capability,68,Descriptive Analysis,,,5
+281,Energy, Finance,Digital Capability,68,Predictive Analysis,,,5
+282,Energy,Human Resources (HR),Human Resources,88,Training on digital platforms,,,5
+283,Energy,Human Resources (HR),Human Resources,88,Monitor skills on digital platforms,,,5
+284,Energy,Human Resources (HR),Human Resources,88,Digitally monitor staff health status,,,5
+285,Energy,Human Resources (HR),Human Resources,88,Change Management,,,5
+286,Energy,Human Resources (HR),Human Resources,88,Reskilling,,,5
+287,Energy,Human Resources (HR),Human Resources,88,Stakeholder Engagement,,,5
+288,Energy,Human Resources (HR),Worker Enablement,87,Quick Decision,,,5
+289,Energy,Human Resources (HR),Worker Enablement,87,Making Employee,,,5
+290,Energy,Human Resources (HR),Worker Enablement,87,Enablement,,,5
+291,Energy,Human Resources (HR),Worker Enablement,87,Employee Effectiveness,,,5
+292,Energy,Human Resources (HR),Culture,85,Work Transformation,,,5
+293,Energy,Human Resources (HR),Culture,85,Changing Behaviour,,,5
+294,Energy,Human Resources (HR),Culture,85,Departmental Transformation,,,5
+295,Energy,Human Resources (HR),Culture,85,People Transformation,,,5
+296,Energy,"Marketing and sales,Corporate Development and Strategy",Customer Experience,77,Customer Satisfaction,,,5
+297,Energy,"Marketing and sales,Corporate Development and Strategy",Customer Experience,77,Mine to Customer,,,5
+298,Energy,"Corporate Development and Strategy, Supply Chain and Logistics",Unified Data ,63,Integrated Operations Centres,,,5
+299,Energy,"Corporate Development and Strategy, Supply Chain and Logistics",Unified Data ,63,Realtime data,,,5
+300,Energy,"Corporate Development and Strategy, Supply Chain and Logistics",Unified Data ,63,Integration,,,5
+301,Energy,"Corporate Development and Strategy, Supply Chain and Logistics",Unified Data ,63,Data-Driven Mine,,,5
+302,Energy,"Corporate Development and Strategy, Supply Chain and Logistics",Unified Data ,63,Eliminating Silos,,,5
+303,Energy,"Corporate Development and Strategy, Supply Chain and Logistics",Unified Data ,63,Single Platform,,,5
+304,Energy,Human Resources (HR),Performance Management,99,Value Chain Optimisation,,,5
+305,Energy,Human Resources (HR),Performance Management,99,Business Intelligence,,,5
+306,Energy,Human Resources (HR),Performance Management,99,Business Improvement,,,5
+307,Energy,Human Resources (HR),Performance Management,99,Shareholder Returns,,,5
+308,Energy,Human Resources (HR),Performance Management,99,Key Performance Indicators,,,5
+309,Energy,Community and Stakeholder Relations,Stakeholder Involvement,55,Labour,,,5
+310,Energy,Community and Stakeholder Relations,Stakeholder Involvement,55,Unions,,,5
+311,Energy,Community and Stakeholder Relations,Stakeholder Involvement,55,Employees,,,5
+312,Energy,"operations,Human Resources (HR)",Ease of Use and Adoption,53,Practicality of technologies,,,5
+313,Energy,"operations,Human Resources (HR)",Ease of Use and Adoption,53,Project Value Realisation,,,5
+314,Energy,"operations,Human Resources (HR)",Ease of Use and Adoption,53,Motivation (No Incentives),,,5
+315,Energy,Corporate Development and Strategy, Change Management,52,Ineffective change management,,,5
+316,Energy,Corporate Development and Strategy, Change Management,52,communication,,,5
+317,Energy,Corporate Development and Strategy, Change Management,52,Change Resistance,,,5
+318,Energy,Corporate Development and Strategy, Change Management,52,Reskilling,,,5
+319,Energy,"operations,Safety, Health, Environment and Quality(SHEQ)",Worker Safety,50,Safety message announcement,,,5
+320,Energy,"operations,Safety, Health, Environment and Quality(SHEQ)",Worker Safety,50,Monitoring of staff and visitor presence,,,5
+321,Energy,Safety and Compliance,Contract management,51,Digitally update and follow-up contracts towards clients,,,5
+322,Energy,Safety and Compliance,Contract management,51,Digitally track sub-contractor and supplier,,,5
+323,Energy,Safety and Compliance,Contract management,51,payment management,,,5
+324,Energy,operations,Quality control,54,Collect and monitor progress reports,,,5
+325,Energy,operations,Quality control,54,Quality inspections with mobile devices,,,5
+326,Energy,operations,Scheduling,57,"Create, assign, and prioritize tasks in real time and distribute to mobile devices",,,5
+327,Energy,operations,Scheduling,57,Plan and simulate site progress in 4D-software,,,5
+328,Energy,operations,Scheduling,57,Maintain a digital construction site disposition plan,,,5
+329,Energy,operations,Logistics,52,"Identify, track and locate material and equipment on-site with digital tools",,,5
+330,Energy,operations,Logistics,52,"Digitally monitor procurement orders, receipts, use, and quality issues",,,5
+331,Energy,operations,Logistics,52,Maintain digital bill of quantities,,,5
+332,Energy,operations,Design management,50,Visualize drawings and 3D models on-site on mobile platforms,,,5
+333,Energy,operations,Design management,50,"Update digital drawings, models and technical information with notes and asbuilt records",,,5
+334,Energy,operations,Ventiltion requirements,96,Dust control measures,,,5
+335,Energy,operations,Ventiltion requirements,96,control measures,,,5
+336,Energy,operations,Ventiltion requirements,96,Satbilization of haul road surfaces,,,5
+337,Energy,operations,Ventiltion requirements,96,Utilization of fog cannons for visible dust,,,5
+338,Energy,operations,Ventiltion requirements,96,Dust supression installation systems,,,5
+339,Energy,"operations,Power Generation",Mineral processing,97,Comminution,,,5
+340,Energy,"operations,Power Generation",Mineral processing,97,Ore characterization,,,5
+341,Energy,"operations,Power Generation",Mineral processing,97,Process facilities,,,5
+342,Energy,"operations,Power Generation",Mineral processing,97,Plant operation and mainatainance philosophy,,,5
+343,Energy,"operations,Power Generation",Mineral processing,97,Expandability and expansion options,,,5
+344,Energy,"operations,Power Generation",Mineral processing,97,Classification,,,5
+345,Energy,"operations,Power Generation",Mineral processing,97,Gravity Separation,,,5
+346,Energy,"operations,Power Generation",Mineral processing,97,Flotation,,,5
+347,Energy,"operations,Power Generation",Mineral processing,97,Magnetic Separation,,,5
+348,Energy,"operations,Power Generation",Mineral processing,97,Leaching,,,5
+349,Energy,"operations,Power Generation",Mineral processing,97,Dewatering,,,5
+350,Energy,"operations,Power Generation",Mineral processing,97,Smelting and Refining,,,5
+351,Energy,operations,Mine access,89,Blind splot,,,5
+352,Energy,operations,Mine access,89,Intersections,,,5
+353,Energy,operations,Mine access,89,Safety berms and ditches,,,5
+354,Energy,operations,Mine access,89,Equipment selection process,,,5
+355,Energy,operations,Mine access,89,Material handling,,,5
+356,Energy,operations,Mine access,89,haul road cross-sections,,,5
+357,Energy,operations,Mine access,89,drainage requirements,,,5
+358,Energy,operations,Mine access,89,road construction materials,,,5
+359,Energy,"Exploration and Geology,Marketing and sales",Market analysis,78,Product shipping storage and distribution,,,5

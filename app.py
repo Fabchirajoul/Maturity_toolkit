@@ -980,17 +980,17 @@ def feedback_function():
 
 def generate_feedback(percentage):
     if 0 <= percentage <= 15.5:
-        return "Stage 0:, Level: Incomplete, Aspect practices are yet to be implemented or incomplete, Organisation only performs essential operations."
+        return "Stage 0:, Level: Incomplete"
     elif 16 <= percentage <= 34.5:
-        return "Stage 1, Level Performed, Aspect practices are fully implemented. Transition to Industry 4.0 has commenced"
+        return "Stage 1, Level Performed"
     elif 35 <= percentage <= 50.5:
-        return "Stage 2, level Managed, Initial implementation of Industry 4.0 technologies.No integration yet.Physical systems can be represented virtually"
+        return "Stage 2, level Managed"
     elif 51 <= percentage <= 67.5:
-        return "Stage 3: Level: Established, Vertical integration from shop floor to ERP level, Standardisation of processes and operations"
+        return "Stage 3: Level: Established"
     elif 68 <= percentage <= 84.5:
-        return "Stage 4: Level: Predictable, Horizontal integration across the value chain.Application of Industry 4.0 technologies such Big Data and artificial intelligence.autonomous optimisation"
+        return "Stage 4: Level: Predictable"
     elif 85 <= percentage <= 100:
-        return "Stage 5: Level: Optimizing, End-to-end integration.Continuous improvement.Smart and autonomous optimisation."
+        return "Stage 5: Level: Optimizing"
 
 
 
