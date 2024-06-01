@@ -1057,19 +1057,14 @@ def submitting_unique_code():
 
                 plt.figure(figsize=(10, 10))  # Increase the size of the polar plots
                 ax = plt.subplot(111, polar=True)
-                ax.plot(angles, as_is_sums + [as_is_sums[0]],
-                        'o-', linewidth=2, label='AS IS', color='red')
-                ax.fill(angles, as_is_sums +
-                        [as_is_sums[0]], alpha=0.4, color='red')
-                ax.plot(angles, to_be_sums + [to_be_sums[0]],
-                        'o-', linewidth=2, label='TO BE', color='blue')
-                ax.fill(angles, to_be_sums +
-                        [to_be_sums[0]], alpha=0.4, color='blue')
+                ax.plot(angles, as_is_sums + [as_is_sums[0]], 'o-', linewidth=2, label='AS IS', color='red')
+                ax.fill(angles, as_is_sums + [as_is_sums[0]], alpha=0.4, color='red')
+                ax.plot(angles, to_be_sums + [to_be_sums[0]], 'o-', linewidth=2, label='TO BE', color='blue')
+                ax.fill(angles, to_be_sums + [to_be_sums[0]], alpha=0.4, color='blue')
                 ax.set_xticks(angles[:-1])
                 ax.set_xticklabels(labels, color='grey', size=8)
 
-                ax.set_title(business_function, size=10,
-                             color='black', weight='bold')
+                ax.set_title(business_function, size=10, color='black', weight='bold')
                 ax.legend(loc='upper right', bbox_to_anchor=(0.1, 0.1))
 
                 buf = io.BytesIO()
@@ -1084,12 +1079,9 @@ def submitting_unique_code():
                 bar_width = 0.25
                 index = np.arange(len(labels))
 
-                plt.bar(index, exped_sums, bar_width,
-                        label='Position of 10 best performing organization')
-                plt.bar(index + bar_width, as_is_sums,
-                        bar_width, label='Current position of your organization')
-                plt.bar(index + 2 * bar_width, to_be_sums,
-                        bar_width, label='Expected position of your organization')
+                plt.bar(index, exped_sums, bar_width, label='Position of 10 best performing organization')
+                plt.bar(index + bar_width, as_is_sums, bar_width, label='Current position of your organization')
+                plt.bar(index + 2 * bar_width, to_be_sums, bar_width, label='Expected position of your organization')
 
                 plt.xlabel('Measuring Element')
                 plt.ylabel('Values')
@@ -1099,25 +1091,23 @@ def submitting_unique_code():
 
                 for i in range(len(labels)):
                     plt.text(i, exped_sums[i], exped_sums[i], ha='center')
-                    plt.text(i + bar_width,
-                             as_is_sums[i], as_is_sums[i], ha='center')
-                    plt.text(i + 2 * bar_width,
-                             to_be_sums[i], to_be_sums[i], ha='center')
+                    plt.text(i + bar_width, as_is_sums[i], as_is_sums[i], ha='center')
+                    plt.text(i + 2 * bar_width, to_be_sums[i], to_be_sums[i], ha='center')
 
                 buf = io.BytesIO()
                 plt.savefig(buf, format='png')
                 buf.seek(0)
-                bar_plot_image = base64.b64encode(
-                    buf.getvalue()).decode('utf-8')
+                bar_plot_image = base64.b64encode(buf.getvalue()).decode('utf-8')
                 bar_plot_images.append(bar_plot_image)
                 plt.close()
 
                 # Create growth rate curve for each business function
                 for idx in range(len(labels)):
-                    x_values = np.linspace(0, durations[idx], 100)
-                    growth_rate = growth_rates[idx]
-                    y_values = to_be_sums[idx] * np.exp(growth_rate * x_values)
-                    plt.plot(x_values, y_values, label=f'{labels[idx]} Growth Curve')
+                    if durations[idx] > 0:  # Ensure duration is not zero or negative
+                        x_values = np.linspace(0, durations[idx], 100)
+                        growth_rate = growth_rates[idx]
+                        y_values = to_be_sums[idx] * np.exp(growth_rate * x_values)
+                        plt.plot(x_values, y_values, label=f'{labels[idx]} Growth Curve')
 
                 plt.xlabel('Time (Years)')
                 plt.ylabel('Value')
@@ -1162,9 +1152,6 @@ def submitting_unique_code():
 
 
 
+
 if __name__ == '__main__':
     app.run(debug=True)
-
-
-
-
