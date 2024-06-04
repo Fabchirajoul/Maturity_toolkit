@@ -542,10 +542,12 @@ def CombinedTiers():
         rating = request.form['Rating']
         subCategory_name = request.form['subCategory_name']
 
-        # Dynamically generate the as_is_question and to_be_question
-        as_is_question = f"Wrt to the 10 best companies incorporating industry 4.0 key enablers making them digitally mature and transformed, how will you best describe your {subCategory_name}?"
-        to_be_question = f"Wrt to the 10 best companies incorporating industry 4.0 key enablers making them digitally mature and transformed, where would you want to find {subCategory_name} in the future?"
 
+        # Dynamically generate the as_is_question and to_be_question
+        as_is_question = f"How will you best describe your {subCategory_name} procedure?"
+        to_be_question = f"Where would you want to find {subCategory_name} procedure in the future?"
+
+       
         MaxRating = request.form['MaxRating']
 
         connection = sqlite3.connect('DigitalMaturityDatabase.db')
