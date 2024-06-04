@@ -1,7 +1,7 @@
 body {
   margin: 0;
   font-family: Arial, sans-serif;
-  background-color: #121212;
+  background-color: white;
   color: #fff;
 }
 
@@ -15,12 +15,17 @@ body {
 
 .sidebar {
   width: 80px;
-  background-color: #1f1f1f;
+  background-color: rgba(128, 128, 128, 0.448);
   padding-top: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
+
+.menu-item.active, .menu-item:hover {
+  background-color: rgba(128, 128, 128, 0.448);
+}
+
 
 .feedback-btn {
   cursor: pointer;
@@ -51,14 +56,11 @@ body {
   display: block;
 }
 
-.menu-item.active, .menu-item:hover {
-  background-color: #333;
-}
 
 .main-content {
   flex-grow: 1;
   padding: 20px;
-  background-color: #282828;
+  /* background-color: orange; */
 }
 
 .main-content h1 {
@@ -78,7 +80,7 @@ body {
 
 
 .card {
-  background-color: #333;
+  background-color: grey;
   border-radius: 8px;
   padding: 20px;
   text-align: center;
