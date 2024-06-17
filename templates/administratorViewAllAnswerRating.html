@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DM | Administrator</title>
+    <link href="/static/css/admin/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="/static/js/code.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link href="/static/css/admin/style.css" rel="stylesheet">
+</head>
+
+<body x-data="AutomatedDigitalMaturity" x-cloak>
+    <div class="container">
+        <div class="sidebar">
+            <div class="logo">Logo</div>
+            <div class="menu">
+                <a href="#" class="menu-item active" x-on:click="openHome('Admin_Home_Page')"><i
+                        class="fas fa-home"></i></a>
+                <a href="#" class="menu-item" x-on:click="openHome('manage_business_sector')">Manage Business Sector</a>
+                <a href="#" class="menu-item" x-on:click="openHome('manage_user_account')">Manage User Account</a>
+                <a href="#" class="menu-item" x-on:click="openHome('manage_csv_file_upload')">Manage Upload CSV</a>
+            </div>
+        </div>
+        <div class="main-content">
+
+            <div class="cards">
+                <div class="card">
+                    <a href="#" x-on:click="openHome('manage_csv_file_upload')"><i class="fas fa-file-alt"></i></a>
+                </div>
+                <div class="card">
+                    <i class="fas fa-users"></i>
+                </div>
+
+                <div class="card">
+                    <form action="/logout">
+                        <button type="submit"><a href="#"><i class="fas fa-lock"></i></a></button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Displaying surveys  -->
+            <div x-show="Admin_Home_Page" x-cloak>
+
+                {% if Password_error %}
+                <div class="error-message">
+                    <p>{{ Password_error }}</p>
+                </div>
+                {% endif %}
+
+
+
+                <div class="table-container">
+                    <h1>ALL ANSWER RATINGS</h1>
+                    <table style="border: 10px solid black;">
+                        <thead>
+                            <tr>
+                                <th style="border: 1px solid black;">ID</th>
+                                <th style="border: 1px solid black;">BUSINESS SECTOR</th>
+                                <th style="border: 1px solid black;">RATING NAME</th>
+                                <th style="border: 1px solid black;">DESCRIPTION</th>
+                                <th style="border: 1px solid black;">VALUE</th>
+                                
+                                <th>DELETE</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for row in combined_ratings %}
+                            <tr >
+                                <td style="border: 1px solid black;">{{ row[0] }}</td>
+                                <td style="border: 1px solid black;">{{ row[1] }}</td>
+                                <td style="border: 1px solid black;">{{ row[2] }}</td>
+                                <td style="border: 1px solid black;">{{ row[3] }}</td>
+                                <td style="border: 1px solid black;">{{ row[4] }}</td>
+                                <td style="border: 1px solid black;">
+                                    <form action="/delete_answer_rating" method="post">
+                                        <input type="hidden" name="record_id" value="{{ row[0] }}">
+                                        <button type="submit" class="submit-btn">Delete</button>
+                                    </form>
+
+                                </td>
+                            </tr>
+                            {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                    
+
+                </div>
+
+            </div>
+
+            <div x-show="manage_business_sector" x-cloak>
+
+                <div class="main-content">
+                    <div class="cards">
+                        <div class="card">
+                            <h2>ADD NEW BUSINESS SECTOR</h2>
+                            <p>Adding business sector individually here</p>
+                            <button class="btn"
+                                x-on:click="openHome('computational_interface_new_business_sector')">ADD</button>
+
+                        </div>
+                        <div class="card">
+                            <h2>UPDATE BUSINESS SECTOR</h2>
+                            <p>Updating business sector individually here</p>
+                            <button class="btn"
+                                x-on:click="openHome('computational_interface_update_business_sector')">UPDATE</button>
+
+                        </div>
+
+
+
+
+
+                        <div class="card">
+                            <h2>ANSWER RATINGS</h2>
+                            <p>Processing answer ratings for the different business functions</p>
+
+                            <button type="submit" class="btn"
+                                x-on:click="openHome('assign_answer_rating_for_business_functions')">RATE</button>
+
+                        </div>
+
+                        <div class="card">
+                            <h2>UPDATE ANSWER RATINGS</h2>
+                            <p>Updating an existing answer rating</p>
+
+                            <button type="submit" class="btn" x-on:click="openHome('update_old_answer_rating')">UPDATE
+                                RATE</button>
+
+                        </div>
+
+                        <div class="card">
+                            <h2>VIEW ANSWER RATINGS</h2>
+                            <p>Updating an existing answer rating</p>
+                            
+                            
+
+                            <button type="submit" class="btn" >VIEW</button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+            <div x-show="manage_user_account">
+
+
+                <div class="main-content">
+                    <div class="cards">
+                        <div class="card">
+                            <h2>ADD NEW USER</h2>
+                            <p>You can add all three types of accounts here </p>
+                            <button class="btn" x-on:click="openHome('add_new_user')">ADD USER</button>
+
+                        </div>
+                        <div class="card">
+                            <h2>VIEW ALL USER ACCOUNTS</h2>
+                            <p>Click to view UsERS</p>
+                            <button class="btn">VIEW USER</button>
+
+
+                        </div>
+
+                        <div class="card">
+                            <h2>CHANGE PASSWORD</h2>
+                            <p>You can chnage the password of a manager, business analysts or other administrator here
+                            </p>
+                            <button class="btn" x-on:click="openHome('change_password')">CHANGE PASSWORD</button>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+
+            </div>
+
+
+            <div x-show="manage_csv_file_upload">
+                <div class="main-content">
+                    <div class="cards">
+                        <div class="card">
+                            <h2>UPLOAD A CSV DATA FILE</h2><br><br>
+
+                            <form action="/" method="post" enctype="multipart/form-data">
+                                <i class="fas fa-file-alt fas-2x"></i>
+                                <input type="file" name="file" accept=".csv">
+                                <button type="submit" class="upload-btn">Upload</button>
+                            </form>
+
+                        </div>
+
+
+
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="userAccountParent">
+                <div x-show="computational_interface_new_business_sector" class="dashboard_computation" x-cloak>
+
+                    <div>
+                        <form action="/CombinedTiersForAll" method="POST">
+                            <div class="card" style="background-color: grey;">
+                                <h1>ADDING NEW BUSINESS SECTOR</h1>
+                                <div class="form-group">
+
+
+                                    <label>
+                                        <h3>Business Sector</h3>
+                                    </label>
+                                    <input name="business_sector_name" class="input" type="text"
+                                        placeholder="Enter buisness sector name">
+
+
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label>
+                                        <h3>Business Function</h3>
+                                    </label>
+                                    <input name="business_function" class="input" type="text"
+                                        placeholder="Type to filter and select an exisiting measuring element from the list">
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label>
+                                        <h3>Measuring Element</h3>
+                                    </label>
+                                    <input name="Measuring_Element" class="input" type="text"
+                                        placeholder="Type to filter and select an exisiting measuring element from the list">
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label>
+                                        <h3>Measuring ELement Rating</h3>
+                                    </label>
+                                    <input name="Rating" class="input" type="number"
+                                        placeholder="Type to filter and select an exisiting measuring element from the list">
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label>
+                                        <h3>Sub Category</h3>
+                                    </label>
+                                    <input name="subCategory_name" class="input" type="text"
+                                        placeholder="Type to filter and select an exisiting measuring element from the list">
+                                </div>
+
+
+
+
+                                <div class="form-group">
+                                    <label>
+                                        <h3>Maximum Rating</h3>
+                                    </label>
+                                    <input name="MaxRating" class="input" type="text"
+                                        placeholder="Type to filter and select an exisiting measuring element from the list">
+                                </div>
+
+
+                                <button class="submit-btn">CREATE ENTRY</button>
+                            </div>
+                        </form>
+                    </div>
+
+
+                </div>
+
+
+
+
+
+
+
+
+
+
+
+
+                <div x-show="computational_interface_update_business_sector" class="dashboard_computation" x-cloak>
+
+                    <div>
+                        <form action="/UpdateCombinedTiersForAll" method="POST">
+                            <div class="card" style="background-color: grey;">
+                                <h1>UPDATING AN EXISTING BUSINESS SECTOR</h1>
+                                <div class="form-group">
+
+                                    <label>
+                                        <h2>Old Business Sector</h2>
+                                    </label>
+                                    <input name="oldbusiness_sector_name" class="input" type="text"
+                                        placeholder="Enter buisness sector name">
+
+
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label>
+                                        <h2>Old Business Function</h2>
+                                    </label>
+                                    <input name="oldbusiness_function" class="input" type="text"
+                                        placeholder="Type to filter and select an exisiting measuring element from the list">
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label>
+                                        <h2>old Measuring Element</h2>
+                                    </label>
+                                    <input name="oldMeasuring_Element" class="input" type="text"
+                                        placeholder="Type to filter and select an exisiting measuring element from the list">
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label>
+                                        <h2>Old Measuring ELement Rating</h2>
+                                    </label>
+                                    <input name="oldRating" class="input" type="number"
+                                        placeholder="Type to filter and select an exisiting measuring element from the list">
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label>
+                                        <h2>Old Sub Category</h2>
+                                    </label>
+                                    <input name="oldsubCategory_name" class="input" type="text"
+                                        placeholder="Type to filter and select an exisiting measuring element from the list">
+                                </div>
+
+
+
+
+                                <div class="form-group">
+                                    <label>
+                                        <h3>Old Maximum Rating</h3>
+                                    </label>
+                                    <input name="oldMaxRating" class="input" type="number"
+                                        placeholder="Type to filter and select an exisiting measuring element from the list">
+                                </div>
+
+
+
+                                <div class="form-group">
+
+                                    <label>
+                                        <h2>New Business Sector</h2>
+                                    </label>
+                                    <input name="newbusiness_sector_name" class="input" type="text"
+                                        placeholder="Enter buisness sector name">
+
+
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label>
+                                        <h2>New Business Function</h2>
+                                    </label>
+                                    <input name="newbusiness_function" class="input" type="text"
+                                        placeholder="Type to filter and select an exisiting measuring element from the list">
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label>
+                                        <h2>New Measuring Element</h2>
+                                    </label>
+                                    <input name="newMeasuring_Element" class="input" type="text"
+                                        placeholder="Type to filter and select an exisiting measuring element from the list">
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label>
+                                        <h2>New Measuring ELement Rating</h2>
+                                    </label>
+                                    <input name="newRating" class="input" type="number"
+                                        placeholder="Type to filter and select an exisiting measuring element from the list">
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label>
+                                        <h2>New Sub Category</h2>
+                                    </label>
+                                    <input name="newsubCategory_name" class="input" type="text"
+                                        placeholder="Type to filter and select an exisiting measuring element from the list">
+                                </div>
+
+
+
+
+                                <div class="form-group">
+                                    <label>
+                                        <h3>New Maximum Rating</h3>
+                                    </label>
+                                    <input name="newMaxRating" class="input" type="number"
+                                        placeholder="Type to filter and select an exisiting measuring element from the list">
+                                </div>
+
+
+
+                                <button class="submit-btn">UPDATE ENTRY</button>
+
+                            </div>
+
+
+
+                        </form>
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- FOr changing password  -->
+
+                <div x-show="change_password" x-cloak>
+
+                    <div class="main-content">
+                        <div class="cards">
+                            <div class="card">
+
+
+
+                            </div>
+                            <div class="card">
+                                <h2>CHANGE PASSWORD OF A USER</h2>
+
+
+
+                                <form method="POST" action="/change_password">
+                                    <div class="textbox">
+                                        <i class="fas fa-envelope"></i>
+                                        <input class="input_password" type="text" placeholder="Your Email" name="email"
+                                            required>
+                                    </div><br><br>
+                                    <div class="textbox">
+                                        <i class="fas fa-lock"></i>
+                                        <input class="input_password" type="password" placeholder="New Password"
+                                            name="newpassword" required>
+                                    </div><br><br>
+
+                                    <div class="textbox">
+                                        <i class="fas fa-lock"></i>
+                                        <input class="input_password" type="password" placeholder="Confirm new Password"
+                                            name="confnewpassword" required>
+                                    </div><br><br>
+                                    <button type="submit" class="submit-btn">Change Password</button>
+
+
+                                </form>
+
+
+
+
+                            </div>
+
+                            <div class="card">
+
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+
+
+
+
+                <div x-show="add_new_user" x-cloak>
+
+                    <div class="main-content">
+                        <div class="cards">
+                            <div class="card">
+
+
+
+                            </div>
+                            <div class="card">
+                                <h2>ADDING NEW USERS</h2>
+
+
+
+                                <form action="/register" method="POST" enctype="multipart/form-data">
+
+                                    <div class="textbox">
+                                        <i class="fas fa-user fa-2x"></i>
+                                        <input class="input_password" type="text" placeholder="Your Username"
+                                            name="name" required>
+                                    </div><br><br>
+
+
+
+                                    <div class="textbox">
+                                        <i class="fas fa-envelope"></i>
+                                        <input class="input_password" type="text" placeholder="Your Email" name="email"
+                                            required>
+                                    </div><br><br>
+
+                                    <div>
+                                        <i class="fas fa-user-plus fa-2x"></i>
+                                        <select name="users" id="cars" class="input_password" required>
+                                            <option value="disabled">Select a user type</option>
+                                            <option value="Business Analyst">Business Analyst</option>
+                                            <option value="Business Manager">Manager</option>
+                                            <option value="Administrator">Administrator</option>
+                                        </select>
+
+                                    </div><br><br>
+
+
+                                    <div class="textbox">
+                                        <i class="fas fa-lock"></i>
+                                        <input class="input_password" type="password" placeholder="New Password"
+                                            name="password" required>
+                                    </div><br><br>
+
+                                    <div class="textbox">
+                                        <i class="fas fa-lock"></i>
+                                        <input class="input_password" type="password" placeholder="Confirm new Password"
+                                            name="confirm_password" required>
+                                    </div><br><br>
+
+
+                                    <div>
+                                        <i class="fas fa-image fa-2x"></i>
+                                        <input type="file" name="User_photo" class="upload-btn" name="password"
+                                            accept="image/*" id="User_photo">
+                                    </div>
+
+
+
+                                    <button type="submit" class="submit-btn">ADD USER</button>
+
+
+                                </form>
+
+
+
+
+                            </div>
+
+                            <div class="card">
+
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+
+
+
+
+
+
+
+                <div x-show="assign_answer_rating_for_business_functions">
+
+                    <form action="/ratingAnswersBusinessFunctions" method="POST">
+
+
+
+
+
+                        <div class="card" style="background-color: grey;">
+                            <h3>ASSIGN RATINGS FOR BUSINESS SECTOR</h3>
+                            <div class="form-group">
+
+
+                                <label>
+                                    <h3>Business Sector</h3>
+                                </label>
+                                <input name="rating_business_sector_name" class="input" type="text"
+                                    placeholder="Enter buisness sector name" required>
+
+
+                            </div>
+
+
+                            <div class="form-group">
+                                <label>
+                                    <h3>RATING NAME</h3>
+                                </label>
+                                <input name="rating_name_business_sector" class="input" type="text"
+                                    placeholder="Enter rating name e.g Basic, Proactive, Resilent etc" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label>
+                                    <h3>DESCRIPTION</h3>
+                                </label>
+
+                                <textarea class="textarea-large" name="rating_description_business_sector" required>
+
+                               </textarea>
+
+
+
+                            </div>
+
+
+                            <div class="form-group">
+                                <label>
+                                    <h3>RATING VALUE</h3>
+                                </label>
+                                <input name="rating_value_business_sector" class="input" type="number"
+                                    placeholder="Type to filter and select an exisiting measuring element from the list"
+                                    required>
+                            </div>
+
+
+
+
+
+
+
+                            <button class="submit-btn">RATE SECTOR</button>
+                        </div>
+                    </form>
+
+
+
+                </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <div x-show="update_old_answer_rating">
+
+                    <form action="/updateratingAnswersBusinessFunctions" method="POST">
+
+
+
+
+
+                        <div class="card" style="background-color: grey;">
+                            <h3>ASSIGN RATINGS FOR BUSINESS SECTOR</h3>
+                            <div class="form-group">
+
+
+                                <label>
+                                    <h3>Business Sector</h3>
+                                </label>
+                                <input name="rating_business_sector_name" class="input" type="text"
+                                    placeholder="Enter buisness sector name" required>
+
+
+                            </div>
+
+
+                            <div class="form-group">
+                                <label>
+                                    <h3>RATING NAME</h3>
+                                </label>
+                                <input name="rating_name_business_sector" class="input" type="text"
+                                    placeholder="Enter rating name e.g Basic, Proactive, Resilent etc" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label>
+                                    <h3>DESCRIPTION</h3>
+                                </label>
+
+                                <textarea class="textarea-large" name="newrating_description_business_sector" required>
+
+                               </textarea>
+
+
+
+                            </div>
+
+
+                            <div class="form-group">
+                                <label>
+                                    <h3>RATING VALUE</h3>
+                                </label>
+                                <input name="newrating_value_business_sector" class="input" type="number"
+                                    placeholder="Type to filter and select an exisiting measuring element from the list"
+                                    required>
+                            </div>
+
+
+
+
+
+
+
+                            <button class="submit-btn">RATE SECTOR</button>
+                        </div>
+                    </form>
+
+
+
+                </div>
+
+
+
+            </div>
+        </div>
+
+    </div>
+</body>
+
+</html>

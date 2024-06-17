@@ -1,6 +1,6 @@
 import sqlite3
 import bcrypt
-from flask import Flask, request, render_template, redirect, session, url_for, jsonify
+from flask import Flask, request, render_template, redirect, session, url_for, jsonify, flash
 import csv
 import numpy as np
 import io
@@ -14,6 +14,7 @@ import matplotlib.pyplot as plt
 import matplotlib
 matplotlib.use('Agg')  # Use a non-GUI backend
 import time
+from functools import wraps
 
 
 
@@ -192,6 +193,17 @@ def index():
 def logout():
     session.pop('email', None)
     return render_template('index.html')
+
+
+# Decorator to protect routes
+def login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if 'logged_in' not in session:
+            flash('You need to login first.')
+            return redirect(url_for('login'))
+        return f(*args, **kwargs)
+    return decorated_function
 
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -666,6 +678,51 @@ def Updateanswerrating():
 
 
 
+# View all answer rating
+@app.route('/view_all_answer_rating', methods=['GET', 'POST'])
+def viewAllAnswerRatings():
+    connection = sqlite3.connect('DigitalMaturityDatabase.db')
+    cursor = connection.cursor()
+    cursor.execute('''
+        SELECT id, BusinessFunction, RatingName, RatingDescription, AnswerRatingValue
+        FROM AnswerRatings
+    ''')
+    combined_ratings = cursor.fetchall()
+
+    # Normalize the BusinessFunction column
+    normalize_business_function()
+
+    cursor.execute('SELECT DISTINCT BusinessFunction FROM ArrangingTheDataInProperOrder')
+    unique_business_functions = cursor.fetchall()
+
+    connection.close()
+
+    return render_template('administratorViewAllAnswerRating.html', combined_ratings=combined_ratings, unique_business_functions=unique_business_functions)
+
+# Delete answer ratings
+@app.route('/delete_answer_rating', methods=['POST'])
+def deleteAnAnswerRating():
+    if request.method == 'POST':
+        # Get the ID of the record to delete from the form
+        delete_record_id = request.form['record_id']
+        try:
+            # Delete the record from the database
+            connection = sqlite3.connect('DigitalMaturityDatabase.db')
+            cursor = connection.cursor()
+            cursor.execute('''
+                DELETE FROM AnswerRatings
+                WHERE id = ?
+            ''', (delete_record_id,))
+            connection.commit()
+            connection.close()
+
+            # Redirect back to the page displaying combined data
+            return redirect('/view_all_answer_rating')
+        except Exception as e:
+            return "Error occurred during deletion: " + str(e)
+    else:
+        return "Method Not Allowed"
+
 
 
 
@@ -779,7 +836,7 @@ def select_business_function():
             connection = sqlite3.connect('DigitalMaturityDatabase.db')
             cursor = connection.cursor()
             cursor.execute('''
-                SELECT MeasuringElt, Rating, SUbCategory, AsIsQuestions, ToBeQuestions, MaxRating
+                SELECT DISTINCT MeasuringElt, Rating, SUbCategory, AsIsQuestions, ToBeQuestions, MaxRating
                 FROM ArrangingTheDataInProperOrder
                 WHERE BusinessFunction=?
             ''', (selected_business_function,))
@@ -861,22 +918,6 @@ def CombinedTiersForUser():
             return redirect('/select_business_sector_user')
 
     return render_template('BusinessFunction.html', error_display_asistobe=error_display_asistobe)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

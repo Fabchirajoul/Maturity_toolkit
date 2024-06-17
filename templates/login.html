@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
     <link href="/static/css/style.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
+
 <body>
     <div class="login-container">
         <div class="login-box">
@@ -15,7 +17,7 @@
                 <div>
                     <i class="fas fa-envelope fa-2x"></i>
                     <input type="email" class="input" id="email" placeholder="Enter email" name="email"
-                    placeholder="Enter your email">
+                        placeholder="Enter your email">
                 </div>
                 <br><br>
 
@@ -35,15 +37,15 @@
                     <input type="password" class="input" id="password" placeholder="Enter password" name="password"
                         required>
                 </div><br><br>
-      
+
                 <button type="submit" class="btn">Login</button>
 
                 <div class="links">
-                    <p><a href="/requestPasswordChange" >Forgot Password ?</a>| <a href="/register">Register ?</a></p> 
+                    <p><a href="/requestPasswordChange">Forgot Password ?</a>| <a href="/register">Register ?</a></p>
                 </div>
-             
+
             </form>
-          
+
 
             <div>
                 {% if error %}
@@ -51,7 +53,20 @@
                 {% endif %}
             </div>
 
+            <div class="error">
+                {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                <ul>
+                    {% for message in messages %}
+                    <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+                {% endwith %}
+            </div>
+
         </div>
     </div>
 </body>
+
 </html>
